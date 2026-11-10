@@ -180,9 +180,9 @@ az adott böngészőben tárolódnak.
 
 ## 3D nézet
 
-- Minden épület és épületrész a valódi OSM-magasságával jelenik meg (a háttértérkép
-  vektorcsempéiből); az atlaszban szereplő épületek részei a korszakuk színét kapják, a többi semleges.
-- Részletes tömegmodell (tetőformákkal: kupola, gúla, kontytető – szeletekkel közelítve) a
-  `public/data/models.geojson` fájlban, OSM-épületrészekből (`building:part`). Jelenleg: Országház,
-  Szent István-bazilika. Új épület felvétele: `data-work/models.py` → `MODELS` lista, majd
-  `cd data-work && python3 models.py`.
+- A város 2D-ben marad (gyors); 3D-ben csak az atlaszban szereplő épületek emelkednek ki,
+  egy-egy hasábként, az OSM-ben rögzített valódi magasságukkal (ennek híján a szintszámból becsülve).
+- Nevezetes épületekhez stilizált tömegmodell (`public/data/models.geojson`), OSM-épületrészekből
+  (`building:part`): kupola, gúla, kúp néhány szelettel, a többi tető lapos tömbként; az apró,
+  eltakart és lebegő részek kimaradnak. Jelenleg: Országház, Szent István-bazilika. Új épület:
+  `data-work/models.py` → `MODELS` lista, majd `cd data-work && python3 models.py`.

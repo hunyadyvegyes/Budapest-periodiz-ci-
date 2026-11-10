@@ -9,7 +9,7 @@ maplibregl.setWorkerUrl(workerUrl);
 import { useFiltered, useStore } from '../state/store';
 import { toMapFeatures, toMapPoints } from './features';
 import { MIN_SELECT_ZOOM, byId as osmById, loadView } from '../data/osmBuildings';
-import { add3dLayers, atlasIdAt, hideModelledFromBase, loadModels, paintAtlasParts, set3dVisible, updateModels, type Models } from './city3d';
+import { add3dLayers, loadModels, modelAtlasIdAt, set3dVisible, updateAtlasHeights, updateModels, type Models } from './city3d';
 import { bboxOf } from '../domain/geo';
 
 const BASEMAP_URL = import.meta.env.VITE_BASEMAP_STYLE || 'https://tiles.openfreemap.org/styles/positron';
@@ -82,12 +82,8 @@ export default function MapView() {
       styleLoaded = true;
       clearTimeout(timer);
       addAtlasLayers(map);
-      add3dLayers(map, map.getStyle().layers?.find((l) => l.type === 'symbol')?.id);
-      loadModels().then((m) => {
-        if (!m) return;
-        hideModelledFromBase(map, m);
-        setModels(m);
-      });
+      add3dLayers(map);
+      loadModels().then((m) => m && setModels(m));
       setReady((r) => r + 1);
     });
 
@@ -126,7 +122,7 @@ export default function MapView() {
     map.on('click', (e) => {
       const st = useStore.getState();
       if (st.mapMode === '3d') {
-        const aid = atlasIdAt(map, e.point);
+        const aid = modelAtlasIdAt(map, e.point);
         if (aid) {
           st.select(aid);
           return;
@@ -245,17 +241,15 @@ export default function MapView() {
     }
   }, [mapMode, ready, showBase]);
 
-  // --- 3D: modellek színezése, atlasz-épületrészek festése ---------------------
+  // --- 3D: stilizált modellek és valódi magasságú atlasz-hasábok ---------------
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    const modelled = new Set(models?.meta.map((m) => m.osmRef) ?? []);
+    const modelled = models ? updateModels(map, models, filtered, selectedId) : new Set<string>();
     paintRef.current = () => {
-      if (mapRef.current && useStore.getState().mapMode === '3d') paintAtlasParts(map, filtered, selectedId, modelled);
+      if (mapRef.current && useStore.getState().mapMode === '3d') updateAtlasHeights(map, filtered, modelled);
     };
-    if (models) updateModels(map, models, filtered, selectedId);
     if (mapMode === '3d') {
-      // a csempék betöltése után fessünk
       if (map.loaded()) paintRef.current();
       else map.once('idle', () => paintRef.current());
     }
@@ -364,8 +358,8 @@ function addAtlasLayers(map: MLMap) {
     layout: { visibility: 'none' },
     paint: {
       'fill-extrusion-color': ['get', 'color'],
-      // ha a valódi magasságú csempeépület(rész) már a korszak színét kapta, a becsült tömb elrejtve
-      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'matched'], false], 0, ['get', 'height']],
+      // valódi OSM-magasság (feature-state „h”), ennek híján becsült; modellel rendelkezőnél elrejtve
+      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'modelled'], false], 0, ['coalesce', ['feature-state', 'h'], ['get', 'height']]],
       'fill-extrusion-opacity': 0.92,
       'fill-extrusion-vertical-gradient': true,
     },
@@ -378,7 +372,7 @@ function addAtlasLayers(map: MLMap) {
     layout: { visibility: 'none' },
     paint: {
       'fill-extrusion-color': '#ffd23f',
-      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'matched'], false], 0, ['+', ['get', 'height'], 0.6]],
+      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'modelled'], false], 0, ['+', ['coalesce', ['feature-state', 'h'], ['get', 'height']], 0.6]],
       'fill-extrusion-opacity': 1,
     },
   });

@@ -95,21 +95,24 @@ def scale_ring(ring, c, s):
     return [[round(c[0] + (x - c[0]) * s, 7), round(c[1] + (y - c[1]) * s, 7)] for x, y in ring]
 
 
-# tetőforma → (szeletek száma, profil t∈[0,1] → méretarány)
+# STILIZÁLT modell: csak a karakteres tetők (kupola, gúla, kúp) kapnak néhány szeletet,
+# a nyereg-, konty- és manzárdtetős részek egyszerű, lapos tetejű tömbök (a tető felével megemelve).
 PROFILES = {
-    'dome': (7, lambda t: math.sqrt(max(0.0, 1 - t * t))),
-    'onion': (7, lambda t: max(0.05, math.sin(math.pi * (0.35 + 0.65 * t)) * 1.1)),
-    'pyramidal': (6, lambda t: 1 - t),
-    'cone': (6, lambda t: 1 - t),
-    'hipped': (3, lambda t: 1 - 0.75 * t),
-    'gabled': (3, lambda t: 1 - 0.6 * t),
-    'mansard': (2, lambda t: 1 - 0.35 * t),
-    'gambrel': (2, lambda t: 1 - 0.35 * t),
-    'half-hipped': (3, lambda t: 1 - 0.65 * t),
+    'dome': (4, lambda t: math.sqrt(max(0.0, 1 - t * t))),
+    'onion': (4, lambda t: max(0.1, math.sin(math.pi * (0.35 + 0.65 * t)) * 1.1)),
+    'pyramidal': (3, lambda t: 1 - t),
+    'cone': (3, lambda t: 1 - t),
 }
+FLAT_ROOF_SHARE = 0.4   # a nem szeletelt tetőből ennyi adódik a tömb magasságához
+MIN_PART_AREA = 60      # m² – ennél kisebb rész csak akkor marad, ha toronyszerű
+TOWER_HEIGHT = 45       # m
 # becsült tetőmagasság az alapterület négyzetgyökéhez képest, ha a tetőmagasság nincs megadva
 ROOF_FACTOR = {'dome': 0.5, 'onion': 0.7, 'pyramidal': 0.9, 'cone': 1.2, 'hipped': 0.3, 'gabled': 0.3,
                'mansard': 0.2, 'gambrel': 0.2, 'half-hipped': 0.3}
+
+
+def r05(v):
+    return round(v * 2) / 2
 
 
 def build_model(ref, name, bbox):
@@ -137,7 +140,7 @@ def build_model(ref, name, bbox):
             outline = max(join_rings([p for p in parts if p]), key=lambda r: area_m2(r, bbox[1]))
 
     lat = bbox[1]
-    feats, part_ids, estimated = [], [], 0
+    parts = []
     for w in ways.values():
         t = w.get('tags', {})
         if not t.get('building:part'):
@@ -147,31 +150,70 @@ def build_model(ref, name, bbox):
             continue
         h = num(t.get('height')) or (num(t.get('building:levels')) or 3) * 4
         mh = num(t.get('min_height')) or ((num(t.get('building:min_level')) or 0) * 4)
+        area = area_m2(ring, lat)
+        if area < MIN_PART_AREA and h < TOWER_HEIGHT:
+            continue  # apró részlet – a stilizált modellből kimarad
+        parts.append({'id': w['id'], 'ring': ring, 'h': h, 'mh': mh, 'area': area, 't': t})
+
+    # azonos alaprajzú részek közül a magasabb marad; teljesen eltakart részek kimaradnak
+    keep = []
+    seen = {}
+    for p in sorted(parts, key=lambda p: -p['h']):
+        key = tuple(map(tuple, p['ring']))
+        if key in seen:
+            continue
+        seen[key] = True
+        keep.append(p)
+    final = []
+    for p in keep:
+        c = centroid(p['ring'])
+        hidden = any(q is not p and q['area'] > p['area'] and q['h'] >= p['h'] and q['mh'] <= p['mh'] and point_in(c, q['ring'])
+                     and all(point_in(v, q['ring']) for v in p['ring'][:-1]) for q in keep)
+        if not hidden:
+            final.append(p)
+
+    # lebegő részek kiszűrése: ami nem a talajon áll, annak egy megtartott rész tetején kell állnia
+    changed = True
+    while changed:
+        changed = False
+        for p in list(final):
+            if p['mh'] <= 1:
+                continue
+            c = centroid(p['ring'])
+            if not any(q is not p and q['h'] >= p['mh'] - 2 and q['mh'] < p['mh'] and point_in(c, q['ring']) for q in final):
+                final.remove(p)
+                changed = True
+
+    feats, part_ids, estimated = [], [], 0
+    for p in final:
+        t, ring, h, mh = p['t'], p['ring'], p['h'], p['mh']
         shape = t.get('roof:shape', 'flat')
-        side = math.sqrt(area_m2(ring, lat))
+        side = math.sqrt(p['area'])
         rh = num(t.get('roof:height'))
         if rh is None and shape in ROOF_FACTOR:
             rh = min(ROOF_FACTOR[shape] * side, (h - mh) * 0.6)
             estimated += 1
         rh = max(0.0, min(rh or 0.0, h - mh))
-        wall_top = h - rh
-        color = t.get('building:colour') or t.get('colour')
-        roof_color = t.get('roof:colour') or color
-        part_ids.append(w['id'])
-        base = {'model': ref, 'part': f"way/{w['id']}"}
-        if wall_top > mh:
-            feats.append({'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [ring]},
-                          'properties': {**base, 'base': round(mh, 2), 'top': round(wall_top, 2), 'osmColor': color, 'roof': False}})
-        if rh > 0.3 and shape in PROFILES:
+        part_ids.append(p['id'])
+        base = {'model': ref, 'part': f"way/{p['id']}"}
+        if shape in PROFILES and rh > 0.3:
+            wall_top = h - rh
+            if wall_top > mh:
+                feats.append({'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [ring]},
+                              'properties': {**base, 'base': r05(mh), 'top': r05(wall_top), 'roof': False}})
             n, prof = PROFILES[shape]
             c = centroid(ring)
             for i in range(n):
                 t0, t1 = i / n, (i + 1) / n
-                s = prof((t0 + t1) / 2)
-                if s <= 0.02:
+                sc = prof((t0 + t1) / 2)
+                if sc <= 0.05:
                     continue
-                feats.append({'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [scale_ring(ring, c, s)]},
-                              'properties': {**base, 'base': round(wall_top + t0 * rh, 2), 'top': round(wall_top + t1 * rh, 2), 'osmColor': roof_color, 'roof': True}})
+                feats.append({'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [scale_ring(ring, c, sc)]},
+                              'properties': {**base, 'base': r05(wall_top + t0 * rh), 'top': r05(wall_top + t1 * rh), 'roof': True}})
+        else:
+            top = h - rh + FLAT_ROOF_SHARE * rh
+            feats.append({'type': 'Feature', 'geometry': {'type': 'Polygon', 'coordinates': [ring]},
+                          'properties': {**base, 'base': r05(mh), 'top': r05(top), 'roof': False}})
     return ref, name, outline, feats, part_ids, estimated
 
 
