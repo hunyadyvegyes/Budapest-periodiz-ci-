@@ -98,7 +98,9 @@ export default function ImportView() {
   const searchOne = async (r: RowState) => {
     update(r.line, { searching: true });
     try {
-      const m = r.address ? await matchAddress(r.address, r.district, r.city) : { status: 'notfound' as const, message: 'Nincs cím megadva.' };
+      const m = r.address || r.name
+        ? await matchAddress({ address: r.address ?? '', city: r.city, district: r.district, postcode: r.postcode, country: r.country, name: r.name })
+        : { status: 'notfound' as const, message: 'Nincs se cím, se név megadva.' };
       const dup = (m.osmRef && existing.byOsm.get(m.osmRef)) || existing.byAddr.get(addrKey(m.address ?? r.address, m.city ?? r.city, m.district ?? r.district));
       update(r.line, { match: m, searching: false, duplicateOf: dup ? dup.id : undefined, include: !dup });
     } catch (e) {
@@ -275,13 +277,14 @@ export default function ImportView() {
                       <td>{r.architects ?? <span className="unknown">–</span>}</td>
                       <td>
                         {st === 'run' && <span className="chip-s">keresés…</span>}
-                        {st === 'found' && <span className="chip-s ok">megtalálva</span>}
+                        {st === 'found' && !r.match?.byName && <span className="chip-s ok">megtalálva</span>}
+                        {st === 'found' && r.match?.byName && <span className="chip-s warn" title={r.match.message}>név alapján – ellenőrizd</span>}
                         {st === 'uncertain' && <span className="chip-s warn">körvonal nélkül</span>}
                         {st === 'notfound' && <span className="chip-s bad">nem található</span>}
                         {!st && <span className="chip-s">vár</span>}
                         {r.duplicateOf && <span className="chip-s warn" title="Bejelölve frissíti a meglévő rekordot">már szerepel</span>}
                         {p && <span className="chip-s bad">{p}</span>}
-                        {r.match && r.match.status !== 'found' && <div className="small muted">{r.match.message}</div>}
+                        {r.match && (r.match.status !== 'found' || r.match.byName) && <div className="small muted">{r.match.message}</div>}
                       </td>
                       <td><button className="link" onClick={() => searchOne(r)} disabled={r.searching}>újra</button></td>
                     </tr>

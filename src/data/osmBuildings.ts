@@ -165,3 +165,41 @@ export function allLoaded(): FeatureCollection<Polygon | MultiPolygon> {
     }
   return { type: 'FeatureCollection', features };
 }
+
+/**
+ * A pontot tartalmazó épület – több részből álló (multipolygon) épületekkel is, pl. templomok,
+ * kastélyok. Nagyobb befoglaló téglalappal, hogy a reláció minden tagja beleférjen.
+ */
+export async function buildingContainingPoint(lat: number, lng: number, d = 0.0012): Promise<OsmBuilding | null> {
+  try {
+    const list = await fromOsmApi(lat - d, lng - d, lat + d, lng + d);
+    const inside = list.filter((b) => containsPoint(b.geometry, lng, lat));
+    // a legkisebb tartalmazó épület (pl. ne a teljes tömböt, ha benne külön épület is van)
+    inside.sort((a, b) => ringArea(a.geometry) - ringArea(b.geometry));
+    return inside[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function containsPoint(g: Polygon | MultiPolygon, x: number, y: number): boolean {
+  const polys = g.type === 'Polygon' ? [g.coordinates] : g.coordinates;
+  return polys.some((p) => {
+    const inRing = (ring: Position[]) => {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    return inRing(p[0]) && !p.slice(1).some(inRing);
+  });
+}
+
+function ringArea(g: Polygon | MultiPolygon): number {
+  const rings = g.type === 'Polygon' ? [g.coordinates[0]] : g.coordinates.map((p) => p[0]);
+  let a = 0;
+  for (const r of rings) for (let i = 0, j = r.length - 1; i < r.length; j = i++) a += r[j][0] * r[i][1] - r[i][0] * r[j][1];
+  return Math.abs(a / 2);
+}

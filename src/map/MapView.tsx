@@ -55,8 +55,7 @@ export default function MapView() {
       style: BASEMAP_URL,
       center: BUDAPEST,
       zoom: 14.2,
-      // Magyarország és egy kis peremsáv
-      maxBounds: [[15.0, 45.2], [24.0, 49.1]],
+      maxBounds: [[12.5, 43.0], [28.0, 50.8]], // a Kárpát-medence (a határon túli épületekhez is)
       attributionControl: { compact: true },
       canvasContextAttributes: { preserveDrawingBuffer: true },
     } as maplibregl.MapOptions);
