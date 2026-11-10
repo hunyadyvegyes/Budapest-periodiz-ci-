@@ -131,8 +131,8 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
   const validate = (): string | null => {
     if ((precision === 'exact' || precision === 'probable') && num(year) == null) return 'Add meg az évet, vagy válaszd az „Ismeretlen” lehetőséget.';
     if (precision === 'range') {
-      if (num(from) == null || num(to) == null) return 'Add meg az intervallum kezdő és záró évét.';
-      if (num(from)! > num(to)!) return 'A kezdő év nem lehet nagyobb a záró évnél.';
+      if (num(from) == null || num(to) == null) return 'Add meg a kezdés és a befejezés évét.';
+      if (num(from)! > num(to)!) return 'A kezdés éve nem lehet későbbi a befejezésénél.';
     }
     if ((yearGiven || archList.length || opt(style)) && !srcTitle.trim())
       return 'Építési évhez, tervezőhöz vagy stílushoz adj meg forrást (pl. könyv, cikk, levéltári jelzet, weboldal).';
@@ -179,7 +179,7 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
           <select value={precision} onChange={(e) => setPrecision(e.target.value as YearPrecision)}>
             <option value="exact">Pontos év (dokumentált)</option>
             <option value="probable">Valószínű év</option>
-            <option value="range">Évintervallum</option>
+            <option value="range">Tól–ig (kezdés és befejezés)</option>
             <option value="unknown">Ismeretlen</option>
           </select>
         </label>
@@ -187,10 +187,13 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
           <label>Év<input type="number" value={year} onChange={(e) => setYear(e.target.value)} placeholder="pl. 1936" /></label>
         )}
         {precision === 'range' && (
+          <>
           <div className="row2">
-            <label>Tól<input type="number" value={from} onChange={(e) => setFrom(e.target.value)} /></label>
-            <label>Ig<input type="number" value={to} onChange={(e) => setTo(e.target.value)} /></label>
+            <label>Kezdés éve<input type="number" value={from} onChange={(e) => setFrom(e.target.value)} placeholder="pl. 1935" /></label>
+            <label>Befejezés éve<input type="number" value={to} onChange={(e) => setTo(e.target.value)} placeholder="pl. 1938" /></label>
           </div>
+          <p className="hint">A térképen a szín a befejezés éve szerinti korszakot mutatja.</p>
+          </>
         )}
 
         <label>Tervező(k) – vesszővel elválasztva

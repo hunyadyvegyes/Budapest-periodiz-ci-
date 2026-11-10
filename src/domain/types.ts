@@ -134,7 +134,7 @@ export const PROTECTION_LABELS: Record<ProtectionStatus, string> = {
 export const PRECISION_LABELS: Record<YearPrecision, string> = {
   exact: 'Dokumentált, pontos év',
   probable: 'Forrás alapján valószínűsített',
-  range: 'Évintervallum',
+  range: 'Tól–ig (kezdés és befejezés éve)',
   unknown: 'Ismeretlen',
 };
 

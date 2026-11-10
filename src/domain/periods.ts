@@ -56,11 +56,13 @@ export function yearSpan(c: ConstructionDate): [number, number] | null {
   return null;
 }
 
-/** Színezéshez használt reprezentatív év (intervallumnál a középpont). */
+/**
+ * A korszakba soroláshoz (szín, évtized-statisztika, idővonal-hisztogram) használt év.
+ * Tól–ig megadásnál a befejezés éve számít: az épület akkor vált a városkép részévé.
+ */
 export function representativeYear(c: ConstructionDate): number | null {
   const s = yearSpan(c);
-  if (!s) return null;
-  return Math.round((s[0] + s[1]) / 2);
+  return s ? s[1] : null;
 }
 
 export function periodForYear(year: number | null): Period | null {
@@ -87,7 +89,7 @@ export function formatConstruction(c: ConstructionDate): string {
     case 'probable':
       return c.year != null ? `kb. ${c.year} (valószínűsített)` : 'ismeretlen';
     case 'range':
-      return c.from != null && c.to != null ? `${c.from}–${c.to} között` : 'ismeretlen';
+      return c.from != null && c.to != null ? `${c.from}–${c.to}` : 'ismeretlen';
     default:
       return 'ismeretlen';
   }

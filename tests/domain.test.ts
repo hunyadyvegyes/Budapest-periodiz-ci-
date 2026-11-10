@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Building } from '../src/domain/types';
 import { EMPTY_FILTER, applyFilter, YEAR_MAX, YEAR_MIN } from '../src/domain/filter';
-import { PERIODS, colorOf, periodForYear, UNKNOWN_COLOR, formatConstruction } from '../src/domain/periods';
+import { PERIODS, colorOf, periodForYear, periodOf, UNKNOWN_COLOR, formatConstruction } from '../src/domain/periods';
 import { parseCSV, toCSV, toGeoJSON, parseGeoJSON, constructionFromFlat } from '../src/domain/io';
 import { byDecade, intensity, topArchitects } from '../src/domain/stats';
 
@@ -27,13 +27,18 @@ describe('korszakok', () => {
     expect(PERIODS).toHaveLength(16);
     for (let y = 1700; y <= 2030; y++) expect(PERIODS.filter((p) => y >= p.from && y <= p.to)).toHaveLength(1);
   });
+  it('tól–ig esetén a befejezés éve dönti el a korszakot (színt)', () => {
+    const b = mk('r', { construction: { precision: 'range', from: 1905, to: 1912, sourceIds: [] } });
+    expect(periodOf(b)?.label).toBe('1910–1919');
+    expect(colorOf(b)).toBe(PERIODS.find((p) => p.label === '1910–1919')!.color);
+  });
   it('ismeretlen év semleges szín', () => {
     expect(colorOf(list[3])).toBe(UNKNOWN_COLOR);
     expect(periodForYear(1905)?.label).toBe('1890–1909');
     expect(periodForYear(1760)?.label).toBe('1800 előtt');
   });
   it('formázás jelöli a bizonytalanságot', () => {
-    expect(formatConstruction(list[1].construction)).toBe('1885–1895 között');
+    expect(formatConstruction(list[1].construction)).toBe('1885–1895');
     expect(formatConstruction(list[2].construction)).toContain('valószínűsített');
     expect(formatConstruction(list[3].construction)).toBe('ismeretlen');
   });

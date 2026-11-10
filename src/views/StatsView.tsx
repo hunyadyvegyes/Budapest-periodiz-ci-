@@ -101,7 +101,7 @@ export default function StatsView() {
       </div>
 
       <div className="charts">
-        <ChartCard title="Épületek száma építési évtizedenként" subtitle="Intervallumos évnél a középpont szerint; színek a térkép korszakskálája szerint" wide>
+        <ChartCard title="Épületek száma építési évtizedenként" subtitle="Tól–ig megadásnál a befejezés éve szerint; színek a térkép korszakskálája szerint" wide>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={data.decades} margin={{ left: 0, right: 12, top: 8, bottom: 0 }} barCategoryGap={2}>
               <CartesianGrid vertical={false} stroke={GRID} />

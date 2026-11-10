@@ -37,7 +37,7 @@ function EditFormInner({ initial }: { initial: Building }) {
       if (c.year == null) return 'Pontos vagy valószínűsített évnél add meg az évet – vagy válaszd az „Ismeretlen” lehetőséget.';
     }
     if (c.precision === 'range') {
-      if (c.from == null || c.to == null || c.from > c.to) return 'Évintervallumnál add meg a kezdő és záró évet (kezdő ≤ záró).';
+      if (c.from == null || c.to == null || c.from > c.to) return 'Tól–ig megadásnál add meg a kezdés és a befejezés évét (a kezdés nem lehet későbbi).';
     }
     if (c.precision !== 'unknown' && !c.sourceIds.length && !b.isDemo)
       return 'Ismert építési évhez legalább egy forrást rendelj (lásd Források). Forrás nélküli évet ne rögzíts.';
@@ -101,8 +101,8 @@ function EditFormInner({ initial }: { initial: Building }) {
               )}
               {c.precision === 'range' && (
                 <div className="row2">
-                  <label>Tól<input type="number" value={c.from ?? ''} onChange={(e) => upC({ from: optNum(e.target.value) })} /></label>
-                  <label>Ig<input type="number" value={c.to ?? ''} onChange={(e) => upC({ to: optNum(e.target.value) })} /></label>
+                  <label>Kezdés éve<input type="number" value={c.from ?? ''} onChange={(e) => upC({ from: optNum(e.target.value) })} /></label>
+                  <label>Befejezés éve<input type="number" value={c.to ?? ''} onChange={(e) => upC({ to: optNum(e.target.value) })} /></label>
                 </div>
               )}
               {c.precision !== 'unknown' && (

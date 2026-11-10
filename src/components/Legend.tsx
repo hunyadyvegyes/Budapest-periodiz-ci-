@@ -55,7 +55,7 @@ export default function Legend() {
         })}
       </ul>
       <div className="legend-note">
-        <span className="dash-sample" /> szaggatott körvonal: valószínűsített év vagy évintervallum
+        <span className="dash-sample" /> szaggatott körvonal: valószínűsített év vagy tól–ig; tól–ig esetén a szín a befejezés éve szerinti
       </div>
       </>)}
     </div>
