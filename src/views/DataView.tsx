@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useFiltered, useStore } from '../state/store';
+import { canEdit, useFiltered, useStore } from '../state/store';
 import { parseCSV, parseGeoJSON, toCSV, toGeoJSON, newId } from '../domain/io';
 import { formatConstruction } from '../domain/periods';
 import { rectAround } from '../domain/geo';
@@ -33,6 +33,8 @@ export default function DataView() {
   const resetLocal = useStore((s) => s.resetLocal);
   const notify = useStore((s) => s.notify);
   const saveTarget = useStore((s) => s.saveTarget);
+  const editable = useStore((s) => canEdit(s));
+  const setLoginOpen = useStore((s) => s.setLoginOpen);
   const filtered = useFiltered();
   const fileRef = useRef<HTMLInputElement>(null);
   const [report, setReport] = useState<string | null>(null);
@@ -73,8 +75,14 @@ export default function DataView() {
   return (
     <div className="data-view">
       <h2>Adatkezelés</h2>
+      {!editable && (
+        <div className="card">
+          <p>Importáláshoz, felvitelhez és szerkesztéshez jelentkezz be szerkesztőként. Az export mindenkinek elérhető.</p>
+          <button className="btn primary" onClick={() => setLoginOpen(true)}>Bejelentkezés</button>
+        </div>
+      )}
       <div className="data-grid">
-        <section className="card">
+        <section className="card" hidden={!editable}>
           <h3>Import</h3>
           <p className="muted">CSV (vessző vagy pontosvessző) vagy GeoJSON. A CSV-oszlopokat lásd az exportált sablonban. Geometria nélküli sor koordinátával (lat, lng) is felvehető.</p>
           <input ref={fileRef} type="file" accept=".csv,.geojson,.json" hidden onChange={(e) => e.target.files?.[0] && onImport(e.target.files[0])} />
@@ -90,14 +98,14 @@ export default function DataView() {
             <button className="btn ghost" onClick={() => download('sablon.csv', '﻿' + toCSV([]), 'text/csv;charset=utf-8')}>Üres CSV-sablon</button>
           </div>
         </section>
-        <section className="card">
+        <section className="card" hidden={!editable}>
           <h3>Kézi felvitel</h3>
           <p className="muted">A legegyszerűbb: a térképen kattints egy szürke épületre – a cím és a körvonal kitöltődik, neked csak a történeti adatokat kell megadnod. Koordinátával is felvehetsz épületet:</p>
           <div className="btn-row">
             <button className="btn primary" onClick={newRecord}>Új épület…</button>
-            <button className="btn danger" onClick={() => confirm('Az összes saját felvitel, módosítás és import törlődik (a projektmappa sajat-modositasok.json fájljából is). Folytatod?') && resetLocal()}>Helyi módosítások törlése</button>
+            <button className="btn danger" hidden={saveTarget === 'online'} onClick={() => confirm('Az összes saját felvitel, módosítás és import törlődik (a projektmappa sajat-modositasok.json fájljából is). Folytatod?') && resetLocal()}>Helyi módosítások törlése</button>
           </div>
-          <p className="hint">A saját felvitelek és módosítások helye: <strong>{saveTarget === 'file' ? 'a projekt mappája (public/data/sajat-modositasok.json)' : 'ez a böngésző (localStorage)'}</strong>. A Supabase/PostGIS háttér sémája: <code>supabase/schema.sql</code>.</p>
+          <p className="hint">A saját felvitelek és módosítások helye: <strong>{saveTarget === 'online' ? 'az online adatbázis' : saveTarget === 'file' ? 'a projekt mappája (public/data/sajat-modositasok.json)' : 'ez a böngésző (localStorage)'}</strong>. A Supabase/PostGIS háttér sémája: <code>supabase/schema.sql</code>.</p>
         </section>
       </div>
 
@@ -127,7 +135,7 @@ export default function DataView() {
                 <td>{b.isDemo ? <span className="demo-tag">DEMO</span> : b.origin}</td>
                 <td className="actions">
                   <button className="link" onClick={() => { select(b.id, true); setView('map'); }}>térkép</button>
-                  <button className="link" onClick={() => startEdit(structuredClone(b))}>szerk.</button>
+                  {editable && <button className="link" onClick={() => startEdit(structuredClone(b))}>szerk.</button>}
                 </td>
               </tr>
             ))}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelected, useStore } from '../state/store';
+import { canEdit, useSelected, useStore } from '../state/store';
 import { DemoBanner, Field, YearBlock } from './BuildingPanel';
 import { IMAGE_KIND_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS, type AttributableField } from '../domain/types';
 
@@ -14,6 +14,7 @@ export default function DetailModal() {
   const open = useStore((s) => s.detailOpen);
   const openDetail = useStore((s) => s.openDetail);
   const startEdit = useStore((s) => s.startEdit);
+  const editable = useStore((s) => canEdit(s));
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && openDetail(false);
@@ -132,7 +133,7 @@ export default function DetailModal() {
           </section>
         </div>
         <footer className="modal-foot">
-          <button className="btn" onClick={() => { openDetail(false); startEdit(structuredClone(b)); }}>Szerkesztés</button>
+          {editable && <button className="btn" onClick={() => { openDetail(false); startEdit(structuredClone(b)); }}>Szerkesztés</button>}
           <button className="btn primary" onClick={() => openDetail(false)}>Bezárás</button>
         </footer>
       </div>

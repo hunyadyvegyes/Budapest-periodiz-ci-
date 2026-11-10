@@ -1,0 +1,5 @@
+{
+  "_leiras": "Online adatbázis (Supabase) beállítása. A supabaseKey a NYILVÁNOS (publishable / anon) kulcs, soha ne a titkos (secret / service_role) kulcs. Üresen hagyva az atlasz online adatbázis nélkül fut.",
+  "supabaseUrl": "",
+  "supabaseKey": ""
+}

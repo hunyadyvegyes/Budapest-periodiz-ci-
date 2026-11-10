@@ -13,10 +13,12 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "maplibre-gl": "^6.17.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "recharts": "^3.10.1",
+    "xlsx": "^0.18.5",
     "zustand": "^5.1.0"
   },
   "devDependencies": {

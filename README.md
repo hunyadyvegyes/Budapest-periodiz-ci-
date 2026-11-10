@@ -1,4 +1,8 @@
-# Budapest Építészettörténeti Atlasz – prototípus (1. fázis)
+# Budapest Építészettörténeti Atlasz
+
+**Közzététel linkre, online adatbázis, tömeges feltöltés:** lásd [docs/KOZZETETEL.md](docs/KOZZETETEL.md).
+
+## Prototípus (1. fázis)
 
 Interaktív, böngészőben futó építészettörténeti térkép: Budapest épületei építési idő,
 tervező, stílus, funkció és védettség szerint, forrásmegjelöléssel és megbízhatósági jelöléssel.

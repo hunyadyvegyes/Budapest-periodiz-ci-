@@ -1,50 +1,172 @@
 import type { Building } from '../domain/types';
 import { featureToBuilding } from '../domain/io';
+import { loadConfig } from './config';
+import { getSupabase } from './supabase';
 
 /**
- * Adattár-absztrakció: a térkép és a felület csak ezen keresztül éri el az adatokat,
- * így a helyi (böngészős) tároló később Supabase/PostGIS háttérre cserélhető
- * (lásd supabase/schema.sql és SupabaseRepository vázlat lent).
+ * Adattár. A térkép és a felület csak ezen keresztül éri el az adatokat.
+ *
+ * Az épületek két rétegből állnak össze:
+ *  1. beépített adatkészletek (statikus GeoJSON-fájlok: kvízépületek, opcionális OSM- és DEMO-adat),
+ *  2. saját felvitelek és módosítások (új épületek, szerkesztések, törlések).
+ *
+ * A 2. réteg helye ("mentés célja"):
+ *  - 'online':  Supabase-adatbázis – ha a weboldalhoz be van állítva (config.json); írni bejelentkezve lehet
+ *  - 'file':    public/data/sajat-modositasok.json – ha az alkalmazás helyben, `npm run dev`-vel fut
+ *  - 'browser': a böngésző saját tárhelye – tartalék, pl. online adatbázis nélküli közzétételnél
  */
-export interface BuildingRepository {
-  readonly kind: string;
-  loadAll(): Promise<Building[]>;
-  upsert(b: Building): Promise<void>;
-  upsertMany(list: Building[]): Promise<void>;
-  remove(id: string): Promise<void>;
-  /** Helyi módosítások törlése (csak a helyi tárolónál értelmes). */
-  reset?(): Promise<void>;
-}
 
-const LS_KEY = 'bpatlasz.local.v1';
-const API = '/api/sajat-adatok';
+export type SaveTarget = 'online' | 'file' | 'browser';
 
-interface LocalState {
+export interface Overlay {
   upserts: Record<string, Building>;
   deleted: string[];
 }
+const emptyOverlay = (): Overlay => ({ upserts: {}, deleted: [] });
 
-const emptyState = (): LocalState => ({ upserts: {}, deleted: [] });
+interface Backend {
+  target: SaveTarget;
+  load(): Promise<Overlay>;
+  put(list: Building[]): Promise<void>;
+  del(ids: string[]): Promise<void>;
+  reset?(): Promise<void>;
+}
 
-function readLS(): LocalState | null {
+/* ---------------- böngésző ---------------- */
+const LS_KEY = 'bpatlasz.local.v1';
+function readLS(): Overlay | null {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (raw) return JSON.parse(raw) as LocalState;
+    if (raw) return JSON.parse(raw) as Overlay;
   } catch { /* privát mód / letiltott tároló */ }
   return null;
 }
-function writeLS(s: LocalState) {
-  try {
-    localStorage.setItem(LS_KEY, JSON.stringify(s));
-  } catch (e) {
-    console.warn('A böngészős mentés nem sikerült', e);
+function clearLS() {
+  try { localStorage.removeItem(LS_KEY); } catch { /* */ }
+}
+
+/** Közös logika a „teljes állapotot egyben mentő” háttértárakhoz (fájl, böngésző). */
+abstract class WholeStateBackend implements Backend {
+  abstract target: SaveTarget;
+  protected state = emptyOverlay();
+  abstract load(): Promise<Overlay>;
+  protected abstract persist(): Promise<void>;
+  async put(list: Building[]) {
+    for (const b of list) this.state.upserts[b.id] = b;
+    const ids = new Set(list.map((b) => b.id));
+    this.state.deleted = this.state.deleted.filter((d) => !ids.has(d));
+    await this.persist();
+  }
+  async del(ids: string[]) {
+    for (const id of ids) {
+      delete this.state.upserts[id];
+      if (!this.state.deleted.includes(id)) this.state.deleted.push(id);
+    }
+    await this.persist();
+  }
+  async reset() {
+    this.state = emptyOverlay();
+    await this.persist();
+    clearLS();
   }
 }
 
+class BrowserBackend extends WholeStateBackend {
+  target: SaveTarget = 'browser';
+  async load() {
+    // a közzétett változatba beépült fájl + a böngésző saját rétege
+    let base = emptyOverlay();
+    try {
+      const r = await fetch(`${import.meta.env.BASE_URL}data/sajat-modositasok.json`);
+      if (r.ok && (r.headers.get('content-type') ?? '').includes('json')) base = await r.json();
+    } catch { /* */ }
+    const ls = readLS() ?? emptyOverlay();
+    this.state = { upserts: { ...base.upserts, ...ls.upserts }, deleted: [...new Set([...base.deleted, ...ls.deleted])] };
+    return this.state;
+  }
+  protected async persist() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(this.state));
+    } catch {
+      throw new Error('A böngésző nem engedi a mentést (privát mód?).');
+    }
+  }
+}
+
+const API = '/api/sajat-adatok';
+class FileBackend extends WholeStateBackend {
+  target: SaveTarget = 'file';
+  static async available(): Promise<boolean> {
+    // csak a saját gépen futó fejlesztői szerver tud fájlba írni
+    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return false;
+    try {
+      const res = await fetch(API);
+      return res.ok && (res.headers.get('content-type') ?? '').includes('json');
+    } catch {
+      return false;
+    }
+  }
+  async load() {
+    this.state = await (await fetch(API)).json();
+    // korábban a böngészőbe mentett módosítások áthelyezése a fájlba
+    const ls = readLS();
+    if (ls && (Object.keys(ls.upserts).length || ls.deleted.length)) {
+      this.state = { upserts: { ...ls.upserts, ...this.state.upserts }, deleted: [...new Set([...this.state.deleted, ...ls.deleted])] };
+      await this.persist();
+      clearLS();
+    }
+    return this.state;
+  }
+  protected async persist() {
+    const res = await fetch(API, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.state) });
+    if (!res.ok) throw new Error('A mentés a projektmappába nem sikerült: ' + (await res.text()));
+  }
+}
+
+/* ---------------- online (Supabase) ---------------- */
+class OnlineBackend implements Backend {
+  target: SaveTarget = 'online';
+  async load(): Promise<Overlay> {
+    const sb = await getSupabase();
+    const out = emptyOverlay();
+    const PAGE = 1000;
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await sb!.from('buildings').select('id,data,deleted').order('id').range(from, from + PAGE - 1);
+      if (error) throw new Error('Az online adatbázis nem érhető el: ' + error.message);
+      for (const r of data ?? []) {
+        if (r.deleted) out.deleted.push(r.id);
+        else out.upserts[r.id] = r.data as Building;
+      }
+      if (!data || data.length < PAGE) break;
+    }
+    return out;
+  }
+  async put(list: Building[]) {
+    const sb = await getSupabase();
+    for (let i = 0; i < list.length; i += 500) {
+      const chunk = list.slice(i, i + 500).map((b) => ({ id: b.id, data: b, deleted: false }));
+      const { error } = await sb!.from('buildings').upsert(chunk);
+      if (error) throw new Error(friendly(error.message));
+    }
+  }
+  async del(ids: string[]) {
+    const sb = await getSupabase();
+    // „puha” törlés: a beépített (fájlból jövő) rekordokat is így lehet elrejteni
+    const { error } = await sb!.from('buildings').upsert(ids.map((id) => ({ id, data: {}, deleted: true })));
+    if (error) throw new Error(friendly(error.message));
+  }
+}
+
+function friendly(msg: string) {
+  if (/row-level security|permission|JWT|not authorized/i.test(msg)) return 'A mentéshez be kell jelentkezned szerkesztőként.';
+  return 'Az online mentés nem sikerült: ' + msg;
+}
+
+/* ---------------- adattár ---------------- */
 async function fetchCollection(url: string): Promise<Building[]> {
   try {
     const res = await fetch(url);
-    if (!res.ok) return [];
+    if (!res.ok) return []; // hiányzó fájl; a JSON-hiba (pl. HTML-válasz) lent kezelve
     const fc = await res.json();
     return (fc.features ?? []).map((f: GeoJSON.Feature) => featureToBuilding(f)).filter(Boolean) as Building[];
   } catch {
@@ -52,105 +174,56 @@ async function fetchCollection(url: string): Promise<Building[]> {
   }
 }
 
-export type SaveTarget = 'file' | 'browser';
+const DATASETS = [
+  'data/demo-buildings.geojson',
+  'data/osm-buildings.geojson', // scripts/fetch-osm.mjs, ha létezik
+  'data/quiz-buildings.geojson', // a kvízapplikáció budapesti épületei (data-work/build.py)
+];
 
-/**
- * Helyi tároló: statikus GeoJSON-állományok (demo, OSM, kvíz) + a saját módosítások.
- * A saját módosítások helye:
- *  - 'file':    public/data/sajat-modositasok.json a projekt mappájában (ha a helyi szerver fut)
- *  - 'browser': a böngésző localStorage-a (pl. statikus tárhelyre feltöltött változatnál)
- */
-export class LocalRepository implements BuildingRepository {
-  readonly kind = 'local';
-  target: SaveTarget = 'browser';
-  private state: LocalState = emptyState();
-
-  constructor(private datasets: string[]) {}
-
-  private async loadState(): Promise<void> {
-    try {
-      const res = await fetch(API);
-      if (res.ok && (res.headers.get('content-type') ?? '').includes('json')) {
-        this.target = 'file';
-        this.state = await res.json();
-        // Korábban a böngészőbe mentett módosítások áthelyezése a fájlba
-        const ls = readLS();
-        if (ls && (Object.keys(ls.upserts).length || ls.deleted.length)) {
-          this.state = {
-            upserts: { ...ls.upserts, ...this.state.upserts },
-            deleted: [...new Set([...this.state.deleted, ...ls.deleted])],
-          };
-          await this.persist();
-          try { localStorage.removeItem(LS_KEY); } catch { /* */ }
-        }
-        return;
-      }
-    } catch { /* nincs helyi szerver */ }
-    this.target = 'browser';
-    // Statikus változat: a buildbe került fájl + a böngésző saját rétege
-    let base = emptyState();
-    try {
-      const r = await fetch(`${import.meta.env.BASE_URL}data/sajat-modositasok.json`);
-      if (r.ok) base = await r.json();
-    } catch { /* */ }
-    const ls = readLS() ?? emptyState();
-    this.state = { upserts: { ...base.upserts, ...ls.upserts }, deleted: [...new Set([...base.deleted, ...ls.deleted])] };
+export class AtlasRepository {
+  private backend: Backend | null = null;
+  get target(): SaveTarget {
+    return this.backend?.target ?? 'browser';
   }
 
-  private async persist(): Promise<void> {
-    if (this.target === 'file') {
-      const res = await fetch(API, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.state) });
-      if (!res.ok) throw new Error('A mentés a projektmappába nem sikerült: ' + (await res.text()));
-    } else {
-      writeLS(this.state);
-    }
+  private async pickBackend(): Promise<Backend> {
+    if (this.backend) return this.backend;
+    const cfg = await loadConfig();
+    if (cfg.supabaseUrl && cfg.supabaseKey) this.backend = new OnlineBackend();
+    else if (await FileBackend.available()) this.backend = new FileBackend();
+    else this.backend = new BrowserBackend();
+    return this.backend;
   }
 
   async loadAll(): Promise<Building[]> {
-    const [lists] = await Promise.all([Promise.all(this.datasets.map(fetchCollection)), this.loadState()]);
+    const backend = await this.pickBackend();
+    const [lists, overlay] = await Promise.all([
+      Promise.all(DATASETS.map((p) => fetchCollection(import.meta.env.BASE_URL + p))),
+      backend.load(),
+    ]);
     const byId = new Map<string, Building>();
     for (const list of lists) for (const b of list) byId.set(b.id, b);
-    for (const id of this.state.deleted) byId.delete(id);
-    for (const b of Object.values(this.state.upserts)) byId.set(b.id, b);
+    for (const id of overlay.deleted) byId.delete(id);
+    for (const b of Object.values(overlay.upserts)) byId.set(b.id, b);
     return [...byId.values()];
   }
   async upsert(b: Building) {
-    this.state.upserts[b.id] = b;
-    this.state.deleted = this.state.deleted.filter((d) => d !== b.id);
-    await this.persist();
+    await (await this.pickBackend()).put([b]);
   }
   async upsertMany(list: Building[]) {
-    for (const b of list) this.state.upserts[b.id] = b;
-    const ids = new Set(list.map((b) => b.id));
-    this.state.deleted = this.state.deleted.filter((d) => !ids.has(d));
-    await this.persist();
+    await (await this.pickBackend()).put(list);
   }
   async remove(id: string) {
-    delete this.state.upserts[id];
-    if (!this.state.deleted.includes(id)) this.state.deleted.push(id);
-    await this.persist();
+    await (await this.pickBackend()).del([id]);
   }
+  /** Csak helyi (fájl/böngésző) módnál: minden saját módosítás törlése. */
   async reset() {
-    this.state = emptyState();
-    await this.persist();
-    try { localStorage.removeItem(LS_KEY); } catch { /* */ }
+    const b = await this.pickBackend();
+    if (!b.reset) throw new Error('Az online adatbázist innen nem lehet kiüríteni.');
+    await b.reset();
   }
 }
 
-/**
- * Supabase/PostGIS adattár – VÁZLAT a második fázishoz.
- * A `buildings_geojson` nézet a sémában GeoJSON-t ad vissza, így a kliensoldali
- * modell változatlan maradhat. Aktiváláshoz: npm i @supabase/supabase-js,
- * VITE_SUPABASE_URL és VITE_SUPABASE_ANON_KEY beállítása.
- */
-// export class SupabaseRepository implements BuildingRepository { ... }
-
-export function createRepository(): LocalRepository {
-  return new LocalRepository([
-    `${import.meta.env.BASE_URL}data/demo-buildings.geojson`,
-    // A scripts/fetch-osm.mjs által előállított valós OSM-állomány, ha létezik:
-    `${import.meta.env.BASE_URL}data/osm-buildings.geojson`,
-    // Kvízapplikáció budapesti épületei, ellenőrzött címmel (data-work/build.py)
-    `${import.meta.env.BASE_URL}data/quiz-buildings.geojson`,
-  ]);
+export function createRepository(): AtlasRepository {
+  return new AtlasRepository();
 }

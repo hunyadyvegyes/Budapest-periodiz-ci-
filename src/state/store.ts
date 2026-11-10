@@ -2,8 +2,9 @@ import { create } from 'zustand';
 import type { Building } from '../domain/types';
 import { EMPTY_FILTER, type FilterState, applyFilter } from '../domain/filter';
 import { createRepository, type SaveTarget } from '../data/repository';
+import { currentSession, onAuthChange, signIn as sbSignIn, signOut as sbSignOut, type EditorSession } from '../data/supabase';
 
-export type View = 'map' | 'stats' | 'data';
+export type View = 'map' | 'stats' | 'data' | 'import';
 export type MapMode = '2d' | '3d' | 'google3d';
 
 const repo = createRepository();
@@ -24,6 +25,10 @@ interface AppState {
   baseSelection: { geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon; props: Record<string, unknown>; lngLat: [number, number]; ts: number } | null;
   /** hova menti a saját adatokat: projektmappa-fájlba vagy a böngészőbe */
   saveTarget: SaveTarget;
+  /** bejelentkezett szerkesztő (csak online módban számít) */
+  session: EditorSession | null;
+  loginOpen: boolean;
+  loadError: string | null;
   flyTo: { center: [number, number]; ts: number } | null;
   toast: string | null;
 
@@ -44,6 +49,14 @@ interface AppState {
   remove(id: string): Promise<void>;
   resetLocal(): Promise<void>;
   notify(msg: string): void;
+  setLoginOpen(v: boolean): void;
+  signIn(email: string, password: string): Promise<void>;
+  signOut(): Promise<void>;
+}
+
+/** Szerkeszthet-e a felhasználó: helyi módban mindig, online módban bejelentkezve. */
+export function canEdit(s: Pick<AppState, 'saveTarget' | 'session'>): boolean {
+  return s.saveTarget !== 'online' || s.session != null;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -60,18 +73,29 @@ export const useStore = create<AppState>((set, get) => ({
   showBaseBuildings: false,
   baseSelection: null,
   saveTarget: 'browser',
+  session: null,
+  loginOpen: false,
+  loadError: null,
   flyTo: null,
   toast: null,
 
   async load() {
-    set({ loading: true });
-    const buildings = await repo.loadAll();
+    set({ loading: true, loadError: null });
+    let buildings: Building[] = [];
+    try {
+      buildings = await repo.loadAll();
+    } catch (e) {
+      set({ loadError: (e as Error).message });
+    }
+    const session = repo.target === 'online' ? await currentSession() : null;
+    if (repo.target === 'online') onAuthChange((s) => set({ session: s }));
     // Ha van valós (nem DEMO) adat: a DEMO rekordok alapból rejtve, az OSM-alapkontúrok láthatók
     const hasReal = buildings.some((b) => !b.isDemo);
     set({
       buildings,
       loading: false,
       saveTarget: repo.target,
+      session,
       ...(hasReal ? { filter: { ...get().filter, showDemo: false }, showBaseBuildings: true } : {}),
     });
   },
@@ -110,7 +134,9 @@ export const useStore = create<AppState>((set, get) => ({
     }
     const list = get().buildings.filter((x) => x.id !== b.id);
     set({ buildings: [...list, updated], editing: null, selectedId: b.id, baseSelection: null });
-    get().notify(repo.target === 'file' ? 'Mentve a projektmappába (public/data/sajat-modositasok.json).' : 'Mentve a böngészőbe.');
+    get().notify(
+      repo.target === 'online' ? 'Mentve az online adatbázisba.' : repo.target === 'file' ? 'Mentve a projektmappába (public/data/sajat-modositasok.json).' : 'Mentve ebbe a böngészőbe.',
+    );
   },
   async saveMany(list) {
     await repo.upsertMany(list);
@@ -118,18 +144,39 @@ export const useStore = create<AppState>((set, get) => ({
     set({ buildings: [...get().buildings.filter((b) => !ids.has(b.id)), ...list] });
   },
   async remove(id) {
-    await repo.remove(id);
+    try {
+      await repo.remove(id);
+    } catch (e) {
+      get().notify(`Hiba: ${(e as Error).message}`);
+      return;
+    }
     set({ buildings: get().buildings.filter((b) => b.id !== id), selectedId: null, detailOpen: false });
     get().notify('Rekord törölve.');
   },
   async resetLocal() {
-    await repo.reset?.();
+    try {
+      await repo.reset();
+    } catch (e) {
+      get().notify((e as Error).message);
+      return;
+    }
     await get().load();
     get().notify('Helyi módosítások törölve, az eredeti adatkészlet betöltve.');
   },
+  setLoginOpen(v) { set({ loginOpen: v }); },
+  async signIn(email, password) {
+    const session = await sbSignIn(email, password);
+    set({ session, loginOpen: false });
+    get().notify(`Bejelentkezve: ${session.email}`);
+  },
+  async signOut() {
+    await sbSignOut();
+    set({ session: null });
+    get().notify('Kijelentkeztél.');
+  },
   notify(msg) {
     set({ toast: msg });
-    setTimeout(() => { if (get().toast === msg) set({ toast: null }); }, 3500);
+    setTimeout(() => { if (get().toast === msg) set({ toast: null }); }, 4500);
   },
 }));
 

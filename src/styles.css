@@ -283,3 +283,26 @@ a { color: var(--accent-2); }
 .qa { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .qa.form fieldset { margin: 4px 0 0; }
 .form-error.block { display: block; max-width: none; margin: 10px 0 0; }
+
+/* ---------- fiók, feltöltés ---------- */
+.account { display: flex; align-items: center; gap: 6px; }
+.account .who { font-size: 12px; color: var(--muted); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.modal.login { width: min(420px, 100%); }
+.load-error { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); background: #fbeaea; color: #8a1c17; border: 1px solid #e3b5b0; padding: 8px 14px; border-radius: var(--radius); z-index: 40; max-width: 90vw; }
+.import-view .steps { display: grid; gap: 14px; padding-left: 20px; max-width: 860px; line-height: 1.5; }
+.import-view .steps li > .btn-row, .import-view .steps li > input, .import-view .steps li > label { margin-top: 8px; }
+.import-view input.wide { width: 100%; max-width: 640px; padding: 7px 9px; border: 1px solid var(--line-2); border-radius: 4px; display: block; }
+.table-scroll { overflow-x: auto; }
+.import-table td { vertical-align: middle; }
+.import-table tr.off td { opacity: 0.45; }
+.import-table .num { font-variant-numeric: tabular-nums; color: var(--muted); }
+.cell-input { width: 100%; min-width: 160px; padding: 4px 6px; border: 1px solid var(--line-2); border-radius: 3px; font-size: 12px; }
+.cell-input.short { min-width: 48px; width: 56px; }
+.chip-s { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 10px; background: var(--paper-2); color: var(--ink-2); margin: 1px 4px 1px 0; white-space: nowrap; }
+.chip-s.ok { background: #e3f0e4; color: #2f5a35; }
+.chip-s.warn { background: #fff2d6; color: #7a5410; }
+.chip-s.bad { background: #fbeaea; color: #8a1c17; white-space: normal; }
+.progress { height: 4px; background: var(--paper-2); border-radius: 2px; margin: 6px 0 10px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--accent-2); transition: width 0.3s; }
+.import-foot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.import-foot .hint { margin: 0; flex: 1 1 260px; }

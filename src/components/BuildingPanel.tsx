@@ -1,4 +1,4 @@
-import { useSelected, useStore } from '../state/store';
+import { canEdit, useSelected, useStore } from '../state/store';
 import type { AttributableField, Building, FieldMeta } from '../domain/types';
 import { IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS } from '../domain/types';
 import { colorOf, formatConstruction, periodOf } from '../domain/periods';
@@ -57,8 +57,21 @@ export default function BuildingPanel() {
   const openDetail = useStore((s) => s.openDetail);
   const startEdit = useStore((s) => s.startEdit);
   const select = useStore((s) => s.select);
+  const editable = useStore((s) => canEdit(s));
+  const setLoginOpen = useStore((s) => s.setLoginOpen);
 
-  if (!b && baseSel) return <QuickAddForm key={baseSel.ts} sel={baseSel} />;
+  if (!b && baseSel) {
+    if (!editable)
+      return (
+        <div className="panel-inner">
+          <div className="bp-kicker">Új épület felvétele</div>
+          <h2>Bejelentkezés szükséges</h2>
+          <p className="muted">Épületet felvenni szerkesztőként, bejelentkezve lehet.</p>
+          <button className="btn primary" onClick={() => setLoginOpen(true)}>Bejelentkezés</button>
+        </div>
+      );
+    return <QuickAddForm key={baseSel.ts} sel={baseSel} />;
+  }
 
   if (!b) {
     return (
@@ -111,7 +124,7 @@ export default function BuildingPanel() {
 
       <div className="bp-actions">
         <button className="btn primary" onClick={() => openDetail(true)}>Részletes adatlap</button>
-        <button className="btn" onClick={() => startEdit(structuredClone(b))}>Szerkesztés</button>
+        {editable && <button className="btn" onClick={() => startEdit(structuredClone(b))}>Szerkesztés</button>}
         <button className="btn ghost" onClick={() => select(null)}>Bezárás</button>
       </div>
     </div>
