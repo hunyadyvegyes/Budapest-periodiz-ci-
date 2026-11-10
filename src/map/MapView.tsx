@@ -8,6 +8,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 maplibregl.setWorkerUrl(workerUrl);
 import { useFiltered, useStore } from '../state/store';
 import { toMapFeatures, toMapPoints } from './features';
+import { MIN_SELECT_ZOOM, byId as osmById, loadView } from '../data/osmBuildings';
 import { bboxOf } from '../domain/geo';
 
 const BASEMAP_URL = import.meta.env.VITE_BASEMAP_STYLE || 'https://tiles.openfreemap.org/styles/positron';
@@ -35,6 +36,8 @@ export default function MapView() {
   const [ready, setReady] = useState(0); // növekszik minden style.load után
   const [basemapFailed, setBasemapFailed] = useState(false);
   const fittedRef = useRef(false);
+  const [osmLoading, setOsmLoading] = useState(false);
+  const osmLoaderRef = useRef<() => void>(() => {});
 
   const filtered = useFiltered();
   const total = useStore((s) => s.buildings.length);
@@ -83,11 +86,22 @@ export default function MapView() {
     map.on('mousemove', (e) => {
       const layers = ATLAS_LAYERS.filter((l) => map.getLayer(l));
       const feats = layers.length ? map.queryRenderedFeatures(e.point, { layers }) : [];
-      const baseLayers = useStore.getState().showBaseBuildings ? baseBuildingLayerIds(map) : [];
-      const baseFeat = !feats.length && baseLayers.length ? map.queryRenderedFeatures(e.point, { layers: baseLayers })[0] : undefined;
-      map.getCanvas().style.cursor = feats.length || baseFeat ? 'pointer' : '';
+      const showBase = useStore.getState().showBaseBuildings;
+      let hoverGeom: GeoJSON.Geometry | null = null;
+      let pointer = feats.length > 0;
+      if (!feats.length && showBase) {
+        if (map.getZoom() >= MIN_SELECT_ZOOM && map.getLayer('osm-bld-hit')) {
+          // valódi, teljes OSM-körvonal (nem a csempékre vágott háttérkép)
+          const hit = map.queryRenderedFeatures(e.point, { layers: ['osm-bld-hit'] })[0];
+          const b = hit ? osmById.get(String(hit.properties.id)) : undefined;
+          if (b) { hoverGeom = b.geometry; pointer = true; }
+        } else {
+          pointer = map.queryRenderedFeatures(e.point, { layers: baseBuildingLayerIds(map) }).length > 0;
+        }
+      }
+      map.getCanvas().style.cursor = pointer ? (hoverGeom || feats.length ? 'pointer' : 'zoom-in') : '';
       (map.getSource('base-hover') as GeoJSONSource | undefined)?.setData(
-        baseFeat ? { type: 'Feature', geometry: baseFeat.geometry, properties: {} } : { type: 'FeatureCollection', features: [] },
+        hoverGeom ? { type: 'Feature', geometry: hoverGeom, properties: {} } : { type: 'FeatureCollection', features: [] },
       );
       if (feats.length) {
         const p = feats[0].properties as Record<string, string>;
@@ -109,15 +123,40 @@ export default function MapView() {
         return;
       }
       if (st.showBaseBuildings) {
-        const base = map.queryRenderedFeatures(e.point, { layers: baseBuildingLayerIds(map) });
-        const g = base[0]?.geometry;
-        if (g && (g.type === 'Polygon' || g.type === 'MultiPolygon')) {
-          st.setBaseSelection({ geometry: g, props: { ...base[0].properties }, lngLat: [e.lngLat.lng, e.lngLat.lat], ts: Date.now() });
+        const lngLat: [number, number] = [e.lngLat.lng, e.lngLat.lat];
+        if (map.getZoom() >= MIN_SELECT_ZOOM && map.getLayer('osm-bld-hit')) {
+          const hit = map.queryRenderedFeatures(e.point, { layers: ['osm-bld-hit'] })[0];
+          const b = hit ? osmById.get(String(hit.properties.id)) : undefined;
+          if (b) {
+            st.setBaseSelection({ geometry: b.geometry, props: { osmRef: b.id, address: b.address, levels: b.levels }, lngLat, ts: Date.now() });
+            return;
+          }
+          if (map.queryRenderedFeatures(e.point, { layers: baseBuildingLayerIds(map) }).length) {
+            st.notify('Az épületkörvonalak még töltődnek – próbáld újra egy pillanat múlva.');
+            return;
+          }
+        } else if (map.queryRenderedFeatures(e.point, { layers: baseBuildingLayerIds(map) }).length) {
+          // Távoli nézetben az épületek össze vannak vonva – ráközelítünk a pontos kijelöléshez
+          map.flyTo({ center: e.lngLat, zoom: Math.max(17, MIN_SELECT_ZOOM + 1), duration: 700 });
+          st.notify('Ráközelítettem – most kattints az épületre.');
           return;
         }
       }
       st.select(null);
     });
+
+    // Valódi OSM-épületkörvonalak betöltése közeli nézetben (kijelöléshez)
+    const loadOsm = () => {
+      if (!useStore.getState().showBaseBuildings || map.getZoom() < MIN_SELECT_ZOOM || !map.getSource('osm-buildings')) return;
+      const bb = map.getBounds();
+      setOsmLoading(true);
+      loadView({ west: bb.getWest(), south: bb.getSouth(), east: bb.getEast(), north: bb.getNorth() })
+        .then((fc) => { if (fc) (map.getSource('osm-buildings') as GeoJSONSource | undefined)?.setData(fc); })
+        .finally(() => setOsmLoading(false));
+    };
+    map.on('moveend', loadOsm);
+    map.on('style.load', loadOsm);
+    osmLoaderRef.current = loadOsm;
 
     return () => {
       clearTimeout(timer);
@@ -197,6 +236,8 @@ export default function MapView() {
     }
   }, [showBase, ready]);
 
+  useEffect(() => { if (showBase) osmLoaderRef.current(); }, [showBase, ready]);
+
   // --- odarepülés -----------------------------------------------------------
   useEffect(() => {
     const map = mapRef.current;
@@ -214,6 +255,7 @@ export default function MapView() {
       )}
       <div className="map-count">
         <strong>{filtered.length.toLocaleString('hu')}</strong> / {total.toLocaleString('hu')} rekord látható
+        {osmLoading && <span className="muted"> · épületkörvonalak betöltése…</span>}
       </div>
     </div>
   );
@@ -232,6 +274,9 @@ function addAtlasLayers(map: MLMap) {
   map.addSource('atlas-points', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   map.addSource('base-selection', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   map.addSource('base-hover', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+  // Valódi OSM-épületek – láthatatlan réteg, csak a kijelöléshez (a megjelenítés a háttérképé)
+  map.addSource('osm-buildings', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+  map.addLayer({ id: 'osm-bld-hit', type: 'fill', source: 'osm-buildings', minzoom: 15, paint: { 'fill-color': '#000', 'fill-opacity': 0 } }, firstSymbol);
   map.addLayer({ id: 'base-hover-fill', type: 'fill', source: 'base-hover', paint: { 'fill-color': '#1f4fa3', 'fill-opacity': 0.12 } }, firstSymbol);
   map.addLayer({ id: 'base-hover-line', type: 'line', source: 'base-hover', paint: { 'line-color': '#1f4fa3', 'line-width': 1.5 } }, firstSymbol);
 

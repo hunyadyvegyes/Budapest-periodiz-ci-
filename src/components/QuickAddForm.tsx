@@ -27,9 +27,9 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
   const saveTarget = useStore((s) => s.saveTarget);
 
   const [looking, setLooking] = useState(true);
-  const [osmRef, setOsmRef] = useState<string | undefined>();
+  const [osmRef, setOsmRef] = useState<string | undefined>(sel.props.osmRef as string | undefined);
   const [geometry, setGeometry] = useState(sel.geometry);
-  const [preciseGeom, setPreciseGeom] = useState(false);
+  const [preciseGeom, setPreciseGeom] = useState(Boolean(sel.props.osmRef));
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -62,14 +62,15 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
     let cancelled = false;
     setLooking(true);
     const [lng, lat] = sel.lngLat;
-    Promise.all([lookupBuildingAt(lat, lng), osmBuildingContaining(lat, lng)]).then(([p, w]) => {
+    const known = Boolean(sel.props.osmRef); // a térkép már a valódi OSM-körvonalat adta
+    Promise.all([lookupBuildingAt(lat, lng), known ? Promise.resolve(null) : osmBuildingContaining(lat, lng)]).then(([p, w]) => {
       if (cancelled) return;
       setLooking(false);
-      // Cím: a Nominatim címe (a kattintott pont címe), ennek híján az épület OSM-címkéi
-      const addr = p?.address ?? w?.address;
+      // Cím: a kattintott pont címe (Nominatim), ennek híján az épület OSM-címkéi
+      const addr = p?.address ?? (sel.props.address as string | undefined) ?? w?.address;
       if (addr) setAddress(addr);
       if (p?.district) setDistrict(p.district);
-      // Körvonal: a Nominatim épülete, ha valóban a kattintott pontot tartalmazza; különben az OSM API-ból
+      if (known) return;
       const exact = p?.geometry && pointInGeometry(sel.lngLat, p.geometry) ? p : w?.geometry ? w : null;
       if (exact?.geometry) {
         setGeometry(exact.geometry);
