@@ -177,3 +177,12 @@ cd data-work && python3 make_research.py && python3 build.py
 Meglévő épületet az adatlap **Szerkesztés** gombjával módosíthatsz; ez is ebbe a fájlba kerül.
 Ha az alkalmazást statikus tárhelyről (nem `npm run dev`-vel) nyitod meg, a módosítások csak
 az adott böngészőben tárolódnak.
+
+## 3D nézet
+
+- Minden épület és épületrész a valódi OSM-magasságával jelenik meg (a háttértérkép
+  vektorcsempéiből); az atlaszban szereplő épületek részei a korszakuk színét kapják, a többi semleges.
+- Részletes tömegmodell (tetőformákkal: kupola, gúla, kontytető – szeletekkel közelítve) a
+  `public/data/models.geojson` fájlban, OSM-épületrészekből (`building:part`). Jelenleg: Országház,
+  Szent István-bazilika. Új épület felvétele: `data-work/models.py` → `MODELS` lista, majd
+  `cd data-work && python3 models.py`.

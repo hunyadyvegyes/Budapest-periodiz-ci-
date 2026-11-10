@@ -9,6 +9,7 @@ maplibregl.setWorkerUrl(workerUrl);
 import { useFiltered, useStore } from '../state/store';
 import { toMapFeatures, toMapPoints } from './features';
 import { MIN_SELECT_ZOOM, byId as osmById, loadView } from '../data/osmBuildings';
+import { add3dLayers, atlasIdAt, hideModelledFromBase, loadModels, paintAtlasParts, set3dVisible, updateModels, type Models } from './city3d';
 import { bboxOf } from '../domain/geo';
 
 const BASEMAP_URL = import.meta.env.VITE_BASEMAP_STYLE || 'https://tiles.openfreemap.org/styles/positron';
@@ -37,6 +38,8 @@ export default function MapView() {
   const [basemapFailed, setBasemapFailed] = useState(false);
   const fittedRef = useRef(false);
   const [osmLoading, setOsmLoading] = useState(false);
+  const [models, setModels] = useState<Models | null>(null);
+  const paintRef = useRef<() => void>(() => {});
   const osmLoaderRef = useRef<() => void>(() => {});
 
   const filtered = useFiltered();
@@ -79,6 +82,12 @@ export default function MapView() {
       styleLoaded = true;
       clearTimeout(timer);
       addAtlasLayers(map);
+      add3dLayers(map, map.getStyle().layers?.find((l) => l.type === 'symbol')?.id);
+      loadModels().then((m) => {
+        if (!m) return;
+        hideModelledFromBase(map, m);
+        setModels(m);
+      });
       setReady((r) => r + 1);
     });
 
@@ -116,6 +125,13 @@ export default function MapView() {
     });
     map.on('click', (e) => {
       const st = useStore.getState();
+      if (st.mapMode === '3d') {
+        const aid = atlasIdAt(map, e.point);
+        if (aid) {
+          st.select(aid);
+          return;
+        }
+      }
       const layers = ATLAS_LAYERS.filter((l) => map.getLayer(l));
       const feats = layers.length ? map.queryRenderedFeatures(e.point, { layers }) : [];
       if (feats.length) {
@@ -155,6 +171,13 @@ export default function MapView() {
         .finally(() => setOsmLoading(false));
     };
     map.on('moveend', loadOsm);
+    let dirty = true;
+    map.on('moveend', () => { dirty = true; });
+    map.on('idle', () => {
+      if (!dirty || useStore.getState().mapMode !== '3d') return;
+      dirty = false;
+      paintRef.current();
+    });
     map.on('style.load', loadOsm);
     osmLoaderRef.current = loadOsm;
 
@@ -213,6 +236,7 @@ export default function MapView() {
     vis('atlas-selected-halo', !is3d);
     vis('atlas-extrusion', is3d);
     vis('atlas-selected-extrusion', is3d);
+    set3dVisible(map, is3d);
     map.easeTo({ pitch: is3d ? 58 : 0, bearing: is3d ? -20 : 0, duration: 900 });
     // alaptérképi 3D épületek (ha a stílus tartalmaz ilyet) csak 3D-ben
     for (const id of baseBuildingLayerIds(map)) {
@@ -220,6 +244,22 @@ export default function MapView() {
       if (layer?.type === 'fill-extrusion') map.setLayoutProperty(id, 'visibility', is3d && showBase ? 'visible' : 'none');
     }
   }, [mapMode, ready, showBase]);
+
+  // --- 3D: modellek színezése, atlasz-épületrészek festése ---------------------
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    const modelled = new Set(models?.meta.map((m) => m.osmRef) ?? []);
+    paintRef.current = () => {
+      if (mapRef.current && useStore.getState().mapMode === '3d') paintAtlasParts(map, filtered, selectedId, modelled);
+    };
+    if (models) updateModels(map, models, filtered, selectedId);
+    if (mapMode === '3d') {
+      // a csempék betöltése után fessünk
+      if (map.loaded()) paintRef.current();
+      else map.once('idle', () => paintRef.current());
+    }
+  }, [filtered, selectedId, mapMode, ready, models]);
 
   // --- alaptérképi (OSM) kontúrok --------------------------------------------
   useEffect(() => {
@@ -324,7 +364,8 @@ function addAtlasLayers(map: MLMap) {
     layout: { visibility: 'none' },
     paint: {
       'fill-extrusion-color': ['get', 'color'],
-      'fill-extrusion-height': ['get', 'height'],
+      // ha a valódi magasságú csempeépület(rész) már a korszak színét kapta, a becsült tömb elrejtve
+      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'matched'], false], 0, ['get', 'height']],
       'fill-extrusion-opacity': 0.92,
       'fill-extrusion-vertical-gradient': true,
     },
@@ -337,7 +378,7 @@ function addAtlasLayers(map: MLMap) {
     layout: { visibility: 'none' },
     paint: {
       'fill-extrusion-color': '#ffd23f',
-      'fill-extrusion-height': ['+', ['get', 'height'], 0.6],
+      'fill-extrusion-height': ['case', ['boolean', ['feature-state', 'matched'], false], 0, ['+', ['get', 'height'], 0.6]],
       'fill-extrusion-opacity': 1,
     },
   });

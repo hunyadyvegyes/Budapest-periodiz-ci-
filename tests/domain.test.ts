@@ -138,3 +138,14 @@ describe('országos kiterjesztés', () => {
     expect(byCity(all)).toContainEqual({ key: 'Szeged', count: 1 });
   });
 });
+
+describe('súlypont', () => {
+  it('kis alaprajznál is pontos (nincs kerekítési csúszás)', async () => {
+    const { centroidOf } = await import('../src/domain/geo');
+    const d = 0.00002; // ~2 m
+    const ring = [[19.0457, 47.5071], [19.0457 + d, 47.5071], [19.0457 + d, 47.5071 + d], [19.0457, 47.5071 + d], [19.0457, 47.5071]];
+    const [x, y] = centroidOf({ type: 'Polygon', coordinates: [ring] });
+    expect(Math.abs(x - (19.0457 + d / 2))).toBeLessThan(1e-9);
+    expect(Math.abs(y - (47.5071 + d / 2))).toBeLessThan(1e-9);
+  });
+});

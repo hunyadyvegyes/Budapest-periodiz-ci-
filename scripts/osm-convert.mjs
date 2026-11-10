@@ -123,13 +123,15 @@ export function elementGeometry(el) {
 
 export function centroid(geom) {
   const ring = geom.type === 'Polygon' ? geom.coordinates[0] : geom.coordinates[0][0];
+  const [ox, oy] = ring[0]; // relatív koordináták: kerekítési hiba elkerülése
   let a = 0, cx = 0, cy = 0;
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const f = ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1];
-    a += f; cx += (ring[j][0] + ring[i][0]) * f; cy += (ring[j][1] + ring[i][1]) * f;
+    const x0 = ring[j][0] - ox, y0 = ring[j][1] - oy, x1 = ring[i][0] - ox, y1 = ring[i][1] - oy;
+    const f = x0 * y1 - x1 * y0;
+    a += f; cx += (x0 + x1) * f; cy += (y0 + y1) * f;
   }
-  if (Math.abs(a) < 1e-14) return ring[0];
-  return [+(cx / (3 * a)).toFixed(7), +(cy / (3 * a)).toFixed(7)];
+  if (Math.abs(a) < 1e-18) return ring[0];
+  return [+(ox + cx / (3 * a)).toFixed(7), +(oy + cy / (3 * a)).toFixed(7)];
 }
 
 function pointInRing([x, y], ring) {

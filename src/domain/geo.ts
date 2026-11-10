@@ -6,15 +6,17 @@ export function centroidOf(geom: Polygon | MultiPolygon): [number, number] {
   let ax = 0, ay = 0, aa = 0;
   for (const ring of rings) {
     let a = 0, cx = 0, cy = 0;
+    // az első csúcshoz viszonyítva számolunk (kerekítési hiba elkerülése kis alaprajzoknál)
+    const [ox, oy] = ring[0] ?? [0, 0];
     for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-      const [x0, y0] = ring[j];
-      const [x1, y1] = ring[i];
+      const x0 = ring[j][0] - ox, y0 = ring[j][1] - oy;
+      const x1 = ring[i][0] - ox, y1 = ring[i][1] - oy;
       const f = x0 * y1 - x1 * y0;
       a += f;
       cx += (x0 + x1) * f;
       cy += (y0 + y1) * f;
     }
-    if (Math.abs(a) < 1e-14) {
+    if (Math.abs(a) < 1e-18) {
       // degenerált: csúcsok átlaga
       const n = ring.length || 1;
       ax += ring.reduce((s, p) => s + p[0], 0) / n;
@@ -23,8 +25,8 @@ export function centroidOf(geom: Polygon | MultiPolygon): [number, number] {
       continue;
     }
     a /= 2;
-    ax += (cx / (6 * a)) * Math.abs(a);
-    ay += (cy / (6 * a)) * Math.abs(a);
+    ax += (ox + cx / (6 * a)) * Math.abs(a);
+    ay += (oy + cy / (6 * a)) * Math.abs(a);
     aa += Math.abs(a);
   }
   return aa ? [ax / aa, ay / aa] : [0, 0];

@@ -168,15 +168,16 @@ def rect(lon, lat, w=16, h=12):
 
 def centroid(g):
     ring = g['coordinates'][0] if g['type'] == 'Polygon' else g['coordinates'][0][0]
+    ox, oy = ring[0]  # relatív koordináták: kerekítési hiba elkerülése
     a = cx = cy = 0
     for i in range(len(ring)):
-        x0, y0 = ring[i - 1]
-        x1, y1 = ring[i]
+        x0, y0 = ring[i - 1][0] - ox, ring[i - 1][1] - oy
+        x1, y1 = ring[i][0] - ox, ring[i][1] - oy
         f = x0 * y1 - x1 * y0
         a += f; cx += (x0 + x1) * f; cy += (y0 + y1) * f
-    if abs(a) < 1e-14:
+    if abs(a) < 1e-18:
         return ring[0]
-    return [round(cx / (3 * a), 7), round(cy / (3 * a), 7)]
+    return [round(ox + cx / (3 * a), 7), round(oy + cy / (3 * a), 7)]
 
 
 def split_architects(s):
