@@ -7,7 +7,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 
 maplibregl.setWorkerUrl(workerUrl);
 import { useFiltered, useStore } from '../state/store';
-import { toMapFeatures } from './features';
+import { toMapFeatures, toMapPoints } from './features';
 import { bboxOf } from '../domain/geo';
 
 const BASEMAP_URL = import.meta.env.VITE_BASEMAP_STYLE || 'https://tiles.openfreemap.org/styles/positron';
@@ -20,7 +20,7 @@ const FALLBACK_STYLE: StyleSpecification = {
 };
 
 const BUDAPEST: [number, number] = [19.058, 47.4995];
-const ATLAS_LAYERS = ['atlas-fill', 'atlas-extrusion'];
+const ATLAS_LAYERS = ['atlas-fill', 'atlas-extrusion', 'atlas-points'];
 
 function baseBuildingLayerIds(map: MLMap): string[] {
   return (map.getStyle()?.layers ?? [])
@@ -126,6 +126,7 @@ export default function MapView() {
     if (!map || !ready) return;
     const src = map.getSource('atlas') as GeoJSONSource | undefined;
     src?.setData(toMapFeatures(filtered));
+    (map.getSource('atlas-points') as GeoJSONSource | undefined)?.setData(toMapPoints(filtered));
     if (!fittedRef.current && filtered.length) {
       // Csak DEMO adatnál a belső-pesti tömbökre közelítünk; valós adatnál a teljes kiterjedésre.
       const real = filtered.filter((b) => !b.isDemo);
@@ -222,6 +223,7 @@ function addAtlasLayers(map: MLMap) {
   const firstSymbol = map.getStyle().layers?.find((l) => l.type === 'symbol')?.id;
 
   map.addSource('atlas', { type: 'geojson', data: { type: 'FeatureCollection', features: [] }, promoteId: 'id' });
+  map.addSource('atlas-points', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   map.addSource('base-selection', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 
   map.addLayer(
@@ -283,6 +285,21 @@ function addAtlasLayers(map: MLMap) {
       'fill-extrusion-color': '#ffd23f',
       'fill-extrusion-height': ['+', ['get', 'height'], 0.6],
       'fill-extrusion-opacity': 1,
+    },
+  });
+  // Kis nagyításnál pontok, hogy a városi áttekintésben is látszódjanak az épületek
+  map.addLayer({
+    id: 'atlas-points',
+    type: 'circle',
+    source: 'atlas-points',
+    maxzoom: 15,
+    paint: {
+      'circle-color': ['get', 'color'],
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 3.5, 14, 5],
+      'circle-stroke-color': '#ffffff',
+      'circle-stroke-width': 1.2,
+      'circle-opacity': ['interpolate', ['linear'], ['zoom'], 13.5, 1, 15, 0],
+      'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 13.5, 1, 15, 0],
     },
   });
   map.addLayer({

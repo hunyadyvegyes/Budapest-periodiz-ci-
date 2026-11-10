@@ -147,3 +147,15 @@ docs/          adatforrás-vizsgálat
 ## Licenc és forrásmegjelölés
 
 Térképadat © OpenStreetMap közreműködők (ODbL). Alaptérkép: OpenFreeMap / OpenMapTiles.
+
+## Valós adatok: a kvízapplikáció budapesti épületei
+
+A `public/data/quiz-buildings.geojson` a kvízapplikáció táblázatának budapesti soraiból készült
+(`data-work/`): az év és a tervező a táblázatból (Vukoszávlyev Zorán előadásanyagai) származik,
+a címet online források (Wikidata/archINFORM, Wikipédia, szakmai oldalak) igazolják, a
+körvonal az OpenStreetMapből jön. Ami nem volt forrással igazolható, nem került a térképre –
+a listát lásd: `docs/KVIZ-EPULETEK-JELENTES.md`. Újragenerálás:
+
+```bash
+cd data-work && python3 make_research.py && python3 build.py
+```

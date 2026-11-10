@@ -3,3 +3,6 @@ dist
 .env
 .env.local
 *.log
+data-work/nominatim-cache.json
+data-work/wp-arch/
+data-work/__pycache__/

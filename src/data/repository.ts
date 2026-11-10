@@ -105,5 +105,7 @@ export function createRepository(): BuildingRepository {
     `${import.meta.env.BASE_URL}data/demo-buildings.geojson`,
     // A scripts/fetch-osm.mjs által előállított valós OSM-állomány, ha létezik:
     `${import.meta.env.BASE_URL}data/osm-buildings.geojson`,
+    // Kvízapplikáció budapesti épületei, ellenőrzött címmel (data-work/build.py)
+    `${import.meta.env.BASE_URL}data/quiz-buildings.geojson`,
   ]);
 }

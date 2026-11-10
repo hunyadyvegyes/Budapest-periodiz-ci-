@@ -1,0 +1,1437 @@
+{
+ "4": {
+  "status": "todo",
+  "note": "A Madách-házak/kapu pontos házszáma a talált forrásokban nem egyértelmű (Madách Imre tér / Károly körút); kézi ellenőrzés kell."
+ },
+ "5": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/250716920",
+    "district": "XII",
+    "address": "Csaba utca 5.",
+    "sources": [
+     {
+      "title": "Wikidata Q1415660 – Városmajori Jézus Szíve-templom, tervező Árkay Aladár és Árkay Bertalan",
+      "url": "https://www.wikidata.org/wiki/Q1415660",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "Wikipédia: Városmajori Jézus Szíve-plébániatemplom",
+      "url": "https://hu.wikipedia.org/wiki/Városmajori_Jézus_Szíve-plébániatemplom",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "templom",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "6": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/250846071",
+    "district": "II",
+    "address": "Pasaréti út 137.",
+    "sources": [
+     {
+      "title": "Welovebudapest: a pasaréti ferences templom évfordulója (2024)",
+      "url": "https://welovebudapest.com/cikk/2024/10/14/latnivalok-es-kultura-pasaret-ferences-templom-evfordulo/",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "templom"
+ },
+ "14": {
+  "status": "todo",
+  "note": "Rimanóczy Gyula postaigazgatósági épületének címét nem találtam megbízható forrásban (a Krisztina körúti Postapalota Sándy Gyula műve, nem ez)."
+ },
+ "15": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Mészáros utca 5-7",
+    "district": "I",
+    "sources": [
+     {
+      "title": "Wikidata Q1298465 – Szilágyi Erzsébet Gimnázium",
+      "url": "https://www.wikidata.org/wiki/Q1298465",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "Fortepan/Hungaricana – a Mészáros utcai gimnázium (1943)",
+      "url": "https://gallery.hungaricana.hu/en/Fortepan/1524648",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "iskola",
+  "description": "Az épület címe forrásból igazolt; a tervezők és az évszám a kvíz adata."
+ },
+ "16": {
+  "status": "todo",
+  "note": "A Levente Otthon címét nem találtam meg forrásban."
+ },
+ "18": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Szabadság tér 5-6",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1938–40, Szabadság tér 5–6.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "pénzintézet",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "19": {
+  "status": "todo",
+  "note": "A Palatinus strand területe ismert, de Janáky 1937-es épületének kontúrja az OSM-ben nem különíthető el a strand területétől."
+ },
+ "20": {
+  "status": "todo",
+  "note": "A Kelenföldi Erőmű telepe ismert, de a Bierbauer-féle épület(ek) kontúrja nem azonosítható biztosan (a szócikk szerint több épületet tervezett 1925–34 között)."
+ },
+ "22": {
+  "status": "todo",
+  "note": "Az Anyag- és Árhivatal (később Könnyűipari Minisztérium) épületének címét nem találtam forrásban."
+ },
+ "24": {
+  "status": "todo",
+  "note": "Ellentmondó címek: az Iparművészeti Múzeum fotója szerint Hankóczy u. 2., egy nyomtatott forrás szerint Ruszti utca 8/B. Kézi ellenőrzés kell."
+ },
+ "25": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Berkenye utca 12",
+    "district": "II",
+    "sources": [
+     {
+      "title": "Wikidata Q127699438 – Kozma Lajos, Berkenye utca 12.",
+      "url": "https://www.wikidata.org/wiki/Q127699438",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "archINFORM 3005 – Haus in der Berkenye-Straße",
+      "url": "https://www.archinform.net/projekte/3005.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "26": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Margit körút 55",
+    "district": "II",
+    "sources": [
+     {
+      "title": "Modernism in Architecture: Átrium (1935)",
+      "url": "https://modernism-in-architecture.org/buildings/atrium/",
+      "kind": "web"
+     },
+     {
+      "title": "Pongrácz Erzsébet: The Cinemas of Budapest (Hungaricana)",
+      "url": "https://library.hungaricana.hu/en/view/VaroshazaKiado_0086/?pg=24",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "bérház és mozi",
+  "architect_confirmed_by": [
+   "s1",
+   "s2"
+  ]
+ },
+ "27": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Vadász utca 29",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Wikidata Q5567049 – Üvegház, Vadász utca 29., tervező Kozma Lajos",
+      "url": "https://www.wikidata.org/wiki/Q5567049",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "üzlet- és raktárház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "28": {
+  "status": "ok",
+  "items": [
+   {
+    "label": "Napraforgó utca 2.",
+    "address": "Napraforgó utca 2",
+    "district": "II",
+    "architects": [
+     "Wälder Gyula"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Wälder Gyula; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 80222 – Wohnhaus Napraforgó utca 2",
+      "url": "https://www.archinform.net/projekte/80222.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 5.",
+    "address": "Napraforgó utca 5",
+    "district": "II",
+    "architects": [
+     "Kozma Lajos"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Kozma Lajos; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 3181 – Wohnhaus Napraforgó utca 5",
+      "url": "https://www.archinform.net/projekte/3181.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 6.",
+    "address": "Napraforgó utca 6",
+    "district": "II",
+    "architects": [
+     "Kozma Lajos"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Kozma Lajos; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 3004 – Wohnhaus Napraforgó utca 6/8 (ikerház)",
+      "url": "https://www.archinform.net/projekte/3004.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 13.",
+    "address": "Napraforgó utca 13",
+    "district": "II",
+    "architects": [
+     "Masirevich György"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Masirevich György; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 80210 – Wohnhaus Napraforgó utca 13",
+      "url": "https://www.archinform.net/projekte/80210.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 15.",
+    "address": "Napraforgó utca 15",
+    "district": "II",
+    "architects": [
+     "Ligeti Pál",
+     "Molnár Farkas"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Ligeti Pál, Molnár Farkas; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 3611 – Wohnhaus Napraforgó utca 15",
+      "url": "https://www.archinform.net/projekte/3611.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 18.",
+    "address": "Napraforgó utca 18",
+    "district": "II",
+    "architects": [
+     "Weichinger Károly"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Weichinger Károly; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 80217 – Wohnhaus Napraforgó utca 18",
+      "url": "https://www.archinform.net/projekte/80217.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 19.",
+    "address": "Napraforgó utca 19",
+    "district": "II",
+    "architects": [
+     "Gerlóczy Gedeon"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Gerlóczy Gedeon; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 80223 – Wohnhaus Napraforgó utca 19",
+      "url": "https://www.archinform.net/projekte/80223.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   },
+   {
+    "label": "Napraforgó utca 20.",
+    "address": "Napraforgó utca 20",
+    "district": "II",
+    "architects": [
+     "Fischer József"
+    ],
+    "architect_confirmed_by": [
+     "s1"
+    ],
+    "note": "A ház tervezője az archINFORM szerint Fischer József; a kvíz a teljes telepet a CIRPAC-csoporthoz köti.",
+    "sources": [
+     {
+      "title": "archINFORM 4980 – Wohnhaus Napraforgó utca 20",
+      "url": "https://www.archinform.net/projekte/4980.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (kísérleti lakótelep)",
+  "description": "A 22 házas telepből az a nyolc szerepel, amelyhez online adatbázisban cím és tervező található."
+ },
+ "29": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Lejtő út 2/b",
+    "district": "XII",
+    "lat": 47.4902,
+    "lon": 19.0153,
+    "sources": [
+     {
+      "title": "archINFORM 927 – Villa in der Lejtő-Straße",
+      "url": "https://www.archinform.net/projekte/927.htm",
+      "kind": "adatbázis (archINFORM)"
+     },
+     {
+      "title": "Welovebudapest: Molnár Farkas – Dálnoki-Kováts-villa",
+      "url": "https://welovebudapest.com/cikk/2026/06/11/molnar-farkas-dalnoki-kovats-villa-bauhaus-budapest/",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1",
+   "s2"
+  ]
+ },
+ "30": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Mihály utca 11",
+    "lat": 47.4872,
+    "lon": 19.0348,
+    "sources": [
+     {
+      "title": "archINFORM 23477 – Wohnhaus in der Mihály-Straße (Ligeti Pál, Molnár Farkas)",
+      "url": "https://www.archinform.net/projekte/23477.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "31": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Harangvirág utca 11",
+    "district": "II",
+    "lat": 47.5226,
+    "lon": 18.9993,
+    "sources": [
+     {
+      "title": "archINFORM 19288 – Villa in der Harangvirág-Straße (Molnár Farkas)",
+      "url": "https://www.archinform.net/projekte/19288.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "32": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Kavics utca 8/f",
+    "district": "II",
+    "lat": 47.5209,
+    "lon": 19.0338,
+    "sources": [
+     {
+      "title": "archINFORM 23559 – Wohnhaus in der Kavics-Straße (Molnár Farkas)",
+      "url": "https://www.archinform.net/projekte/23559.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "33": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Lotz Károly utca 4/B",
+    "district": "II",
+    "lat": 47.518189,
+    "lon": 18.997873,
+    "sources": [
+     {
+      "title": "archINFORM 929 – Wohnhaus Lotz Károly utca 4B (Molnár Farkas)",
+      "url": "https://www.archinform.net/projekte/929.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "34": {
+  "status": "todo",
+  "note": "A pestújhelyi kórház személyzeti épületének pontos címét nem találtam (Ferkai András disszertációja tárgyalja)."
+ },
+ "35": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Baba utca 14",
+    "district": "II",
+    "sources": [
+     {
+      "title": "Wikidata Q127785560 – Járitz-villa, Baba utca 14.",
+      "url": "https://www.wikidata.org/wiki/Q127785560",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "archINFORM 10137 – Járitz-Villa",
+      "url": "https://www.archinform.net/projekte/10137.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "36": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Szépvölgyi út 88/b",
+    "district": "II",
+    "lat": 47.5301,
+    "lon": 19.0268,
+    "sources": [
+     {
+      "title": "archINFORM 1821 – Villa Hoffmann (Fischer József)",
+      "url": "https://www.archinform.net/projekte/1821.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (villa)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "37": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "relation/3331750",
+    "district": "VIII",
+    "address": "Fiumei út 19.",
+    "sources": [
+     {
+      "title": "Wikipédia: Komor Marcell (művek listája: Fiumei út 19.)",
+      "url": "https://hu.wikipedia.org/wiki/Komor_Marcell",
+      "kind": "Wikipédia"
+     },
+     {
+      "title": "Wikipédia: Jakab Dezső (1929–31 bővítés)",
+      "url": "https://hu.wikipedia.org/wiki/Jakab_Dezső",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "székház (társadalombiztosítás)",
+  "architect_confirmed_by": [
+   "s1",
+   "s2"
+  ],
+  "description": "A székház 1911–13-ban épült; a kvíz dátuma (1930) az 1929–31-es bővítésre utal."
+ },
+ "38": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Visegrádi utca 47/c",
+    "district": "XIII",
+    "sources": [
+     {
+      "title": "FSZEK Budapest-képarchívum: V. ker. rendelőintézet, Visegrádi utca 47/c–d (1942)",
+      "url": "https://dspace.fszek.hu/items/2b820ffd-59b6-40af-9592-71912b01ee12/full",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "rendelőintézet"
+ },
+ "39": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Fiumei út 17",
+    "district": "VIII",
+    "queries": [
+     "Fiumei út 13, VIII. kerület, Budapest",
+     "Fiumei út 15, VIII. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "Wikipédia: Gerlóczy Gedeon (OTI Baleseti kórház, Fiumei út 13–17., 1937–39)",
+      "url": "https://hu.wikipedia.org/wiki/Gerlóczy_Gedeon",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "kórház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "40": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "II. János Pál pápa tér 15",
+    "district": "VIII",
+    "lat": 47.4954,
+    "lon": 19.0799,
+    "queries": [
+     "II. János Pál pápa tér 14, VIII. kerület, Budapest",
+     "II. János Pál pápa tér 16, VIII. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "archINFORM 27017 – Mietshaus-Gruppe OTI, II. János Pál pápa tér 14–16 (volt Köztársaság tér)",
+      "url": "https://www.archinform.net/projekte/27017.htm",
+      "kind": "adatbázis (archINFORM)"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "description": "A tér korábbi neve Köztársaság tér."
+ },
+ "41": {
+  "status": "ok",
+  "items": [
+   {
+    "label": "Pozsonyi út 36–38. (Szent István park 27–29.)",
+    "address": "Pozsonyi út 38",
+    "district": "XIII",
+    "queries": [
+     "Pozsonyi út 36, XIII. kerület, Budapest"
+    ],
+    "note": "Alföldi Cukorgyár Rt. bérháza a Dunapark kávéházzal, 1936–37.",
+    "sources": [
+     {
+      "title": "Wikipédia: Hofstätter Béla (művek listája, Domány Ferenccel)",
+      "url": "https://hu.wikipedia.org/wiki/Hofstätter_Béla",
+      "kind": "Wikipédia"
+     }
+    ]
+   },
+   {
+    "label": "Pozsonyi út 40. (Szent István park 30.)",
+    "address": "Pozsonyi út 40",
+    "district": "XIII",
+    "note": "Magyar Rabbethege és Giesecke Rt. bérháza, 1935–37.",
+    "sources": [
+     {
+      "title": "Wikipédia: Hofstätter Béla (művek listája, Domány Ferenccel)",
+      "url": "https://hu.wikipedia.org/wiki/Hofstätter_Béla",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A kvíz „apartmanházak” megjelölését a Hofstätter–Domány páros Szent István parki, 1935–37-es közös bérházaira vonatkoztattam."
+ },
+ "42": {
+  "status": "todo",
+  "note": "A Wikipédia szerint a Hofstätter–Domány-féle Margit körút 15–17. a Weiss Manfréd Nyugdíjpénztár bérháza (1937–38); az „Elektromos Művek bérháza” megnevezés ezzel nem egyezik – ellenőrizendő."
+ },
+ "43": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Kékgolyó utca 10",
+    "district": "XII",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1933–34. Lakóház, Kékgolyó utca 10.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "44": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Hollósy Simon utca 9",
+    "district": "XII",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1934. Németvölgyi udvar, ma Hollósy Simon utca 9.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "45": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Irányi utca 8",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1936. Lakóház (átépítve), Irányi utca 8.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "46": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Vincellér utca 26/a",
+    "district": "XI",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1942. Lakóház, Vincellér utca 26/a.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "47": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Városmajor utca 50/b",
+    "district": "XII",
+    "sources": [
+     {
+      "title": "Wikipedia (en): Tschögl Building, Városmajor utca 50/b",
+      "url": "https://en.wikipedia.org/wiki/Tsch%C3%B6gl_Building",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "bérház",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "Tschögl-ház; a források 1940-et vagy 1941-et adnak meg."
+ },
+ "48": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Bartók Béla út 62",
+    "district": "XI",
+    "queries": [
+     "Bartók Béla út 64, XI. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "Welovebudapest: a Simplon mozi és bérház története (2025)",
+      "url": "https://welovebudapest.com/cikk/2025/09/01/simplon-mozi-berhaz-tortenete-bartok-bela-ut-ujbuda/",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "bérház és mozi",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A Weiss Manfréd Nyugdíjintézeti Pénztár megrendelésére épült (Simplon, később Bartók mozi)."
+ },
+ "50": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "József Attila utca 2",
+    "district": "V",
+    "queries": [
+     "József Attila utca 4, V. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "Trade magazin: a Belügyminisztérium egykori épületének árverése",
+      "url": "https://trademagazin.hu/en/508-milliardos-kikialtasi-aron-aukciora-kerul-a-belugyminiszterium-egykori-epulete",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "minisztérium",
+  "description": "Egyes források 1947–1951-et adnak meg."
+ },
+ "51": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Dózsa György út 84/a",
+    "district": "VI",
+    "sources": [
+     {
+      "title": "archINFORM 1585 – Haus der Gewerkschaften MÉMOSZ",
+      "url": "https://www.archinform.net/projekte/1585.htm",
+      "kind": "adatbázis (archINFORM)"
+     },
+     {
+      "title": "Wikidata Q122442029 – MÉMOSZ-székház",
+      "url": "https://www.wikidata.org/wiki/Q122442029",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "szakszervezeti székház",
+  "description": "Az OSM szerint ma Liget Center irodaház.",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "52": {
+  "status": "todo",
+  "note": "A Bányász szakszervezet Szrogh-féle székházának címét nem találtam forrásban."
+ },
+ "53": {
+  "status": "todo",
+  "note": "A Ferihegy 1 terminál épületét az OSM-ben nem sikerült egyértelműen azonosítani."
+ },
+ "54": {
+  "status": "todo",
+  "note": "A MÁVAUT-pályaudvar az Erzsébet téren állt (Fortepan, 1949); az épület OSM-kontúrja nem azonosítható biztosan."
+ },
+ "55": {
+  "status": "todo",
+  "note": "A Csepeli posta tervezőit a Postamúzeum igazolja, de címet nem találtam (és a források 1949 vs. 1951 között ellentmondanak)."
+ },
+ "56": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Fehérvári út 130",
+    "district": "XI",
+    "sources": [
+     {
+      "title": "Wikipédia: Lauber László (művek listája: 1949–50, Vas és Fémipari Kutató Intézet, Fehérvári út 130.)",
+      "url": "https://hu.wikipedia.org/wiki/Lauber_László",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "kutatóintézet",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "57": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Fehérvári út 12",
+    "district": "XI",
+    "sources": [
+     {
+      "title": "Wikimedia Commons: Szent Kristóf Szakrendelő (Fehérvári úti SZTK)",
+      "url": "https://commons.wikimedia.org/wiki/Category:Szent_Krist%C3%B3f_Szakrendel%C5%91_(Budapest)",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "rendelőintézet",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A források a házszámot 12. és 16–20. között adják meg."
+ },
+ "58": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Fő utca 61",
+    "district": "II",
+    "sources": [
+     {
+      "title": "Városháza Kiadó – Budapest építészeti kalauz (Hungaricana)",
+      "url": "https://library.hungaricana.hu/hu/view/VaroshazaKiado_0058/?pg=22",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (pontház)",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A forrás kilencszintes, 48 lakásos pontházként írja le, 1948–49."
+ },
+ "59": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Lehel utca 2/A",
+    "district": "XIII",
+    "sources": [
+     {
+      "title": "Angyalföldi Helytörténeti Gyűjtemény (museum-digital): élmunkásházak, Lehel u. 2/A",
+      "url": "https://bu.hu.museum-digital.org/pdf/object/420696.pdf?lang=en",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (élmunkásház)",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "Négyépületes élmunkás-lakóházcsoport."
+ },
+ "60": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "relation/107772",
+    "district": "XI",
+    "address": "Móricz Zsigmond körtér 10.",
+    "sources": [
+     {
+      "title": "OpenStreetMap: Gomba, Móricz Zsigmond körtér",
+      "url": "https://www.openstreetmap.org/relation/107772",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "villamosváró / üzlet"
+ },
+ "61": {
+  "status": "todo",
+  "note": "A Zsombolyai úti kollégiumot nem találtam forrásban."
+ },
+ "62": {
+  "status": "todo",
+  "note": "A Népstadiont 2016-ban lebontották; helyén a Puskás Aréna áll, ezért nem a mai épületre rajzoljuk. Történeti kontúrként később felvehető."
+ },
+ "63": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Mechwart liget 1",
+    "district": "II",
+    "queries": [
+     "Budapest Főváros II. Kerületi Önkormányzat",
+     "II. kerületi Polgármesteri Hivatal"
+    ],
+    "sources": [
+     {
+      "title": "Welovebudapest: Helyóvó – a Mechwart ligeti bunker",
+      "url": "https://welovebudapest.com/cikk/2026/02/20/helyovo-ovohely-mechwart-liget-bunker-masodik-kerulet-helytorteneti-gyujtemeny/",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "pártház (ma kerületi önkormányzat)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "64": {
+  "status": "todo",
+  "note": "A Zugligeti úti Népművelési Intézet épületét nem találtam forrásban."
+ },
+ "66": {
+  "status": "todo",
+  "note": "A Csepeli rendőrség Szrogh-féle épületét nem találtam forrásban."
+ },
+ "75": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Hűvösvölgyi út 64",
+    "district": "II",
+    "sources": [
+     {
+      "title": "Welovebudapest: felújították az egykori Pannónia Filmstúdiót",
+      "url": "https://welovebudapest.com/cikk/2017/03/16/ujra-a-verkeringesben-felujitottak-az-egykori-pannonia-filmstudiot",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "filmstúdió",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "76": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/24727027",
+    "district": "XI",
+    "address": "Műegyetem rakpart 7-9.",
+    "sources": [
+     {
+      "title": "Wikimedia Commons: BUTE R building",
+      "url": "https://commons.wikimedia.org/wiki/Category:BUTE_R_building",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "egyetemi épület",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "78": {
+  "status": "todo",
+  "note": "A Chemolimpex-irodaház címét nem találtam forrásban."
+ },
+ "79": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Pozsonyi út 56",
+    "district": "XIII",
+    "sources": [
+     {
+      "title": "Architectuul: Headquarters of the Aluminium Industry Trust",
+      "url": "https://architectuul.com/architecture/headquarters-of-the-aluminium-industry-trust",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "irodaház (székház)",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A források 1964–67 közé teszik; ma átalakítva."
+ },
+ "80": {
+  "status": "todo",
+  "note": "A BHG műhelyépületét nem találtam forrásban."
+ },
+ "82": {
+  "status": "todo",
+  "note": "A Csarnok téri (1963) és Dob utcai (1965) transzformátorház tervezőjét a Telex igazolja, de pontos házszám nincs a forrásokban."
+ },
+ "86": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Bem rakpart 33",
+    "district": "II",
+    "queries": [
+     "Novotel Budapest Danube"
+    ],
+    "sources": [
+     {
+      "title": "World-Architects: Hotel Novotel Danube (az egykori EGI-székház)",
+      "url": "https://world-architects.com/en/t2-a-architects-budapest/project/hotel-novotel-danube",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "irodaház (ma szálloda)",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "2006-ban Novotel szállodává alakították át; a forrás 1967-et ad meg."
+ },
+ "87": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "89": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "91": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "92": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "93": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "94": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "95": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "96": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "97": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "98": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "99": {
+  "status": "todo",
+  "note": "Pontos házszámot nem találtam megbízható forrásban."
+ },
+ "90": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "József Attila utca 22",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Wikimedia Commons: József Attila utca 22 (Lipótváros)",
+      "url": "https://commons.wikimedia.org/wiki/Category:J%C3%B3zsef_Attila_utca_22_(Lip%C3%B3tv%C3%A1ros)",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "A forrás szerint 1956–58 között épült."
+ },
+ "107": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Szent László tér 15",
+    "district": "X",
+    "sources": [
+     {
+      "title": "Wikidata Q116820535 – Kőbánya mozi, Szent László tér 15.",
+      "url": "https://www.wikidata.org/wiki/Q116820535",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "mozi"
+ },
+ "118": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Úri utca 32",
+    "district": "I",
+    "sources": []
+   }
+  ],
+  "function": "lakóház (műemléki rehabilitáció)",
+  "description": "A címet maga a kvíztábla tartalmazza."
+ },
+ "119": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Dísz tér 8",
+    "district": "I",
+    "sources": []
+   }
+  ],
+  "function": "lakóház (műemléki rehabilitáció)",
+  "description": "A címet maga a kvíztábla tartalmazza."
+ },
+ "120": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Úri utca 23",
+    "district": "I",
+    "sources": []
+   }
+  ],
+  "function": "lakóház (műemléki rehabilitáció)",
+  "description": "A címet maga a kvíztábla tartalmazza."
+ },
+ "121": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Nándor utca 5",
+    "district": "V",
+    "queries": [
+     "Nándor utca 7, V. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "Fortepan/Hungaricana: Nándor (Petermann bíró) utca 5–7., az Országos Villamos Teherelosztó épülete",
+      "url": "https://gallery.hungaricana.hu/en/Fortepan/1541470",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "irodaház (teherelosztó)",
+  "description": "A Peterman bíró utca ma Nándor utca."
+ },
+ "124": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/319291836",
+    "district": "XII",
+    "address": "Hegyalja út 139.",
+    "sources": [
+     {
+      "title": "Wikidata Q1177434 – Mindenszentek-plébániatemplom, tervező Szabó István",
+      "url": "https://www.wikidata.org/wiki/Q1177434",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "templom",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "127": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Szőlő utca 66",
+    "district": "III",
+    "queries": [
+     "Faluház, Óbuda"
+    ],
+    "sources": [
+     {
+      "title": "Wikidata Q95748698 – Faluház, Szőlő utca 66–94.",
+      "url": "https://www.wikidata.org/wiki/Q95748698",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "lakóház (panelház)"
+ },
+ "128": {
+  "status": "todo",
+  "note": "A forrás (Szablyár: Sky-high) az Alagút utca–Attila út–Pauler utca tömböt írja le, házszám nélkül."
+ },
+ "130": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/415556517",
+    "district": "II",
+    "address": "Szilágyi Erzsébet fasor 47.",
+    "sources": [
+     {
+      "title": "Wikidata Q110872954 – Körszálló, tervező Szrogh György",
+      "url": "https://www.wikidata.org/wiki/Q110872954",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "Wikipédia: Körszálló",
+      "url": "https://hu.wikipedia.org/wiki/Körszálló",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "szálloda",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "Az OSM szerint az épület átépítés alatt áll."
+ },
+ "131": {
+  "status": "todo",
+  "note": "A „Duna-parti szállodák” megjelölés nem egyértelmű (a Hotel Intercontinental külön sorban szerepel; a Forum szálló 1981-es) – ellenőrizendő."
+ },
+ "132": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Apáczai Csere János utca 4",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Wikidata Q108811077 – Budapest Marriott Hotel (volt Duna Intercontinental), tervező Finta József",
+      "url": "https://www.wikidata.org/wiki/Q108811077",
+      "kind": "adatbázis (Wikidata)"
+     }
+    ]
+   }
+  ],
+  "function": "szálloda",
+  "architect_confirmed_by": [
+   "s1"
+  ],
+  "description": "Ma Budapest Marriott Hotel."
+ },
+ "139": {
+  "status": "todo",
+  "note": "A Farkasréti temető ismert, de a ravatalozó épületét az OSM-ben nem azonosítottam biztosan."
+ },
+ "151": {
+  "status": "ok",
+  "items": [
+   {
+    "osm": "way/128982110",
+    "district": "XIII",
+    "address": "Róbert Károly körút 67.",
+    "sources": [
+     {
+      "title": "Wikidata Q56390532 – Domus Áruház, tervező Reimholz Péter és Lázár Antal",
+      "url": "https://www.wikidata.org/wiki/Q56390532",
+      "kind": "adatbázis (Wikidata)"
+     },
+     {
+      "title": "Wikipédia: Domus Áruház",
+      "url": "https://hu.wikipedia.org/wiki/Domus_Áruház",
+      "kind": "Wikipédia"
+     }
+    ]
+   }
+  ],
+  "function": "áruház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "153": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Váci utca 20",
+    "district": "V",
+    "sources": [
+     {
+      "title": "Juhász–Szántó: Hotels – Our Budapest (Hungaricana)",
+      "url": "https://library.hungaricana.hu/en/view/VaroshazaKiado_0076/?pg=58",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "szálloda",
+  "description": "Az OSM szerint ma Mercure Budapest City Center.",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "154": {
+  "status": "todo",
+  "note": "A Bajcsy-Zsilinszky úti Finta-irodaházat nem azonosítottam biztosan."
+ },
+ "155": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Rákóczi út 1",
+    "district": "VIII",
+    "queries": [
+     "Rákóczi út 3, VIII. kerület, Budapest"
+    ],
+    "sources": [
+     {
+      "title": "Eston: East-West Business Center, Rákóczi út 1–3.",
+      "url": "https://eston.hu/property/east-west-business-center",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "irodaház",
+  "description": "A forrás 1991-es átadást ad meg; a tervezőt csak a kvíz adja."
+ },
+ "156": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Naphegy tér 8",
+    "district": "I",
+    "sources": [
+     {
+      "title": "Szablyár Péter: Sky-high – Our Budapest (Hungaricana)",
+      "url": "https://library.hungaricana.hu/en/view/VaroshazaKiado_0004/?pg=55",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "székház (hírügynökség)",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ },
+ "163": {
+  "status": "todo",
+  "note": "A Számadó utcai lakóparkot nem találtam forrásban."
+ },
+ "164": {
+  "status": "todo",
+  "note": "A Graphisoft Park „G-A-B” épületeit egyenként nem azonosítottam."
+ },
+ "165": {
+  "status": "ok",
+  "items": [
+   {
+    "address": "Fortuna utca 18",
+    "district": "I",
+    "sources": [
+     {
+      "title": "Manchester History: Hapimag House, Fortuna utca",
+      "url": "https://manchesterhistory.net/architecture/2000/hapimag.html",
+      "kind": "web"
+     }
+    ]
+   }
+  ],
+  "function": "apartmanház",
+  "architect_confirmed_by": [
+   "s1"
+  ]
+ }
+}

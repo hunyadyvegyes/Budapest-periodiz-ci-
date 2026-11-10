@@ -31,7 +31,7 @@ export default function App() {
   const toggleLeft = useStore((s) => s.toggleLeft);
   const toggleRight = useStore((s) => s.toggleRight);
   const toast = useStore((s) => s.toast);
-  const hasDemo = useStore((s) => s.buildings.some((b) => b.isDemo));
+  const hasDemo = useStore((s) => s.filter.showDemo && s.buildings.some((b) => b.isDemo));
 
   useEffect(() => { load(); }, [load]);
 

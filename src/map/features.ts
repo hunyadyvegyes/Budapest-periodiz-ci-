@@ -1,4 +1,4 @@
-import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson';
+import type { FeatureCollection, MultiPolygon, Point, Polygon } from 'geojson';
 import type { Building } from '../domain/types';
 import { colorOf, formatConstruction, isUncertain } from '../domain/periods';
 
@@ -26,4 +26,16 @@ export function toMapFeatures(list: Building[]): FeatureCollection<Polygon | Mul
 /** Becsült magasság CSAK vizualizációhoz (szintszám × 3,4 m; ismeretlennél semleges 10 m). */
 export function buildingHeight(b: Building): number {
   return b.floors != null ? Math.max(4, b.floors * 3.4 + 1.5) : 10;
+}
+
+/** Középpontok kis nagyításhoz (városi áttekintésnél a kis kontúrok nem látszanának). */
+export function toMapPoints(list: Building[]): FeatureCollection<Point> {
+  return {
+    type: 'FeatureCollection',
+    features: list.map((b) => ({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: b.centroid },
+      properties: { id: b.id, color: colorOf(b), label: b.name ?? b.address ?? 'Névtelen épület', yearLabel: `Építés: ${formatConstruction(b.construction)}`, isDemo: b.isDemo },
+    })),
+  };
 }

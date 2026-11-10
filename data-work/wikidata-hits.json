@@ -1,0 +1,770 @@
+[
+ {
+  "item": "http://www.wikidata.org/entity/Q5567049",
+  "deLabel": "Glashaus",
+  "coord": "Point(19.05363 47.50569)",
+  "addr": "Vadász utca 29.",
+  "commons": "Üvegház",
+  "inception": "2005-01-01T00:00:00Z",
+  "itemLabel": "Üvegház",
+  "archLabel": "Kozma Lajos"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118287878",
+  "deLabel": "Wohnhaus Lotz Károly utca 4B",
+  "coord": "Point(18.997873 47.518189)",
+  "addr": "Lotz Károly utca 4B, 1026 Budapest",
+  "commons": "Lotz Károly utca, 4B (Budapest)",
+  "itemLabel": "Lotz Károly utca 4/B",
+  "archLabel": "Molnár Farkas",
+  "ai": "929",
+  "osmway": "512912053"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289444",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 5",
+  "coord": "Point(18.9872 47.5267)",
+  "addr": "Napraforgó utca 5, 1021 Budapest",
+  "commons": "Napraforgó street 5",
+  "itemLabel": "Napraforgó utca 5., családi ház",
+  "archLabel": "Kozma Lajos",
+  "ai": "3181"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289457",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 15",
+  "coord": "Point(18.9864 47.5275)",
+  "addr": "Napraforgó utca 15, 1021 Budapest",
+  "commons": "Napraforgó street 15",
+  "itemLabel": "Napraforgó utca 15., családi ház",
+  "archLabel": "Molnár Farkas",
+  "ai": "3611"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289457",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 15",
+  "coord": "Point(18.9864 47.5275)",
+  "addr": "Napraforgó utca 15, 1021 Budapest",
+  "commons": "Napraforgó street 15",
+  "itemLabel": "Napraforgó utca 15., családi ház",
+  "archLabel": "Ligeti Pál",
+  "ai": "3611"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289468",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 13",
+  "coord": "Point(18.9865 47.5273)",
+  "addr": "Napraforgó utca 13, 1021 Budapest",
+  "itemLabel": "Napraforgó utca 13., családi ház",
+  "archLabel": "Masirevich György",
+  "ai": "80210"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289476",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 20",
+  "coord": "Point(18.9858 47.5277)",
+  "addr": "Napraforgó utca 20, 1021 Budapest",
+  "commons": "Napraforgó street 20",
+  "itemLabel": "Napraforgó utca 20., családi ház",
+  "archLabel": "Fischer József",
+  "ai": "4980"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289616",
+  "deLabel": "Wohnhaus Csévi köz 7a",
+  "coord": "Point(18.9949 47.5254)",
+  "addr": "Csévi köz 7a, 1025 Budapest",
+  "itemLabel": "Q118289616",
+  "archLabel": "Molnár Farkas",
+  "ai": "57973"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289616",
+  "deLabel": "Wohnhaus Csévi köz 7a",
+  "coord": "Point(18.9949 47.5254)",
+  "addr": "Csévi köz 7a, 1025 Budapest",
+  "itemLabel": "Q118289616",
+  "archLabel": "Fischer József",
+  "ai": "57973"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289651",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 2",
+  "coord": "Point(18.9872 47.5263)",
+  "addr": "Napraforgó utca 2, 1021 Budapest",
+  "commons": "Napraforgó street 2",
+  "itemLabel": "Napraforgó utca 2., családi ház",
+  "archLabel": "Wälder Gyula",
+  "ai": "80222"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289669",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 19",
+  "coord": "Point(18.986027777 47.527833333)",
+  "addr": "Napraforgó utca 19, Budapest",
+  "commons": "Napraforgó street 19",
+  "itemLabel": "Napraforgó utca 19., családi ház",
+  "archLabel": "Gerlóczy Gedeon",
+  "ai": "80223"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118289694",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 18",
+  "coord": "Point(18.986 47.5276)",
+  "addr": "Napraforgó utca 18, 1021 Budapest",
+  "commons": "Napraforgó street 18",
+  "itemLabel": "Napraforgó utca 18., családi ház",
+  "archLabel": "Weichinger Károly",
+  "ai": "80217"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118298833",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 6/8",
+  "coord": "Point(18.9868 47.5267)",
+  "addr": "Napraforgó utca 6/8, 1021 Budapest",
+  "commons": "Napraforgó street 8",
+  "itemLabel": "Napraforgó utca 6/8., ikerház",
+  "archLabel": "Kozma Lajos",
+  "ai": "3004"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118298833",
+  "deLabel": "Wohnhaus in der Napraforgó-Straße 6/8",
+  "coord": "Point(18.9868 47.5267)",
+  "addr": "Napraforgó utca 6/8, 1021 Budapest",
+  "commons": "Napraforgó street 6",
+  "itemLabel": "Napraforgó utca 6/8., ikerház",
+  "archLabel": "Kozma Lajos",
+  "ai": "3004"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118309899",
+  "deLabel": "Villa Hoffmann",
+  "coord": "Point(19.0268 47.5301)",
+  "addr": "Szépvölgyi Út !88/B, 1025 Budapest",
+  "commons": "Szépvölgyi út, 88 (Budapest)",
+  "itemLabel": "Hoffmann-ház",
+  "archLabel": "Fischer József",
+  "ai": "1821",
+  "street": "Szépvölgyi út"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q118905066",
+  "deLabel": "Wohnhaus in der Jenő Hankóczy-Straße",
+  "coord": "Point(19.0135 47.5151)",
+  "addr": "Hankóczy Jenő utca 3a, 1022 Budapest",
+  "commons": "Hankóczy Jenő utca 3A, Budapest (Balla-villa)",
+  "itemLabel": "Q118905066",
+  "archLabel": "Molnár Farkas",
+  "ai": "13138"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119626394",
+  "deLabel": "Villa at Orsó utca 21",
+  "coord": "Point(19.0001 47.5229)",
+  "addr": "Orsó utca 21, 1026 Budapest",
+  "itemLabel": "Q119626394",
+  "archLabel": "Kozma Lajos",
+  "ai": "3184"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119819623",
+  "deLabel": "Mietshaus-Gruppe OTI",
+  "coord": "Point(19.0799 47.4954)",
+  "addr": "II. János Pál pápa tér 14/15/16, 1081 Budapest",
+  "itemLabel": "Q119819623",
+  "archLabel": "Árkay Bertalan",
+  "ai": "27017"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119819623",
+  "deLabel": "Mietshaus-Gruppe OTI",
+  "coord": "Point(19.0799 47.4954)",
+  "addr": "II. János Pál pápa tér 14/15/16, 1081 Budapest",
+  "itemLabel": "Q119819623",
+  "archLabel": "Molnár Farkas",
+  "ai": "27017"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119819623",
+  "deLabel": "Mietshaus-Gruppe OTI",
+  "coord": "Point(19.0799 47.4954)",
+  "addr": "II. János Pál pápa tér 14/15/16, 1081 Budapest",
+  "itemLabel": "Q119819623",
+  "archLabel": "Preisich Gábor",
+  "ai": "27017"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119819623",
+  "deLabel": "Mietshaus-Gruppe OTI",
+  "coord": "Point(19.0799 47.4954)",
+  "addr": "II. János Pál pápa tér 14/15/16, 1081 Budapest",
+  "itemLabel": "Q119819623",
+  "archLabel": "Ligeti Pál",
+  "ai": "27017"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119819623",
+  "deLabel": "Mietshaus-Gruppe OTI",
+  "coord": "Point(19.0799 47.4954)",
+  "addr": "II. János Pál pápa tér 14/15/16, 1081 Budapest",
+  "itemLabel": "Q119819623",
+  "archLabel": "Fischer József",
+  "ai": "27017"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119841835",
+  "deLabel": "Villa in der Csatárka-Straße",
+  "coord": "Point(19.0195 47.5308)",
+  "addr": "Csatárka Út 4/A, 1037 Budapest",
+  "itemLabel": "Q119841835",
+  "archLabel": "Fischer József",
+  "ai": "1820"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119841860",
+  "deLabel": "Doppelhaus in Budapest",
+  "coord": "Point(19.0273 47.5222)",
+  "addr": "Palánta út 15a/15b, 1025 Budapest",
+  "itemLabel": "Q119841860",
+  "archLabel": "Molnár Farkas",
+  "ai": "1823"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119841860",
+  "deLabel": "Doppelhaus in Budapest",
+  "coord": "Point(19.0273 47.5222)",
+  "addr": "Palánta út 15a/15b, 1025 Budapest",
+  "itemLabel": "Q119841860",
+  "archLabel": "Fischer József",
+  "ai": "1823"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119841875",
+  "deLabel": "Doppelvilla Rácz Aladár utca 26",
+  "coord": "Point(18.9963 47.4826)",
+  "addr": "Rácz Aladár utca 26/28, 1121 Budapest",
+  "itemLabel": "Q119841875",
+  "archLabel": "Fischer József",
+  "ai": "28412"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q119841899",
+  "deLabel": "Mehrfamilienhaus Pusztaszeri út 23a",
+  "coord": "Point(19.0292 47.5273)",
+  "addr": "Pusztaszeri út 23a, 1025 Budapest",
+  "itemLabel": "Q119841899",
+  "archLabel": "Fischer József",
+  "ai": "28519"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121323428",
+  "deLabel": "Wohnhaus Cserje utca 12",
+  "coord": "Point(19.0278 47.5217)",
+  "addr": "Cserje utca 12, 1025 Budapest",
+  "itemLabel": "Cserje utca 12. alatti lakóház",
+  "archLabel": "Molnár Farkas",
+  "ai": "80996"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121323457",
+  "deLabel": "Wohnhaus in der Vérhalom-Straße",
+  "coord": "Point(19.0342 47.5173)",
+  "addr": "Vérhalom utca 2, 1025 Budapest",
+  "itemLabel": "Q121323457",
+  "archLabel": "Molnár Farkas",
+  "ai": "25381"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121323464",
+  "deLabel": "Wohnhaus in der Kavics-Straße",
+  "coord": "Point(19.0338 47.5209)",
+  "addr": "Kavics utca 8f, 1025 Budapest",
+  "itemLabel": "Q121323464",
+  "archLabel": "Molnár Farkas",
+  "ai": "23559"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335450",
+  "deLabel": "Wohnhaus Székács utca 17",
+  "coord": "Point(19.0163 47.4998)",
+  "addr": "Székács utca 17, 1122 Budapest",
+  "itemLabel": "Q121335450",
+  "archLabel": "Molnár Farkas",
+  "ai": "80995"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335476",
+  "deLabel": "Wohnhaus Vérhalom utca 2",
+  "coord": "Point(19.0341 47.5172)",
+  "addr": "Vérhalom utca 2, 1025 Budapest",
+  "itemLabel": "Q121335476",
+  "archLabel": "Molnár Farkas",
+  "ai": "80997"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335538",
+  "deLabel": "Wohnhaus in der Széher-Straße",
+  "coord": "Point(18.9773 47.5256)",
+  "addr": "Széher út 60, 1021 Budapest",
+  "itemLabel": "Q121335538",
+  "archLabel": "Molnár Farkas",
+  "ai": "2720"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335565",
+  "deLabel": "Wohnhaus in der Mihály-Straße",
+  "coord": "Point(19.0348 47.4872)",
+  "addr": "Mihály utca 11, 1053 Budapest",
+  "itemLabel": "Q121335565",
+  "archLabel": "Molnár Farkas",
+  "ai": "23477"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335565",
+  "deLabel": "Wohnhaus in der Mihály-Straße",
+  "coord": "Point(19.0348 47.4872)",
+  "addr": "Mihály utca 11, 1053 Budapest",
+  "itemLabel": "Q121335565",
+  "archLabel": "Ligeti Pál",
+  "ai": "23477"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335594",
+  "deLabel": "Wohnhäuser in der Cserje-Straße",
+  "coord": "Point(19.0268 47.5211)",
+  "addr": "Cserje utca 4a/4b, 1025 Budapest",
+  "itemLabel": "Q121335594",
+  "archLabel": "Molnár Farkas",
+  "ai": "6588"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335603",
+  "deLabel": "Villa in der Lejtő-Straße",
+  "coord": "Point(19.0153 47.4902)",
+  "addr": "Lejtő Út 2b, 1124 Budapest",
+  "itemLabel": "Q121335603",
+  "archLabel": "Molnár Farkas",
+  "ai": "927"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121335603",
+  "deLabel": "Villa in der Lejtő-Straße",
+  "coord": "Point(19.0153 47.4902)",
+  "addr": "Apor Vilmos tér, 1124 Budapest",
+  "itemLabel": "Q121335603",
+  "archLabel": "Molnár Farkas",
+  "ai": "927"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q121757953",
+  "deLabel": "Wohnhaus in der Pasaréti-Straße",
+  "coord": "Point(19.0108 47.5108)",
+  "addr": "Pasaréti út 7, 1026 Budapest",
+  "commons": "Pasaréti út, 7 (Budapest)",
+  "itemLabel": "residential building in Pasaréti street",
+  "archLabel": "Molnár Farkas",
+  "ai": "3003"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q122442029",
+  "deLabel": "Haus der Gewerkschaften MÉMOSZ",
+  "coord": "Point(19.08 47.5113)",
+  "addr": "Dózsa György út, Budapest",
+  "commons": "Dózsa György út 84/a, Budapest",
+  "itemLabel": "MÉMOSZ-székház",
+  "archLabel": "Preisich Gábor",
+  "ai": "1585"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q122442029",
+  "deLabel": "Haus der Gewerkschaften MÉMOSZ",
+  "coord": "Point(19.08 47.5113)",
+  "addr": "Dózsa György út, Budapest",
+  "commons": "Dózsa György út 84/a, Budapest",
+  "itemLabel": "MÉMOSZ-székház",
+  "archLabel": "Szrogh György",
+  "ai": "1585"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q122442029",
+  "deLabel": "Haus der Gewerkschaften MÉMOSZ",
+  "coord": "Point(19.08 47.5113)",
+  "addr": "Dózsa György út, Budapest",
+  "commons": "Dózsa György út 84/a, Budapest",
+  "itemLabel": "MÉMOSZ-székház",
+  "archLabel": "Gádoros Lajos",
+  "ai": "1585"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q122442029",
+  "deLabel": "Haus der Gewerkschaften MÉMOSZ",
+  "coord": "Point(19.08 47.5113)",
+  "addr": "Dózsa György út, Budapest",
+  "commons": "Dózsa György út 84/a, Budapest",
+  "itemLabel": "MÉMOSZ-székház",
+  "archLabel": "Perényi Imre",
+  "ai": "1585"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q124250506",
+  "deLabel": "Villa in der Harangvirág-Straße",
+  "coord": "Point(18.9993 47.5226)",
+  "addr": "Harangvirág utca 11, 1026 Budapest",
+  "commons": "Harangvirág utca 11, (Budapest)",
+  "itemLabel": "Q124250506",
+  "archLabel": "Molnár Farkas",
+  "ai": "19288"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q125526606",
+  "deLabel": "Wohnhaus Toldy Ferenc utca 1B",
+  "coord": "Point(19.0362 47.5033)",
+  "addr": "Toldy Ferenc utca 1B, 1015 Budapest",
+  "commons": "Toldy Ferenc Street 1B",
+  "itemLabel": "Q125526606",
+  "archLabel": "Molnár Farkas",
+  "ai": "86202"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127699438",
+  "deLabel": "Haus in der Berkenye-Straße",
+  "coord": "Point(19.0259 47.5187)",
+  "addr": "Berkenye utca 12, 1025 Budapest",
+  "commons": "Berkenye utca, 12 (Budapest)",
+  "itemLabel": "Q127699438",
+  "archLabel": "Kozma Lajos",
+  "ai": "3005"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785560",
+  "deLabel": "Járitz-Villa",
+  "coord": "Point(19.0143 47.5263)",
+  "addr": "Baba utca 14, 1025 Budapest",
+  "itemLabel": "Q127785560",
+  "archLabel": "Fischer József",
+  "ai": "10137"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785571",
+  "deLabel": "Wohnhaus Gárdonyi Géza útca 25",
+  "coord": "Point(19.0066 47.526)",
+  "addr": "Gárdonyi Géza útca 25, 1026 Budapest",
+  "itemLabel": "Q127785571",
+  "archLabel": "Fischer József",
+  "ai": "31950"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785568",
+  "deLabel": "Hotel Gyopár",
+  "coord": "Point(18.9817 47.4949)",
+  "addr": "Rege útca 15, 1121 Budapest",
+  "itemLabel": "Q127785568",
+  "archLabel": "Fischer József",
+  "ai": "82061"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785574",
+  "deLabel": "Hotel Rege",
+  "coord": "Point(18.9831 47.494)",
+  "addr": "Rege útca 10, 1121 Budapest",
+  "itemLabel": "Q127785574",
+  "archLabel": "Fischer József",
+  "ai": "82130"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785585",
+  "deLabel": "Mietshaus mit Geschäften",
+  "coord": "Point(19.0597 47.5171)",
+  "addr": "Váci út 46/b, 1132 Budapest",
+  "itemLabel": "Q127785585",
+  "archLabel": "Fischer József",
+  "ai": "82059"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q127785606",
+  "deLabel": "Wohnhaus Csernyus útca 7A/B",
+  "coord": "Point(19.1353 47.5119)",
+  "addr": "Csernyus útca 7A/B, 1141 Budapest",
+  "itemLabel": "Q127785606",
+  "archLabel": "Fischer József",
+  "ai": "82057"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q130330090",
+  "deLabel": "Mehrfamilienhaus Napsugár/Sonnenstrahl",
+  "coord": "Point(19.0302 47.5263)",
+  "addr": "Pusztaszeri út 16, 1025 Budapest",
+  "itemLabel": "Q130330090",
+  "archLabel": "Fischer József",
+  "ai": "82060"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q134109517",
+  "deLabel": "Wohnhaus Bimbó út 39",
+  "coord": "Point(19.0244 47.5156)",
+  "addr": "Bimbó út 39, 1022 Budapest",
+  "commons": "Bimbó út, 39 (Budapest)",
+  "itemLabel": "Wohnhaus",
+  "archLabel": "Kozma Lajos",
+  "ai": "46993"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q186596",
+  "huwiki": "https://hu.wikipedia.org/wiki/Id%C5%91ker%C3%A9k",
+  "deLabel": "Zeitrad",
+  "coord": "Point(19.08027778 47.51277778)",
+  "commons": "Timewheel",
+  "osmway": "233864905",
+  "inception": "2004-01-01T00:00:00Z",
+  "itemLabel": "Időkerék",
+  "archLabel": "Janáky István"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q222750",
+  "huwiki": "https://hu.wikipedia.org/wiki/Budapest_Kongresszusi_K%C3%B6zpont",
+  "deLabel": "Kongresszentrum Budapest",
+  "coord": "Point(19.02234 47.48848)",
+  "commons": "Budapest Kongresszusi Központ",
+  "itemLabel": "Budapest Kongresszusi Központ",
+  "archLabel": "Finta József"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q593186",
+  "huwiki": "https://hu.wikipedia.org/wiki/Spen%C3%B3th%C3%A1z",
+  "coord": "Point(19.0475 47.5006)",
+  "commons": "Spenótház (Budapest)",
+  "itemLabel": "Spenótház",
+  "archLabel": "Hübner Tibor",
+  "addr": "Széchenyi István tér 7-8"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q721104",
+  "huwiki": "https://hu.wikipedia.org/wiki/Westend",
+  "coord": "Point(19.0594 47.5133)",
+  "commons": "Westend, Budapest",
+  "itemLabel": "Westend",
+  "archLabel": "Finta József"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q850864",
+  "huwiki": "https://hu.wikipedia.org/wiki/Budai_Vigad%C3%B3",
+  "deLabel": "Budai Vigadó",
+  "coord": "Point(19.035555555 47.504444444)",
+  "commons": "Budai Vigadó",
+  "inception": "1899-01-01T00:00:00Z",
+  "itemLabel": "Budai Vigadó",
+  "archLabel": "Árkay Aladár",
+  "addr": "1011 Budapest, Corvin tér 8."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q1161037",
+  "huwiki": "https://hu.wikipedia.org/wiki/MOM_Kultur%C3%A1lis_K%C3%B6zpont",
+  "coord": "Point(19.018616605 47.490273003)",
+  "commons": "MOM cultural centre",
+  "osmway": "197544901",
+  "itemLabel": "MOM Kulturális Központ",
+  "archLabel": "Dávid Károly"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q1177434",
+  "huwiki": "https://hu.wikipedia.org/wiki/Mindenszentek-pl%C3%A9b%C3%A1niatemplom",
+  "coord": "Point(19.0062699 47.4838951)",
+  "commons": "All Saints church in Budapest, Németvölgy",
+  "itemLabel": "Mindenszentek-plébániatemplom",
+  "archLabel": "Szabó István"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q1286373",
+  "huwiki": "https://hu.wikipedia.org/wiki/Sch%C3%B6nherz_Koll%C3%A9gium",
+  "coord": "Point(19.053055555 47.473055555)",
+  "commons": "Schönherz Zoltán Kollégium, Budapest",
+  "itemLabel": "Schönherz Kollégium",
+  "archLabel": "Finta József",
+  "addr": "Irinyi József utca 42."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q1415660",
+  "huwiki": "https://hu.wikipedia.org/wiki/V%C3%A1rosmajori_J%C3%A9zus_Sz%C3%ADve-pl%C3%A9b%C3%A1niatemplom",
+  "coord": "Point(19.0212 47.506)",
+  "commons": "Városmajor Church",
+  "itemLabel": "Jézus Szíve-templom",
+  "archLabel": "Árkay Aladár"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q1415660",
+  "huwiki": "https://hu.wikipedia.org/wiki/V%C3%A1rosmajori_J%C3%A9zus_Sz%C3%ADve-pl%C3%A9b%C3%A1niatemplom",
+  "coord": "Point(19.0212 47.506)",
+  "commons": "Városmajor Church",
+  "itemLabel": "Jézus Szíve-templom",
+  "archLabel": "Árkay Bertalan"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q12354009",
+  "huwiki": "https://hu.wikipedia.org/wiki/Budai_ciszterci_Szent_Imre-templom",
+  "coord": "Point(19.042251 47.478692)",
+  "commons": "Saint Emeric church in Budapest 11",
+  "inception": "1938-11-06T00:00:00Z",
+  "itemLabel": "Szent Imre-templom",
+  "archLabel": "Wälder Gyula",
+  "addr": "1114, Budapest, Villányi út 25"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q15228738",
+  "huwiki": "https://hu.wikipedia.org/wiki/InterContinental_Budapest_Hotel",
+  "deLabel": "InterContinental Budapest",
+  "coord": "Point(19.04785 47.49742)",
+  "commons": "InterContinental Budapest",
+  "itemLabel": "InterContinental Budapest",
+  "archLabel": "Finta József",
+  "addr": "Apáczai Csere János u. 12-14."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q15228738",
+  "huwiki": "https://hu.wikipedia.org/wiki/InterContinental_Budapest_Hotel",
+  "deLabel": "InterContinental Budapest",
+  "coord": "Point(19.047777777 47.497222222)",
+  "commons": "InterContinental Budapest",
+  "itemLabel": "InterContinental Budapest",
+  "archLabel": "Finta József",
+  "addr": "Apáczai Csere János u. 12-14."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q56388739",
+  "huwiki": "https://hu.wikipedia.org/wiki/R%C3%B3zsadombi_Krisztus_Kir%C3%A1ly-templom",
+  "coord": "Point(19.02477 47.5129)",
+  "commons": "Church of Christ the King in Rózsadomb",
+  "inception": "1926-01-01T00:00:00Z",
+  "itemLabel": "Rózsadombi Krisztus Király-templom",
+  "archLabel": "Árkay Aladár"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q56390532",
+  "huwiki": "https://hu.wikipedia.org/wiki/Domus_%C3%81ruh%C3%A1z",
+  "coord": "Point(19.076944444 47.525555555)",
+  "commons": "Domus Áruház (Budapest)",
+  "itemLabel": "Domus Áruház",
+  "archLabel": "Reimholz Péter",
+  "addr": "Róbert Károly körút 67."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q56390532",
+  "huwiki": "https://hu.wikipedia.org/wiki/Domus_%C3%81ruh%C3%A1z",
+  "coord": "Point(19.076944444 47.525555555)",
+  "commons": "Domus Áruház (Budapest)",
+  "itemLabel": "Domus Áruház",
+  "archLabel": "Lázár Antal",
+  "addr": "Róbert Károly körút 67."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q63788502",
+  "huwiki": "https://hu.wikipedia.org/wiki/Babocsay-villa",
+  "coord": "Point(19.077194444 47.513833333)",
+  "commons": "Serbian Embassy, Budapest",
+  "osmway": "90444471",
+  "itemLabel": "Babocsay-villa",
+  "archLabel": "Árkay Aladár",
+  "addr": "Dózsa György út 92/b",
+  "street": "Andrássy út"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q63788502",
+  "huwiki": "https://hu.wikipedia.org/wiki/Babocsay-villa",
+  "coord": "Point(19.077194444 47.513833333)",
+  "commons": "Serbian Embassy, Budapest",
+  "osmway": "90444471",
+  "itemLabel": "Babocsay-villa",
+  "archLabel": "Árkay Aladár",
+  "addr": "Dózsa György út 92/b",
+  "street": "Dózsa György út"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q63788502",
+  "huwiki": "https://hu.wikipedia.org/wiki/Babocsay-villa",
+  "coord": "Point(19.077194444 47.513833333)",
+  "commons": "Serbian Embassy, Budapest",
+  "osmway": "90444471",
+  "itemLabel": "Babocsay-villa",
+  "archLabel": "Kozma Lajos",
+  "addr": "Dózsa György út 92/b",
+  "street": "Andrássy út"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q63788502",
+  "huwiki": "https://hu.wikipedia.org/wiki/Babocsay-villa",
+  "coord": "Point(19.077194444 47.513833333)",
+  "commons": "Serbian Embassy, Budapest",
+  "osmway": "90444471",
+  "itemLabel": "Babocsay-villa",
+  "archLabel": "Kozma Lajos",
+  "addr": "Dózsa György út 92/b",
+  "street": "Dózsa György út"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q87723092",
+  "huwiki": "https://hu.wikipedia.org/wiki/Munk%C3%A1smozgalmi_Panteon",
+  "deLabel": "Pantheon der Arbeiterbewegung",
+  "coord": "Point(19.08815 47.49418)",
+  "commons": "Pantheon of the Workers' Movement",
+  "inception": "1958-01-01T00:00:00Z",
+  "itemLabel": "Munkásmozgalmi Panteon",
+  "archLabel": "Körner József"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q107429393",
+  "huwiki": "https://hu.wikipedia.org/wiki/V%C3%A1rosmajori_J%C3%A9zus_Sz%C3%ADve-kistemplom",
+  "coord": "Point(19.02169 47.50611)",
+  "commons": "Városmajor Chapel",
+  "inception": "1925-01-01T00:00:00Z",
+  "itemLabel": "Városmajori kistemplom",
+  "archLabel": "Árkay Aladár"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q108811077",
+  "huwiki": "https://hu.wikipedia.org/wiki/Budapest_Marriott_Hotel",
+  "coord": "Point(19.0497012 47.494823)",
+  "commons": "InterContinental Budapest",
+  "inception": "1966-01-01T00:00:00Z",
+  "itemLabel": "Budapest Marriott Hotel",
+  "archLabel": "Finta József",
+  "addr": "Apáczai Csere János u. 4"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q108811077",
+  "huwiki": "https://hu.wikipedia.org/wiki/Budapest_Marriott_Hotel",
+  "coord": "Point(19.04985 47.494297)",
+  "commons": "InterContinental Budapest",
+  "inception": "1966-01-01T00:00:00Z",
+  "itemLabel": "Budapest Marriott Hotel",
+  "archLabel": "Finta József",
+  "addr": "Apáczai Csere János u. 4"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q108850098",
+  "huwiki": "https://hu.wikipedia.org/wiki/V%C3%ADztoronyh%C3%A1z",
+  "coord": "Point(19.1405947 47.5444416)",
+  "commons": "Nyírpalota út, 71 (Víztoronyház)",
+  "itemLabel": "Víztoronyház",
+  "archLabel": "Tenke Tibor",
+  "addr": "Nyírpalota út 71."
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q110872954",
+  "huwiki": "https://hu.wikipedia.org/wiki/K%C3%B6rsz%C3%A1ll%C3%B3",
+  "coord": "Point(19.01314 47.51025)",
+  "commons": "Hotel Budapest",
+  "osmway": "415556517",
+  "inception": "1967-12-31T00:00:00Z",
+  "itemLabel": "Körszálló",
+  "archLabel": "Szrogh György",
+  "street": "Szilágyi Erzsébet fasor"
+ },
+ {
+  "item": "http://www.wikidata.org/entity/Q139764907",
+  "huwiki": "https://hu.wikipedia.org/wiki/B%C3%ADr%C3%A1k_%C3%A9s_%C3%9Cgy%C3%A9szek_lak%C3%B3negyede",
+  "coord": "Point(19.0180635 47.5011811)",
+  "inception": "1910-01-01T00:00:00Z",
+  "itemLabel": "Bírák és Ügyészek lakónegyede",
+  "archLabel": "Árkay Aladár"
+ }
+]

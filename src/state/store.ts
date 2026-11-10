@@ -63,8 +63,13 @@ export const useStore = create<AppState>((set, get) => ({
   async load() {
     set({ loading: true });
     const buildings = await repo.loadAll();
-    // Ha valós (nem demo) adat is van, az alaptérképi kontúrok bekapcsolása hasznos
-    set({ buildings, loading: false });
+    // Ha van valós (nem DEMO) adat: a DEMO rekordok alapból rejtve, az OSM-alapkontúrok láthatók
+    const hasReal = buildings.some((b) => !b.isDemo);
+    set({
+      buildings,
+      loading: false,
+      ...(hasReal ? { filter: { ...get().filter, showDemo: false }, showBaseBuildings: true } : {}),
+    });
   },
   setFilter(patch) {
     set({ filter: { ...get().filter, ...patch } });
