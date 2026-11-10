@@ -3,7 +3,7 @@ import type { Building } from '../src/domain/types';
 import { EMPTY_FILTER, applyFilter, YEAR_MAX, YEAR_MIN } from '../src/domain/filter';
 import { PERIODS, colorOf, periodForYear, periodOf, UNKNOWN_COLOR, formatConstruction } from '../src/domain/periods';
 import { parseCSV, toCSV, toGeoJSON, parseGeoJSON, constructionFromFlat } from '../src/domain/io';
-import { byDecade, intensity, topArchitects } from '../src/domain/stats';
+import { byCity, byDecade, byDistrict, intensity, topArchitects } from '../src/domain/stats';
 
 const geom = { type: 'Polygon' as const, coordinates: [[[19.05, 47.5], [19.051, 47.5], [19.051, 47.501], [19.05, 47.501], [19.05, 47.5]]] };
 function mk(id: string, patch: Partial<Building> = {}): Building {
@@ -122,5 +122,19 @@ describe('helyi mentésfájl áttöltése', () => {
     expect(buildings.map((x) => x.id)).toEqual(['m-1']);
     expect(buildings[0].geometry).toEqual(geom);
     expect(skipped).toBe(1);
+  });
+});
+
+describe('országos kiterjesztés', () => {
+  const szeged = mk('sz', { city: 'Szeged', construction: { precision: 'exact', year: 1930, sourceIds: ['s1'] } });
+  const all = [...list, szeged];
+  it('településre szűr, és a keresés a települést is nézi', () => {
+    expect(applyFilter(all, { ...EMPTY_FILTER, cities: ['Szeged'] }).map((b) => b.id)).toEqual(['sz']);
+    expect(applyFilter(all, { ...EMPTY_FILTER, query: 'szeged' }).map((b) => b.id)).toEqual(['sz']);
+    expect(applyFilter(all, { ...EMPTY_FILTER, cities: ['Budapest'] })).toHaveLength(list.length);
+  });
+  it('a kerületi statisztika csak budapesti épületekből számol', () => {
+    expect(byDistrict(all).some((r) => r.key === 'Ismeretlen')).toBe(false);
+    expect(byCity(all)).toContainEqual({ key: 'Szeged', count: 1 });
   });
 });

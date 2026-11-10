@@ -7,6 +7,7 @@ import type { MultiPolygon, Polygon } from 'geojson';
  */
 export interface OsmPlace {
   address?: string;
+  city?: string;
   district?: string;
   name?: string;
   osmRef?: string; // pl. "way/123"
@@ -18,6 +19,12 @@ const ROMAN = /(^|[\s,])([IVXL]+)\. kerület/;
 
 export function districtFrom(display: string): string | undefined {
   return display.match(ROMAN)?.[2];
+}
+
+/** Település a Nominatim-címből (város, község, falu). */
+export function cityFrom(a: Record<string, string> | undefined): string | undefined {
+  if (!a) return undefined;
+  return a.city ?? a.town ?? a.village ?? a.municipality ?? a.hamlet;
 }
 
 export function addressFrom(a: Record<string, string> | undefined): string | undefined {
@@ -49,6 +56,7 @@ export async function lookupBuildingAt(lat: number, lng: number): Promise<OsmPla
     const isBuildingLike = r.category === 'building' || r.addresstype === 'building' || r.extratags?.building;
     return {
       address: addressFrom(r.address),
+      city: cityFrom(r.address),
       district: districtFrom(r.display_name ?? ''),
       name: r.name || undefined,
       osmRef: r.osm_type && r.osm_id ? `${r.osm_type}/${r.osm_id}` : undefined,

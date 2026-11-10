@@ -1,5 +1,5 @@
 import type { Building } from './types';
-import { DISTRICTS } from './types';
+import { DISTRICTS, isBudapest } from './types';
 import { representativeYear, yearSpan } from './periods';
 
 export interface CountRow {
@@ -35,7 +35,13 @@ export function byFunction(list: Building[]): CountRow[] {
   return countBy(list, (b) => b.originalFunction ?? UNKNOWN_LABEL).sort((a, b) => b.count - a.count);
 }
 
+export function byCity(list: Building[]): CountRow[] {
+  return countBy(list, (b) => b.city || 'Budapest').sort((a, b) => b.count - a.count || a.key.localeCompare(b.key, 'hu'));
+}
+
+/** Budapesti kerületek (csak a budapesti épületekből). */
 export function byDistrict(list: Building[]): CountRow[] {
+  list = list.filter((b) => isBudapest(b.city));
   const order = (k: string) => {
     const i = (DISTRICTS as readonly string[]).indexOf(k);
     return i < 0 ? 99 : i;
@@ -87,6 +93,7 @@ export function styleByDistrict(list: Building[], maxStyles = 8) {
     .slice(0, maxStyles)
     .map((r) => r.key);
   const districts = byDistrict(list).map((r) => r.key);
+  list = list.filter((b) => isBudapest(b.city));
   const rows = districts.map((d) => {
     const row: Record<string, number | string> = { district: d };
     for (const s of styles) row[s] = 0;

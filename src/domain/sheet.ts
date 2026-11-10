@@ -6,6 +6,7 @@ export interface ImportRow {
   line: number; // sor száma a táblázatban (fejléc = 1)
   name?: string;
   address?: string;
+  city?: string;
   district?: string;
   year?: string; // nyers, pl. "1936", "kb. 1936", "1935–1938"
   from?: number;
@@ -24,6 +25,7 @@ type Field = Exclude<keyof ImportRow, 'line'>;
 const HEADERS: Record<Field, string[]> = {
   name: ['nev', 'epulet', 'epulet neve', 'megnevezes'],
   address: ['cim', 'pontos cim', 'utca hazszam', 'helyszin cim'],
+  city: ['telepules', 'varos', 'helyseg', 'helyszin', 'telepules neve', 'kozseg'],
   district: ['kerulet', 'ker'],
   year: ['epitesi ev', 'ev', 'evszam', 'datum', 'datum kepalairas szerint', 'epites eve'],
   from: ['tol', 'kezdes eve', 'epites kezdete', 'ev tol'],
@@ -36,7 +38,7 @@ const HEADERS: Record<Field, string[]> = {
   note: ['megjegyzes', 'leiras', 'rovid leiras'],
 };
 
-export const TEMPLATE_HEADERS = ['Név', 'Cím', 'Kerület', 'Építési év', 'Tervező', 'Stílus', 'Funkció', 'Forrás', 'Forrás link', 'Megjegyzés'];
+export const TEMPLATE_HEADERS = ['Név', 'Cím', 'Település', 'Kerület', 'Építési év', 'Tervező', 'Stílus', 'Funkció', 'Forrás', 'Forrás link', 'Megjegyzés'];
 
 function key(h: string) {
   return normalize(h).replace(/[^a-z0-9]+/g, ' ').trim();

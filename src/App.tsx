@@ -55,7 +55,7 @@ export default function App() {
         <div className="brand">
           <span className="brand-mark" aria-hidden>▦</span>
           <div>
-            <h1>Budapest Építészettörténeti Atlasz</h1>
+            <h1>Magyar Építészettörténeti Atlasz</h1>
             <span className="brand-sub">prototípus · 1. fázis</span>
           </div>
           {hasDemo && <span className="demo-badge" title="Az adatbázis generált tesztrekordokat tartalmaz">DEMO ADATOK</span>}

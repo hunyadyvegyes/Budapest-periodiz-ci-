@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { canEdit, useSelected, useStore } from '../state/store';
 import { DemoBanner, Field, YearBlock } from './BuildingPanel';
-import { IMAGE_KIND_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS, type AttributableField } from '../domain/types';
+import { isBudapest, IMAGE_KIND_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS, type AttributableField } from '../domain/types';
 
 const FIELD_LABELS: Record<AttributableField, string> = {
   name: 'Név', address: 'Cím', architects: 'Tervező', style: 'Stílus', originalFunction: 'Eredeti funkció',
@@ -43,7 +43,8 @@ export default function DetailModal() {
               <dl className="fields">
                 <Field label="Név" value={b.name} b={b} field="name" />
                 <Field label="Cím" value={b.address} b={b} field="address" />
-                <Field label="Kerület" value={b.district ? `${b.district}. kerület` : undefined} b={b} />
+                <Field label="Település" value={b.city || 'Budapest'} b={b} />
+                {isBudapest(b.city) && <Field label="Kerület" value={b.district ? `${b.district}. kerület` : undefined} b={b} />}
                 <Field label="Koordináták" value={`${b.centroid[1].toFixed(6)}, ${b.centroid[0].toFixed(6)}`} b={b} />
                 <Field label="Kontúr" value={b.geometryApprox ? 'nincs valódi kontúr (jelölő négyzet)' : `${b.geometry.type}`} b={b} />
               </dl>

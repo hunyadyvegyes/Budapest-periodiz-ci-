@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../state/store';
 import {
-  DISTRICTS, IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS,
+  DISTRICTS, isBudapest, IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS,
   type AttributableField, type Building, type ImageKind, type ProtectionStatus, type Reliability, type YearPrecision,
 } from '../domain/types';
 
@@ -50,6 +50,7 @@ function EditFormInner({ initial }: { initial: Building }) {
     if (err) return setError(err);
     const cleaned: Building = {
       ...b,
+      city: b.city?.trim() || 'Budapest',
       construction: {
         ...c,
         year: c.precision === 'exact' || c.precision === 'probable' ? c.year : undefined,
@@ -80,12 +81,15 @@ function EditFormInner({ initial }: { initial: Building }) {
               <legend>Alapadatok</legend>
               <label>Név<input value={b.name ?? ''} onChange={(e) => up({ name: opt(e.target.value) })} /></label>
               <label>Cím<input value={b.address ?? ''} onChange={(e) => up({ address: opt(e.target.value) })} /></label>
-              <label>Kerület
-                <select value={b.district ?? ''} onChange={(e) => up({ district: opt(e.target.value) })}>
-                  <option value="">ismeretlen</option>
-                  {DISTRICTS.map((d) => <option key={d} value={d}>{d}. kerület</option>)}
-                </select>
-              </label>
+              <label>Település<input value={b.city ?? ''} onChange={(e) => up({ city: e.target.value, ...(isBudapest(e.target.value) ? {} : { district: undefined }) })} placeholder="pl. Budapest" /></label>
+              {isBudapest(b.city) && (
+                <label>Kerület
+                  <select value={b.district ?? ''} onChange={(e) => up({ district: opt(e.target.value) })}>
+                    <option value="">ismeretlen</option>
+                    {DISTRICTS.map((d) => <option key={d} value={d}>{d}. kerület</option>)}
+                  </select>
+                </label>
+              )}
               <label className="check"><input type="checkbox" checked={b.isDemo} onChange={(e) => up({ isDemo: e.target.checked })} /> <span>DEMO / tesztrekord</span></label>
             </fieldset>
 

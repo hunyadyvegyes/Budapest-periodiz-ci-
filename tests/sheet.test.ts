@@ -8,6 +8,11 @@ describe('tömeges feltöltés – táblázat', () => {
     const q = mapHeaders(['Épület', 'Tervező(k)', 'Dátum (képaláírás szerint)', 'Kezdés éve', 'Befejezés éve', 'Forrás']);
     expect([...q.map.values()]).toEqual(['name', 'architects', 'year', 'from', 'to', 'source']);
   });
+  it('a település oszlopot (a kvíztábla „Helyszín” oszlopát is) felismeri', () => {
+    const { map } = mapHeaders(['Épület', 'Helyszín', 'Cím']);
+    expect([...map.values()]).toEqual(['name', 'city', 'address']);
+    expect(mapHeaders(['Település']).map.get(0)).toBe('city');
+  });
   it('sorok és kerület egységesítése', () => {
     const { rows, hasAddress } = rowsFromTable([
       ['Név', 'Cím', 'Kerület'],

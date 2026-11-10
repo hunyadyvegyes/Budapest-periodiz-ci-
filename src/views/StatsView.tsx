@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useFiltered, useStore } from '../state/store';
-import { UNKNOWN_LABEL, byDecade, byDistrict, byFunction, byStyle, intensity, topArchitects, type CountRow } from '../domain/stats';
+import { UNKNOWN_LABEL, byCity, byDecade, byDistrict, byFunction, byStyle, intensity, topArchitects, type CountRow } from '../domain/stats';
 import { periodForYear } from '../domain/periods';
 import { activeFilterCount } from '../domain/filter';
+import { isBudapest } from '../domain/types';
 
 const ACCENT = '#3d6797';
 const ACCENT_MUTED = '#9bb3cf';
@@ -50,16 +51,19 @@ export default function StatsView() {
   const data = useMemo(() => {
     const styles = byStyle(list);
     const districts = byDistrict(list);
+    const cities = byCity(list);
     const topStyles = styles.filter((s) => s.key !== UNKNOWN_LABEL).slice(0, 10).map((s) => s.key);
+    const bpList = list.filter((b) => isBudapest(b.city));
     const matrix = districts.map((d) => ({
       district: d.key,
-      cells: topStyles.map((s) => list.filter((b) => (b.district ?? UNKNOWN_LABEL) === d.key && b.style === s).length),
+      cells: topStyles.map((s) => bpList.filter((b) => (b.district ?? UNKNOWN_LABEL) === d.key && b.style === s).length),
     }));
     const matrixMax = Math.max(1, ...matrix.flatMap((r) => r.cells));
     return {
       decades: byDecade(list),
       styles,
       districts,
+      cities,
       functions: byFunction(list),
       architects: topArchitects(list),
       intensity: intensity(list),
@@ -131,9 +135,17 @@ export default function StatsView() {
           <HBar data={data.styles} onPick={(k) => k !== UNKNOWN_LABEL && go({ styles: [k] })} />
         </ChartCard>
 
-        <ChartCard title="Épületek kerületenként">
-          <HBar data={data.districts.map((d) => ({ ...d, key: d.key === UNKNOWN_LABEL ? d.key : `${d.key}. kerület` }))} onPick={(k) => k !== UNKNOWN_LABEL && go({ districts: [k.replace('. kerület', '')] })} />
-        </ChartCard>
+        {data.cities.length > 1 && (
+          <ChartCard title="Épületek településenként">
+            <HBar data={data.cities} onPick={(k) => go({ cities: [k] })} />
+          </ChartCard>
+        )}
+
+        {data.districts.length > 0 && (
+          <ChartCard title="Budapesti épületek kerületenként">
+            <HBar data={data.districts.map((d) => ({ ...d, key: d.key === UNKNOWN_LABEL ? d.key : `${d.key}. kerület` }))} onPick={(k) => k !== UNKNOWN_LABEL && go({ cities: ['Budapest'], districts: [k.replace('. kerület', '')] })} />
+          </ChartCard>
+        )}
 
         <ChartCard title="Eredeti funkció szerint">
           <HBar data={data.functions} onPick={(k) => k !== UNKNOWN_LABEL && go({ functions: [k] })} />
@@ -143,8 +155,8 @@ export default function StatsView() {
           {data.architects.length ? <HBar data={data.architects} onPick={(k) => go({ architects: [k] })} /> : <p className="muted">Nincs tervezőadat a szűrésben.</p>}
         </ChartCard>
 
-        <ChartCard title="Stílusok térbeli eloszlása" subtitle="Épületszám kerület × stílus szerint; egy cellára kattintva mindkét szűrő beáll" wide>
-          {data.topStyles.length ? (
+        <ChartCard title="Stílusok térbeli eloszlása Budapesten" subtitle="Épületszám kerület × stílus szerint; egy cellára kattintva mindkét szűrő beáll" wide>
+          {data.topStyles.length && data.districts.length ? (
             <div className="heatmap-wrap">
               <table className="heatmap">
                 <thead>

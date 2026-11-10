@@ -27,8 +27,8 @@ async function downloadTemplate() {
   const XLSX = await import('xlsx');
   const ws = XLSX.utils.aoa_to_sheet([
     TEMPLATE_HEADERS,
-    ['Átrium-ház', 'Margit körút 55.', 'II', '1935–1936', 'Kozma Lajos', 'modern', 'bérház és mozi', 'Ferkai András: Buda építészete a két világháború között, 1995', ''],
-    ['(minta – töröld ki)', 'Utca 12.', 'VII', 'kb. 1910', '', '', 'lakóház', '', '', 'A „kb.” valószínű évet jelent'],
+    ['Átrium-ház', 'Margit körút 55.', 'Budapest', 'II', '1935–1936', 'Kozma Lajos', 'modern', 'bérház és mozi', '(a forrás pontos megnevezése, pl. szerző: cím, oldalszám)', ''],
+    ['(minta – töröld ki)', 'Példa utca 1.', 'Szeged', '', 'kb. 1910', '', '', 'lakóház', '', '', 'A „kb.” valószínű évet jelent'],
   ]);
   ws['!cols'] = TEMPLATE_HEADERS.map((h) => ({ wch: Math.max(12, h.length + 4) }));
   const wb = XLSX.utils.book_new();
@@ -41,7 +41,7 @@ function csvCell(v: unknown) {
   return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-const addrKey = (a?: string, d?: string) => normalize(`${a ?? ''} ${d ?? ''}`).replace(/[^a-z0-9]/g, '');
+const addrKey = (a?: string, c?: string, d?: string) => normalize(`${a ?? ''} ${c || 'Budapest'} ${d ?? ''}`).replace(/[^a-z0-9]/g, '');
 
 export default function ImportView() {
   const buildings = useStore((s) => s.buildings);
@@ -73,7 +73,7 @@ export default function ImportView() {
         const m = s.url?.match(/openstreetmap\.org\/(way|relation)\/(\d+)/);
         if (m) byOsm.set(`${m[1]}/${m[2]}`, b);
       }
-      if (b.address) byAddr.set(addrKey(b.address, b.district), b);
+      if (b.address) byAddr.set(addrKey(b.address, b.city, b.district), b);
     }
     return { byOsm, byAddr };
   }, [buildings]);
@@ -98,8 +98,8 @@ export default function ImportView() {
   const searchOne = async (r: RowState) => {
     update(r.line, { searching: true });
     try {
-      const m = r.address ? await matchAddress(r.address, r.district) : { status: 'notfound' as const, message: 'Nincs cím megadva.' };
-      const dup = (m.osmRef && existing.byOsm.get(m.osmRef)) || existing.byAddr.get(addrKey(m.address ?? r.address, m.district ?? r.district));
+      const m = r.address ? await matchAddress(r.address, r.district, r.city) : { status: 'notfound' as const, message: 'Nincs cím megadva.' };
+      const dup = (m.osmRef && existing.byOsm.get(m.osmRef)) || existing.byAddr.get(addrKey(m.address ?? r.address, m.city ?? r.city, m.district ?? r.district));
       update(r.line, { match: m, searching: false, duplicateOf: dup ? dup.id : undefined, include: !dup });
     } catch (e) {
       update(r.line, { searching: false, match: { status: 'notfound', message: (e as Error).message } });
@@ -148,7 +148,7 @@ export default function ImportView() {
     return {
       id: prev?.id ?? newId('t'),
       isDemo: false,
-      city: 'Budapest',
+      city: m.city ?? r.city ?? 'Budapest',
       name: r.name ?? prev?.name,
       address: m.address ?? r.address,
       district: m.district ?? r.district,
@@ -210,7 +210,7 @@ export default function ImportView() {
       <h2>Tömeges feltöltés</h2>
       <ol className="steps">
         <li>
-          <strong>Töltsd ki a táblázatot.</strong> Egy sor = egy épület. A <em>Cím</em> és a <em>Kerület</em> alapján az atlasz
+          <strong>Töltsd ki a táblázatot.</strong> Egy sor = egy épület. A <em>Cím</em>, a <em>Település</em> (üresen: Budapest) és budapesti címnél a <em>Kerület</em> alapján az atlasz
           magától megkeresi az épület pontos körvonalát. A kvízapp táblázatának oszlopneveit is felismeri.
           <div className="btn-row"><button className="btn" onClick={downloadTemplate}>Excel-sablon letöltése</button></div>
         </li>
@@ -257,7 +257,7 @@ export default function ImportView() {
           <div className="table-scroll">
             <table className="records import-table">
               <thead>
-                <tr><th /><th>Sor</th><th>Név</th><th>Cím</th><th>Ker.</th><th>Építés</th><th>Tervező</th><th>Állapot</th><th /></tr>
+                <tr><th /><th>Sor</th><th>Név</th><th>Cím</th><th>Település</th><th>Ker.</th><th>Építés</th><th>Tervező</th><th>Állapot</th><th /></tr>
               </thead>
               <tbody>
                 {rows.map((r) => {
@@ -269,6 +269,7 @@ export default function ImportView() {
                       <td className="num">{r.line}</td>
                       <td>{r.name ?? <span className="unknown">–</span>}</td>
                       <td><input id={`addr-${r.line}`} className="cell-input" value={r.address ?? ''} onChange={(e) => update(r.line, { address: e.target.value, match: undefined })} /></td>
+                      <td><input id={`city-${r.line}`} className="cell-input mid" value={r.city ?? ''} placeholder="Budapest" onChange={(e) => update(r.line, { city: e.target.value, match: undefined })} /></td>
                       <td><input id={`ker-${r.line}`} className="cell-input short" value={r.district ?? ''} onChange={(e) => update(r.line, { district: e.target.value.toUpperCase(), match: undefined })} /></td>
                       <td>{formatConstruction(parseYear(r.year, r.from, r.to))}</td>
                       <td>{r.architects ?? <span className="unknown">–</span>}</td>

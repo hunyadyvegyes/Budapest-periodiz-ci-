@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useStore } from '../state/store';
-import { DISTRICTS, type Building, type FieldMeta, type Reliability, type YearPrecision } from '../domain/types';
+import { DISTRICTS, isBudapest, type Building, type FieldMeta, type Reliability, type YearPrecision } from '../domain/types';
 import { centroidOf } from '../domain/geo';
 import { newId } from '../domain/io';
 import { lookupBuildingAt, osmBuildingContaining, pointInGeometry } from '../data/osmLookup';
@@ -34,6 +34,7 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [district, setDistrict] = useState('');
+  const [city, setCity] = useState('');
   const [precision, setPrecision] = useState<YearPrecision>('exact');
   const [year, setYear] = useState('');
   const [from, setFrom] = useState('');
@@ -70,6 +71,7 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
       const addr = p?.address ?? (sel.props.address as string | undefined) ?? w?.address;
       if (addr) setAddress(addr);
       if (p?.district) setDistrict(p.district);
+      if (p?.city) setCity(p.city);
       if (known) return;
       const exact = p?.geometry && pointInGeometry(sel.lngLat, p.geometry) ? p : w?.geometry ? w : null;
       if (exact?.geometry) {
@@ -101,10 +103,10 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
     return {
       id: newId('m'),
       isDemo: false,
-      city: 'Budapest',
+      city: opt(city) ?? 'Budapest',
       name: opt(name),
       address: opt(address),
-      district: opt(district),
+      district: isBudapest(city) ? opt(district) : undefined,
       centroid: centroidOf(geometry),
       geometry,
       construction: {
@@ -165,14 +167,17 @@ export default function QuickAddForm({ sel }: { sel: Sel }) {
 
       <div className="qa form">
         <label>Név<input value={name} onChange={(e) => setName(e.target.value)} placeholder="pl. Átrium-ház" /></label>
+        <label>Cím<input value={address} onChange={(e) => setAddress(e.target.value)} /></label>
         <div className="row2">
-          <label>Cím<input value={address} onChange={(e) => setAddress(e.target.value)} /></label>
-          <label>Kerület
-            <select value={district} onChange={(e) => setDistrict(e.target.value)}>
-              <option value="">–</option>
-              {DISTRICTS.map((d) => <option key={d} value={d}>{d}.</option>)}
-            </select>
-          </label>
+          <label>Település<input value={city} onChange={(e) => setCity(e.target.value)} placeholder="pl. Budapest" /></label>
+          {isBudapest(city) && (
+            <label>Kerület
+              <select value={district} onChange={(e) => setDistrict(e.target.value)}>
+                <option value="">–</option>
+                {DISTRICTS.map((d) => <option key={d} value={d}>{d}.</option>)}
+              </select>
+            </label>
+          )}
         </div>
 
         <label>Építési idő

@@ -55,7 +55,8 @@ export default function MapView() {
       style: BASEMAP_URL,
       center: BUDAPEST,
       zoom: 14.2,
-      maxBounds: [[18.75, 47.3], [19.4, 47.65]],
+      // Magyarország és egy kis peremsáv
+      maxBounds: [[15.0, 45.2], [24.0, 49.1]],
       attributionControl: { compact: true },
       canvasContextAttributes: { preserveDrawingBuffer: true },
     } as maplibregl.MapOptions);

@@ -25,8 +25,9 @@ Egyszeri beállítás a GitHubon: **Settings → Pages → Build and deployment 
    a jobb felső **Bejelentkezés** után lehet.
 
 ## 3. Tömeges feltöltés
-**Feltöltés** fül → Excel-sablon letöltése → kitöltés (egy sor = egy épület; *Cím* és *Kerület*
-alapján keresi meg az épületet) → fájl kiválasztása → **Címek keresése** → ellenőrzés →
+**Feltöltés** fül → Excel-sablon letöltése → kitöltés (egy sor = egy épület; a *Cím*, a *Település*
+– üresen hagyva Budapest – és budapesti címnél a *Kerület* alapján keresi meg az épületet; az egész
+ország területén működik) → fájl kiválasztása → **Címek keresése** → ellenőrzés →
 **N épület feltöltése**. Ami nem található, letölthető CSV-ben, és a térképen kattintással felvehető.
 A címkereső (OpenStreetMap Nominatim) használati feltétele miatt kb. 1 sor/másodperc;
 nagyon nagy (több ezres) tételnél érdemes több részletben feltölteni.

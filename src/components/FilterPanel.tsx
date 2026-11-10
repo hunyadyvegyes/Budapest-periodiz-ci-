@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useFiltered, useStore } from '../state/store';
 import { YEAR_MAX, YEAR_MIN, activeFilterCount, type FilterState } from '../domain/filter';
-import { DISTRICTS, PRECISION_LABELS, PROTECTION_LABELS, type ProtectionStatus, type YearPrecision } from '../domain/types';
+import { DISTRICTS, isBudapest, PRECISION_LABELS, PROTECTION_LABELS, type ProtectionStatus, type YearPrecision } from '../domain/types';
 import { formatConstruction, colorOf } from '../domain/periods';
 
 function distinct(values: (string | undefined)[]): string[] {
@@ -50,7 +50,8 @@ export default function FilterPanel() {
 
   const opts = useMemo(
     () => ({
-      districts: (DISTRICTS as readonly string[]).filter((d) => buildings.some((b) => b.district === d)),
+      cities: distinct(buildings.map((b) => b.city || 'Budapest')),
+      districts: (DISTRICTS as readonly string[]).filter((d) => buildings.some((b) => b.district === d && isBudapest(b.city))),
       styles: distinct(buildings.map((b) => b.style)),
       functions: distinct(buildings.flatMap((b) => [b.originalFunction, b.currentFunction])),
       architects: distinct(buildings.flatMap((b) => b.architects)),
@@ -88,7 +89,7 @@ export default function FilterPanel() {
               <span className="result-text">
                 <span className="result-title">{b.name ?? b.address ?? b.id}</span>
                 <span className="result-sub">
-                  {b.district ? `${b.district}. ker. · ` : ''}
+                  {isBudapest(b.city) ? (b.district ? `${b.district}. ker. · ` : '') : `${b.city} · `}
                   {formatConstruction(b.construction)}
                   {b.isDemo ? ' · DEMO' : ''}
                 </span>
@@ -103,7 +104,19 @@ export default function FilterPanel() {
         {n > 0 && <button className="link" onClick={resetFilter}>Összes törlése ({n})</button>}
       </div>
 
-      <Section title="Kerület" count={filter.districts.length} defaultOpen>
+      {opts.cities.length > 1 && (
+        <Section title="Település" count={filter.cities.length} defaultOpen>
+          <div className="chips">
+            {opts.cities.map((c) => (
+              <button key={c} className={`chip ${filter.cities.includes(c) ? 'on' : ''}`} onClick={() => set('cities')(toggle(filter.cities, c))}>
+                {c}
+              </button>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      <Section title="Budapesti kerület" count={filter.districts.length} defaultOpen={opts.cities.length <= 1}>
         <div className="chips">
           {opts.districts.map((d) => (
             <button key={d} className={`chip ${filter.districts.includes(d) ? 'on' : ''}`} onClick={() => set('districts')(toggle(filter.districts, d))}>

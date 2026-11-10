@@ -118,6 +118,11 @@ export interface Building {
   updatedAt: string;
 }
 
+/** Budapest-e a település (a kerület csak ott értelmezett). */
+export function isBudapest(city: string | undefined): boolean {
+  return !city || city.trim().toLocaleLowerCase('hu') === 'budapest';
+}
+
 export const DISTRICTS = [
   'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII',
   'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII',

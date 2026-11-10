@@ -3,6 +3,8 @@ import { PERIODS, UNKNOWN_PERIOD_ID, formatConstruction, periodOf, yearSpan } fr
 
 export interface FilterState {
   query: string;
+  /** települések (pl. Budapest, Szeged) */
+  cities: string[];
   districts: string[];
   styles: string[];
   functions: string[];
@@ -20,6 +22,7 @@ export interface FilterState {
 
 export const EMPTY_FILTER: FilterState = {
   query: '',
+  cities: [],
   districts: [],
   styles: [],
   functions: [],
@@ -45,6 +48,7 @@ export function searchText(b: Building): string {
     [
       b.name,
       b.address,
+      b.city,
       b.district ? `${b.district}. kerulet ${b.district} ker` : '',
       b.architects.join(' '),
       b.style,
@@ -86,6 +90,7 @@ function overlaps(a: [number, number], b: [number, number]): boolean {
 
 export function matchesFilter(b: Building, f: FilterState): boolean {
   if (!f.showDemo && b.isDemo) return false;
+  if (f.cities.length && !f.cities.includes(b.city || 'Budapest')) return false;
   if (f.districts.length && (!b.district || !f.districts.includes(b.district))) return false;
   if (f.styles.length && (!b.style || !f.styles.includes(b.style))) return false;
   if (f.functions.length) {
@@ -124,6 +129,7 @@ export function applyFilter(list: Building[], f: FilterState): Building[] {
 export function activeFilterCount(f: FilterState): number {
   return (
     (f.query.trim() ? 1 : 0) +
+    f.cities.length +
     f.districts.length +
     f.styles.length +
     f.functions.length +

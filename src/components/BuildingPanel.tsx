@@ -1,8 +1,14 @@
 import { canEdit, useSelected, useStore } from '../state/store';
 import type { AttributableField, Building, FieldMeta } from '../domain/types';
-import { IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS } from '../domain/types';
+import { isBudapest, IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS } from '../domain/types';
 import { colorOf, formatConstruction, periodOf } from '../domain/periods';
 import QuickAddForm from './QuickAddForm';
+
+/** „Budapest, II. kerület” vagy „Szeged” */
+export function placeLabel(b: Building): string {
+  const city = b.city || 'Budapest';
+  return b.district && isBudapest(city) ? `${city}, ${b.district}. kerület` : city;
+}
 
 export function Unknown() {
   return <span className="unknown">ismeretlen</span>;
@@ -86,7 +92,7 @@ export default function BuildingPanel() {
   return (
     <div className="panel-inner">
       {b.isDemo && <DemoBanner />}
-      <div className="bp-kicker">{b.district ? `Budapest, ${b.district}. kerület` : 'Budapest'}</div>
+      <div className="bp-kicker">{placeLabel(b)}</div>
       <h2>{b.name ?? b.address ?? 'Névtelen épület'}</h2>
       {b.name && b.address && <div className="bp-address">{b.address}</div>}
 
