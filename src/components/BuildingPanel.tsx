@@ -2,8 +2,7 @@ import { useSelected, useStore } from '../state/store';
 import type { AttributableField, Building, FieldMeta } from '../domain/types';
 import { IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS } from '../domain/types';
 import { colorOf, formatConstruction, periodOf } from '../domain/periods';
-import { centroidOf } from '../domain/geo';
-import { newId } from '../domain/io';
+import QuickAddForm from './QuickAddForm';
 
 export function Unknown() {
   return <span className="unknown">ismeretlen</span>;
@@ -59,49 +58,13 @@ export default function BuildingPanel() {
   const startEdit = useStore((s) => s.startEdit);
   const select = useStore((s) => s.select);
 
-  if (!b && baseSel) {
-    const p = baseSel.props;
-    return (
-      <div className="panel-inner">
-        <div className="bp-kicker">OpenStreetMap-kontúr</div>
-        <h2>{String(p.name ?? 'Adatbázison kívüli épület')}</h2>
-        <p className="muted">
-          Ez az épület az alaptérképen szerepel, de még nincs az atlasz adatbázisában. Építési éve, tervezője és stílusa ismeretlen.
-        </p>
-        {p.render_height != null && <p className="muted">Az OSM szerinti magasság: {String(p.render_height)} m</p>}
-        <button
-          className="btn primary"
-          onClick={() =>
-            startEdit({
-              id: newId('m'),
-              isDemo: false,
-              city: 'Budapest',
-              centroid: centroidOf(baseSel.geometry),
-              geometry: baseSel.geometry,
-              construction: { precision: 'unknown', sourceIds: [] },
-              alterations: [],
-              architects: [],
-              protection: 'ismeretlen',
-              images: [],
-              sources: [{ id: 'osm', title: 'OpenStreetMap közreműködők – épületkontúr', url: 'https://www.openstreetmap.org/copyright', license: 'ODbL 1.0' }],
-              fieldMeta: {},
-              origin: 'manual',
-              updatedAt: new Date().toISOString(),
-            })
-          }
-        >
-          Felvétel az adatbázisba…
-        </button>
-        <p className="hint">A kontúr a vektorcsempéből származik; csempehatáron levágott lehet.</p>
-      </div>
-    );
-  }
+  if (!b && baseSel) return <QuickAddForm key={baseSel.ts} sel={baseSel} />;
 
   if (!b) {
     return (
       <div className="panel-inner empty">
         <h2>Épület adatlap</h2>
-        <p className="muted">Kattints egy épületre a térképen, vagy keress a bal oldali keresőben.</p>
+        <p className="muted">Kattints egy színes épületre az adatlapjáért, vagy egy szürke (még nem nyilvántartott) épületre, hogy felvedd az adatait.</p>
       </div>
     );
   }

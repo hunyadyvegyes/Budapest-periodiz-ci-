@@ -277,3 +277,9 @@ a { color: var(--accent-2); }
   .legend { width: 160px; bottom: 10px; max-height: 40%; }
   .tl-presets { display: none; }
 }
+
+/* ---------- gyors felvétel ---------- */
+.quick-add h2 { margin-bottom: 4px; }
+.qa { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.qa.form fieldset { margin: 4px 0 0; }
+.form-error.block { display: block; max-width: none; margin: 10px 0 0; }

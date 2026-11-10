@@ -159,3 +159,17 @@ a listát lásd: `docs/KVIZ-EPULETEK-JELENTES.md`. Újragenerálás:
 ```bash
 cd data-work && python3 make_research.py && python3 build.py
 ```
+
+## Új épület felvétele a térképen
+
+1. Indítsd az alkalmazást (`npm run dev`), és közelíts rá az épületre.
+2. Kattints a szürke (még nem nyilvántartott) épületre – kék keret jelzi, mire kattintasz.
+3. A jobb oldalon megnyíló űrlapon a **cím, a kerület és a pontos körvonal** magától kitöltődik
+   az OpenStreetMapből (ellenőrizd). Add meg a nevet, az építési időt, a tervezőt, a stílust,
+   a funkciót és a **forrást** – évhez, tervezőhöz, stílushoz forrás nélkül nem ment.
+4. **Mentés**: a rekord a projekt mappájába kerül (`public/data/sajat-modositasok.json`),
+   így böngészőváltás után is megmarad, és a mappával együtt menthető/másolható.
+
+Meglévő épületet az adatlap **Szerkesztés** gombjával módosíthatsz; ez is ebbe a fájlba kerül.
+Ha az alkalmazást statikus tárhelyről (nem `npm run dev`-vel) nyitod meg, a módosítások csak
+az adott böngészőben tárolódnak.

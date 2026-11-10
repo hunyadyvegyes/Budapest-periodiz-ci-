@@ -32,6 +32,7 @@ export default function DataView() {
   const setView = useStore((s) => s.setView);
   const resetLocal = useStore((s) => s.resetLocal);
   const notify = useStore((s) => s.notify);
+  const saveTarget = useStore((s) => s.saveTarget);
   const filtered = useFiltered();
   const fileRef = useRef<HTMLInputElement>(null);
   const [report, setReport] = useState<string | null>(null);
@@ -91,12 +92,12 @@ export default function DataView() {
         </section>
         <section className="card">
           <h3>Kézi felvitel</h3>
-          <p className="muted">Új rekord koordináta alapján, vagy a térképen: kapcsold be az OSM-kontúrokat, kattints egy épületre, majd „Felvétel az adatbázisba”.</p>
+          <p className="muted">A legegyszerűbb: a térképen kattints egy szürke épületre – a cím és a körvonal kitöltődik, neked csak a történeti adatokat kell megadnod. Koordinátával is felvehetsz épületet:</p>
           <div className="btn-row">
             <button className="btn primary" onClick={newRecord}>Új épület…</button>
-            <button className="btn danger" onClick={() => confirm('A böngészőben tárolt összes módosítás és import törlődik. Folytatod?') && resetLocal()}>Helyi módosítások törlése</button>
+            <button className="btn danger" onClick={() => confirm('Az összes saját felvitel, módosítás és import törlődik (a projektmappa sajat-modositasok.json fájljából is). Folytatod?') && resetLocal()}>Helyi módosítások törlése</button>
           </div>
-          <p className="hint">A prototípus a böngésző helyi tárolójában (localStorage) menti a módosításokat. A Supabase/PostGIS háttér sémája: <code>supabase/schema.sql</code>.</p>
+          <p className="hint">A saját felvitelek és módosítások helye: <strong>{saveTarget === 'file' ? 'a projekt mappája (public/data/sajat-modositasok.json)' : 'ez a böngésző (localStorage)'}</strong>. A Supabase/PostGIS háttér sémája: <code>supabase/schema.sql</code>.</p>
         </section>
       </div>
 

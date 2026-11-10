@@ -84,8 +84,11 @@ export default function MapView() {
       const layers = ATLAS_LAYERS.filter((l) => map.getLayer(l));
       const feats = layers.length ? map.queryRenderedFeatures(e.point, { layers }) : [];
       const baseLayers = useStore.getState().showBaseBuildings ? baseBuildingLayerIds(map) : [];
-      const baseHit = !feats.length && baseLayers.length && map.queryRenderedFeatures(e.point, { layers: baseLayers }).length;
-      map.getCanvas().style.cursor = feats.length || baseHit ? 'pointer' : '';
+      const baseFeat = !feats.length && baseLayers.length ? map.queryRenderedFeatures(e.point, { layers: baseLayers })[0] : undefined;
+      map.getCanvas().style.cursor = feats.length || baseFeat ? 'pointer' : '';
+      (map.getSource('base-hover') as GeoJSONSource | undefined)?.setData(
+        baseFeat ? { type: 'Feature', geometry: baseFeat.geometry, properties: {} } : { type: 'FeatureCollection', features: [] },
+      );
       if (feats.length) {
         const p = feats[0].properties as Record<string, string>;
         const html = `<strong>${escapeHtml(p.label)}</strong><br/><span>${escapeHtml(p.yearLabel)}</span>${p.isDemo === 'true' || (p.isDemo as unknown) === true ? '<br/><em class="demo-tag">DEMO</em>' : ''}`;
@@ -93,7 +96,10 @@ export default function MapView() {
         popupRef.current.setLngLat(e.lngLat).setHTML(html).addTo(map);
       } else popupRef.current?.remove();
     });
-    map.on('mouseout', () => popupRef.current?.remove());
+    map.on('mouseout', () => {
+      popupRef.current?.remove();
+      (map.getSource('base-hover') as GeoJSONSource | undefined)?.setData({ type: 'FeatureCollection', features: [] });
+    });
     map.on('click', (e) => {
       const st = useStore.getState();
       const layers = ATLAS_LAYERS.filter((l) => map.getLayer(l));
@@ -106,7 +112,7 @@ export default function MapView() {
         const base = map.queryRenderedFeatures(e.point, { layers: baseBuildingLayerIds(map) });
         const g = base[0]?.geometry;
         if (g && (g.type === 'Polygon' || g.type === 'MultiPolygon')) {
-          st.setBaseSelection({ geometry: g, props: { ...base[0].properties } });
+          st.setBaseSelection({ geometry: g, props: { ...base[0].properties }, lngLat: [e.lngLat.lng, e.lngLat.lat], ts: Date.now() });
           return;
         }
       }
@@ -225,6 +231,9 @@ function addAtlasLayers(map: MLMap) {
   map.addSource('atlas', { type: 'geojson', data: { type: 'FeatureCollection', features: [] }, promoteId: 'id' });
   map.addSource('atlas-points', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   map.addSource('base-selection', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+  map.addSource('base-hover', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+  map.addLayer({ id: 'base-hover-fill', type: 'fill', source: 'base-hover', paint: { 'fill-color': '#1f4fa3', 'fill-opacity': 0.12 } }, firstSymbol);
+  map.addLayer({ id: 'base-hover-line', type: 'line', source: 'base-hover', paint: { 'line-color': '#1f4fa3', 'line-width': 1.5 } }, firstSymbol);
 
   map.addLayer(
     {

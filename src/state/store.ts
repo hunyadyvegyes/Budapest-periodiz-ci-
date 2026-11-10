@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Building } from '../domain/types';
 import { EMPTY_FILTER, type FilterState, applyFilter } from '../domain/filter';
-import { createRepository } from '../data/repository';
+import { createRepository, type SaveTarget } from '../data/repository';
 
 export type View = 'map' | 'stats' | 'data';
 export type MapMode = '2d' | '3d' | 'google3d';
@@ -21,7 +21,9 @@ interface AppState {
   rightOpen: boolean;
   showBaseBuildings: boolean;
   /** kijelölt OSM-alaptérképi épület (még nincs az adatbázisban) */
-  baseSelection: { geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon; props: Record<string, unknown> } | null;
+  baseSelection: { geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon; props: Record<string, unknown>; lngLat: [number, number]; ts: number } | null;
+  /** hova menti a saját adatokat: projektmappa-fájlba vagy a böngészőbe */
+  saveTarget: SaveTarget;
   flyTo: { center: [number, number]; ts: number } | null;
   toast: string | null;
 
@@ -57,6 +59,7 @@ export const useStore = create<AppState>((set, get) => ({
   rightOpen: true,
   showBaseBuildings: false,
   baseSelection: null,
+  saveTarget: 'browser',
   flyTo: null,
   toast: null,
 
@@ -68,6 +71,7 @@ export const useStore = create<AppState>((set, get) => ({
     set({
       buildings,
       loading: false,
+      saveTarget: repo.target,
       ...(hasReal ? { filter: { ...get().filter, showDemo: false }, showBaseBuildings: true } : {}),
     });
   },
@@ -98,10 +102,15 @@ export const useStore = create<AppState>((set, get) => ({
   startEdit(b) { set({ editing: b }); },
   async save(b) {
     const updated = { ...b, updatedAt: new Date().toISOString() };
-    await repo.upsert(updated);
+    try {
+      await repo.upsert(updated);
+    } catch (e) {
+      get().notify(`Hiba: ${(e as Error).message}`);
+      throw e;
+    }
     const list = get().buildings.filter((x) => x.id !== b.id);
     set({ buildings: [...list, updated], editing: null, selectedId: b.id, baseSelection: null });
-    get().notify('Rekord mentve (helyi tároló).');
+    get().notify(repo.target === 'file' ? 'Mentve a projektmappába (public/data/sajat-modositasok.json).' : 'Mentve a böngészőbe.');
   },
   async saveMany(list) {
     await repo.upsertMany(list);
