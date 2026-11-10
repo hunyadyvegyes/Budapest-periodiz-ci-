@@ -84,7 +84,7 @@ export default function DataView() {
       <div className="data-grid">
         <section className="card" hidden={!editable}>
           <h3>Import</h3>
-          <p className="muted">CSV (vessző vagy pontosvessző) vagy GeoJSON. A CSV-oszlopokat lásd az exportált sablonban. Geometria nélküli sor koordinátával (lat, lng) is felvehető.</p>
+          <p className="muted">CSV (vessző vagy pontosvessző), GeoJSON, vagy a gépeden futó változat mentésfájlja (<code>public/data/sajat-modositasok.json</code>) – így a korábban felvitt épületeid áttölthetők. A CSV-oszlopokat lásd az exportált sablonban. Geometria nélküli sor koordinátával (lat, lng) is felvehető.</p>
           <input ref={fileRef} type="file" accept=".csv,.geojson,.json" hidden onChange={(e) => e.target.files?.[0] && onImport(e.target.files[0])} />
           <button className="btn primary" onClick={() => fileRef.current?.click()}>Fájl kiválasztása…</button>
           {report && <p className="report">{report}</p>}

@@ -109,3 +109,13 @@ describe('keresés – egybetűs token', () => {
     expect(applyFilter(l, { ...EMPTY_FILTER, query: 'Tervező K' }).map((b) => b.id)).toEqual(['k']);
   });
 });
+
+describe('helyi mentésfájl áttöltése', () => {
+  it('a sajat-modositasok.json formátumot is beolvassa', () => {
+    const b = mk('m-1', { name: 'Saját', district: 'VII' });
+    const { buildings, skipped } = parseGeoJSON(JSON.stringify({ upserts: { 'm-1': b, rossz: { id: 'rossz' } }, deleted: [] }));
+    expect(buildings.map((x) => x.id)).toEqual(['m-1']);
+    expect(buildings[0].geometry).toEqual(geom);
+    expect(skipped).toBe(1);
+  });
+});

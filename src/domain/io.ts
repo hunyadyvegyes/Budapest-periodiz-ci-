@@ -146,6 +146,19 @@ function flatToBuilding(
 
 export function parseGeoJSON(text: string): { buildings: Building[]; skipped: number } {
   const data = JSON.parse(text);
+  // A helyi változat mentésfájlja (public/data/sajat-modositasok.json): { upserts: {id: rekord}, deleted: [...] }
+  if (data && typeof data === 'object' && data.upserts && !data.type) {
+    const buildings: Building[] = [];
+    let skipped = 0;
+    for (const b of Object.values(data.upserts) as Building[]) {
+      const g = b?.geometry;
+      if (g && (g.type === 'Polygon' || g.type === 'MultiPolygon')) {
+        const f = featureToBuilding({ type: 'Feature', geometry: g, properties: { ...b, geometry: undefined } });
+        if (f) buildings.push(f); else skipped++;
+      } else skipped++;
+    }
+    return { buildings, skipped };
+  }
   const features: Feature[] = data.type === 'FeatureCollection' ? data.features : data.type === 'Feature' ? [data] : [];
   const buildings: Building[] = [];
   let skipped = 0;
