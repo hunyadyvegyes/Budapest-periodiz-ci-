@@ -1,0 +1,33 @@
+{
+  "name": "budapest-atlasz",
+  "version": "1.0.0",
+  "description": "Budapest Építészettörténeti Atlasz – interaktív prototípus",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "gen:demo": "node scripts/generate-demo.mjs",
+    "fetch:osm": "node scripts/fetch-osm.mjs"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "maplibre-gl": "^6.17.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.10.1",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0"
+  },
+  "private": true,
+  "type": "module"
+}
