@@ -135,6 +135,7 @@ export default function DetailModal() {
         </div>
         <footer className="modal-foot">
           {editable && <button className="btn" onClick={() => { openDetail(false); startEdit(structuredClone(b)); }}>Szerkesztés</button>}
+          {editable && <button className="btn" onClick={() => useStore.getState().startReassign(b.id)}>Áthelyezés másik épületre</button>}
           <button className="btn primary" onClick={() => openDetail(false)}>Bezárás</button>
         </footer>
       </div>

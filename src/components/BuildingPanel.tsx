@@ -3,6 +3,7 @@ import type { AttributableField, Building, FieldMeta } from '../domain/types';
 import { isBudapest, IMAGE_KIND_LABELS, PRECISION_LABELS, PROTECTION_LABELS, RELIABILITY_LABELS } from '../domain/types';
 import { colorOf, formatConstruction, periodOf } from '../domain/periods';
 import QuickAddForm from './QuickAddForm';
+import ReassignPanel from './ReassignPanel';
 
 /** „Budapest, II. kerület” vagy „Szeged” */
 export function placeLabel(b: Building): string {
@@ -65,6 +66,10 @@ export default function BuildingPanel() {
   const select = useStore((s) => s.select);
   const editable = useStore((s) => canEdit(s));
   const setLoginOpen = useStore((s) => s.setLoginOpen);
+  const reassign = useStore((s) => s.reassign);
+  const startReassign = useStore((s) => s.startReassign);
+
+  if (b && reassign && reassign.id === b.id && editable) return <ReassignPanel b={b} />;
 
   if (!b && baseSel) {
     if (!editable)
@@ -131,6 +136,11 @@ export default function BuildingPanel() {
       <div className="bp-actions">
         <button className="btn primary" onClick={() => openDetail(true)}>Részletes adatlap</button>
         {editable && <button className="btn" onClick={() => startEdit(structuredClone(b))}>Szerkesztés</button>}
+        {editable && (
+          <button className="btn" onClick={() => startReassign(b.id)} title="Ha rossz épülethez került: az adatok megtartásával áthelyezheted a helyes épületre">
+            Áthelyezés másik épületre
+          </button>
+        )}
         <button className="btn ghost" onClick={() => select(null)}>Bezárás</button>
       </div>
     </div>

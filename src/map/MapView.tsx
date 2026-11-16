@@ -46,6 +46,8 @@ export default function MapView() {
   const total = useStore((s) => s.buildings.length);
   const selectedId = useStore((s) => s.selectedId);
   const baseSelection = useStore((s) => s.baseSelection);
+  const reassign = useStore((s) => s.reassign);
+  const cancelReassign = useStore((s) => s.cancelReassign);
   const mapMode = useStore((s) => s.mapMode);
   const showBase = useStore((s) => s.showBaseBuildings);
   const flyTo = useStore((s) => s.flyTo);
@@ -90,8 +92,9 @@ export default function MapView() {
     // interakció
     map.on('mousemove', (e) => {
       const layers = ATLAS_LAYERS.filter((l) => map.getLayer(l));
-      const feats = layers.length ? map.queryRenderedFeatures(e.point, { layers }) : [];
-      const showBase = useStore.getState().showBaseBuildings;
+      const reassigning = Boolean(useStore.getState().reassign);
+      const feats = layers.length && !reassigning ? map.queryRenderedFeatures(e.point, { layers }) : [];
+      const showBase = useStore.getState().showBaseBuildings || reassigning;
       let hoverGeom: GeoJSON.Geometry | null = null;
       let pointer = feats.length > 0;
       if (!feats.length && showBase) {
@@ -121,6 +124,26 @@ export default function MapView() {
     });
     map.on('click', (e) => {
       const st = useStore.getState();
+      if (st.reassign) {
+        // Áthelyezési mód: a kattintott (helyes) épület kiválasztása
+        if (map.getZoom() < MIN_SELECT_ZOOM) {
+          map.flyTo({ center: e.lngLat, zoom: Math.max(17, MIN_SELECT_ZOOM + 1), duration: 700 });
+          st.notify('Ráközelítettem – most kattints a helyes épületre.');
+          return;
+        }
+        const other = map
+          .queryRenderedFeatures(e.point, { layers: ['atlas-fill', 'atlas-extrusion'].filter((l) => map.getLayer(l)) })
+          .find((f) => String(f.properties.id) !== st.reassign!.id);
+        if (other) {
+          st.notify(`Ez az épület már szerepel az atlaszban („${other.properties.label}”). Válassz másikat.`);
+          return;
+        }
+        const hit = map.getLayer('osm-bld-hit') ? map.queryRenderedFeatures(e.point, { layers: ['osm-bld-hit'] })[0] : undefined;
+        const ob = hit ? osmById.get(String(hit.properties.id)) : undefined;
+        if (ob) st.setReassignTarget({ geometry: ob.geometry, osmRef: ob.id, address: ob.address, lngLat: [e.lngLat.lng, e.lngLat.lat] });
+        else st.notify('Itt nem találok épületet – ha most töltődik a környék, próbáld újra egy pillanat múlva.');
+        return;
+      }
       if (st.mapMode === '3d') {
         const aid = modelAtlasIdAt(map, e.point);
         if (aid) {
@@ -159,7 +182,8 @@ export default function MapView() {
 
     // Valódi OSM-épületkörvonalak betöltése közeli nézetben (kijelöléshez)
     const loadOsm = () => {
-      if (!useStore.getState().showBaseBuildings || map.getZoom() < MIN_SELECT_ZOOM || !map.getSource('osm-buildings')) return;
+      const st0 = useStore.getState();
+      if ((!st0.showBaseBuildings && !st0.reassign) || map.getZoom() < MIN_SELECT_ZOOM || !map.getSource('osm-buildings')) return;
       const bb = map.getBounds();
       setOsmLoading(true);
       loadView({ west: bb.getWest(), south: bb.getSouth(), east: bb.getEast(), north: bb.getNorth() })
@@ -213,12 +237,18 @@ export default function MapView() {
     for (const l of ['atlas-selected', 'atlas-selected-halo', 'atlas-selected-extrusion'])
       if (map.getLayer(l)) map.setFilter(l, ['==', ['get', 'id'], id]);
     const src = map.getSource('base-selection') as GeoJSONSource | undefined;
-    src?.setData(
-      baseSelection
-        ? { type: 'Feature', geometry: baseSelection.geometry, properties: {} }
-        : { type: 'FeatureCollection', features: [] },
-    );
-  }, [selectedId, baseSelection, ready]);
+    const g = reassign?.target?.geometry ?? baseSelection?.geometry;
+    src?.setData(g ? { type: 'Feature', geometry: g, properties: {} } : { type: 'FeatureCollection', features: [] });
+  }, [selectedId, baseSelection, reassign, ready]);
+
+  // Áthelyezési módban az OSM-körvonalak akkor is töltődjenek, ha az alaptérképi kontúrok ki vannak kapcsolva
+  useEffect(() => {
+    if (!reassign) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && cancelReassign();
+    window.addEventListener('keydown', onKey);
+    osmLoaderRef.current();
+    return () => window.removeEventListener('keydown', onKey);
+  }, [reassign, cancelReassign]);
 
   // --- 2D / 3D -----------------------------------------------------------
   useEffect(() => {
@@ -285,6 +315,14 @@ export default function MapView() {
       {basemapFailed && (
         <div className="map-notice">
           Az alaptérkép ({new URL(BASEMAP_URL).host}) nem érhető el – egyszerűsített háttér látható. Az adatréteg működik.
+        </div>
+      )}
+      {reassign && (
+        <div className="reassign-banner" role="status">
+          <span>
+            <strong>Áthelyezés:</strong> {reassign.target ? 'a kiválasztott épület kéken jelölve – ellenőrizd a jobb oldalon.' : 'kattints a helyes épületre a térképen (szükség esetén közelíts rá).'}
+          </span>
+          <button className="btn small" onClick={cancelReassign}>Mégse</button>
         </div>
       )}
       <div className="map-count">

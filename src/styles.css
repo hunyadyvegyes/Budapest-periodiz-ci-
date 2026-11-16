@@ -308,3 +308,11 @@ a { color: var(--accent-2); }
 .import-foot .hint { margin: 0; flex: 1 1 260px; }
 
 .cell-input.mid { min-width: 100px; width: 120px; }
+
+/* ---------- áthelyezés ---------- */
+.reassign-banner { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 6; display: flex; gap: 10px; align-items: center;
+  background: #1f4fa3; color: #fff; padding: 7px 8px 7px 14px; border-radius: var(--radius); box-shadow: 0 2px 10px rgba(0,0,0,0.2); max-width: min(640px, 90%); font-size: 12.5px; }
+.reassign-banner .btn { background: #fff; border-color: #fff; color: #1f4fa3; }
+.reassign-step { display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.hint-box { background: #eaf0fa; border: 1px solid #c7d6ef; border-radius: var(--radius); padding: 10px 12px; margin-top: 10px; line-height: 1.45; color: #1f3a66; }
+kbd { font-family: ui-monospace, monospace; font-size: 11px; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 3px; padding: 0 4px; background: var(--card); }

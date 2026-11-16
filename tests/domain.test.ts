@@ -149,3 +149,22 @@ describe('súlypont', () => {
     expect(Math.abs(y - (47.5071 + d / 2))).toBeLessThan(1e-9);
   });
 });
+
+describe('áthelyezés másik épületre', () => {
+  it('minden adat megmarad, csak a hely és az OSM-hivatkozás változik', async () => {
+    const { reassignBuilding } = await import('../src/domain/reassign');
+    const b = mk('x', {
+      name: 'Teszt', address: 'Régi utca 1.', district: 'V', architects: ['A B'], description: 'leírás',
+      construction: { precision: 'exact', year: 1900, sourceIds: ['s1'] },
+      sources: [{ id: 's1', title: 'könyv' }, { id: 'osm', title: 'OSM régi', url: 'https://www.openstreetmap.org/way/1' }],
+    });
+    const g = { type: 'Polygon' as const, coordinates: [[[19.1, 47.5], [19.101, 47.5], [19.101, 47.501], [19.1, 47.501], [19.1, 47.5]]] };
+    const r = reassignBuilding(b, { geometry: g, osmRef: 'way/2', place: { address: 'Új utca 3.', city: 'Budapest', district: 'VI' }, updateAddress: true });
+    expect(r).toMatchObject({ id: 'x', name: 'Teszt', architects: ['A B'], description: 'leírás', construction: b.construction, address: 'Új utca 3.', district: 'VI', geometry: g });
+    expect(r.sources.map((s) => s.url ?? s.id)).toEqual(['s1', 'https://www.openstreetmap.org/way/2']);
+    expect(r.centroid[0]).toBeCloseTo(19.1005, 6);
+    const keep = reassignBuilding(b, { geometry: g, osmRef: 'way/2', place: { address: 'Új utca 3.' }, updateAddress: false });
+    expect(keep.address).toBe('Régi utca 1.');
+    expect(keep.district).toBe('V');
+  });
+});

@@ -7,6 +7,13 @@ import { currentSession, onAuthChange, signIn as sbSignIn, signOut as sbSignOut,
 export type View = 'map' | 'stats' | 'data' | 'import';
 export type MapMode = '2d' | '3d' | 'google3d';
 
+export interface ReassignTarget {
+  geometry: GeoJSON.Polygon | GeoJSON.MultiPolygon;
+  osmRef?: string;
+  address?: string;
+  lngLat: [number, number];
+}
+
 const repo = createRepository();
 
 interface AppState {
@@ -37,6 +44,11 @@ interface AppState {
   resetFilter(): void;
   select(id: string | null, fly?: boolean): void;
   setBaseSelection(s: AppState['baseSelection']): void;
+  /** Áthelyezés: a kijelölt rekord hozzárendelése egy másik (helyes) épülethez */
+  reassign: { id: string; target: ReassignTarget | null } | null;
+  startReassign(id: string): void;
+  setReassignTarget(t: ReassignTarget | null): void;
+  cancelReassign(): void;
   openDetail(open: boolean): void;
   setView(v: View): void;
   setMapMode(m: MapMode): void;
@@ -72,6 +84,7 @@ export const useStore = create<AppState>((set, get) => ({
   rightOpen: true,
   showBaseBuildings: false,
   baseSelection: null,
+  reassign: null,
   saveTarget: 'browser',
   session: null,
   loginOpen: false,
@@ -114,6 +127,16 @@ export const useStore = create<AppState>((set, get) => ({
       flyTo: fly && b ? { center: b.centroid, ts: Date.now() } : get().flyTo,
     });
   },
+  startReassign(id) {
+    set({ reassign: { id, target: null }, selectedId: id, baseSelection: null, detailOpen: false, rightOpen: true });
+  },
+  setReassignTarget(t) {
+    const r = get().reassign;
+    if (r) set({ reassign: { ...r, target: t } });
+  },
+  cancelReassign() {
+    set({ reassign: null });
+  },
   setBaseSelection(s) {
     set({ baseSelection: s, selectedId: null, rightOpen: s ? true : get().rightOpen });
   },
@@ -133,7 +156,7 @@ export const useStore = create<AppState>((set, get) => ({
       throw e;
     }
     const list = get().buildings.filter((x) => x.id !== b.id);
-    set({ buildings: [...list, updated], editing: null, selectedId: b.id, baseSelection: null });
+    set({ buildings: [...list, updated], editing: null, selectedId: b.id, baseSelection: null, reassign: null });
     get().notify(
       repo.target === 'online' ? 'Mentve az online adatbázisba.' : repo.target === 'file' ? 'Mentve a projektmappába (public/data/sajat-modositasok.json).' : 'Mentve ebbe a böngészőbe.',
     );
