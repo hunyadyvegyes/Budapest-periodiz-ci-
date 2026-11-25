@@ -5,6 +5,7 @@ import { LAYER_DEFS, LINEWEIGHTS, LAYER_COLORS, LayerName } from '../drawing/typ
 import { Derived } from '../state/derived';
 import { Project, persistKey, useStore } from '../state/store';
 import { CLAUDE_MODEL } from '../ai/models';
+import { inArtifact } from '../platform';
 
 export default function LeftPanel({ project, derived }: { project: Project | null; derived: Derived | null }) {
   return (
@@ -77,10 +78,12 @@ function Recognition({ project }: { project: Project | null }) {
       <button disabled={!project || project.status === 'processing'} onClick={() => run()}>Re-analyse</button>
       <div className="ai-box">
         <div className="ai-h">AI review <span className="badge">optional</span></div>
-        <p className="muted small">Sends the corrected photo and the detected candidates to {CLAUDE_MODEL} with your own Anthropic API key. It confirms, rejects or re-classifies openings, masks cars, trees and people, and points out missed openings. Geometry stays photo-based.</p>
+        <p className="muted small">{inArtifact ? 'Sends the corrected photo and the detected candidates to Claude (built into claude.ai, you are asked once).' : `Sends the corrected photo and the detected candidates to ${CLAUDE_MODEL} with your own Anthropic API key.`} It confirms, rejects or re-classifies openings, masks cars, trees and people, and points out missed openings. Geometry stays photo-based.</p>
+        {!inArtifact && <>
         <input type="password" placeholder="Anthropic API key (sk-ant-…)" value={apiKey} autoComplete="off"
           onChange={(e) => { patch({ apiKey: e.target.value }); persistKey(e.target.value, remember); }} />
         <label className="check small"><input type="checkbox" checked={remember} onChange={(e) => { patch({ rememberKey: e.target.checked }); persistKey(apiKey, e.target.checked); }} /> Remember for this browser tab only</label>
+        </>}
         <button disabled={!project?.model || project.ai.status === 'running'} onClick={() => aiReview()}>{project?.ai.status === 'running' ? 'Reviewing…' : 'Review with Claude'}</button>
         {project?.ai.message && <p className={`note ${project.ai.status === 'error' ? 'err' : ''}`}>{project.ai.message}</p>}
       </div>

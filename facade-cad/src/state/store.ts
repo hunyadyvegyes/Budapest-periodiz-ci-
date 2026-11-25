@@ -9,6 +9,7 @@ import { RectInfo } from '../worker/protocol';
 import { worker } from '../worker/client';
 import { mergeRefinement, MergeSummary } from '../ai/merge';
 import { NormBox, toNorm, fromNorm } from '../ai/provider';
+import { hostedRefiner } from '../platform';
 
 export type View = 'photo' | 'rectified' | 'drawing' | 'overlay';
 export type Tool = 'select' | 'pan' | 'addWindow' | 'addDoor' | 'addLine' | 'ignore' | 'scalePoints';
@@ -199,7 +200,8 @@ export const useStore = create<State>((set, get) => ({
     const p = active(get());
     if (!p || !p.model || !p.rect) return;
     const key = get().apiKey.trim();
-    if (!key) { get().patchProject(p.id, { ai: { status: 'error', message: 'Enter an Anthropic API key first.' } }); return; }
+    const hosted = await hostedRefiner();
+    if (!hosted && !key) { get().patchProject(p.id, { ai: { status: 'error', message: 'Enter an Anthropic API key first.' } }); return; }
     get().patchProject(p.id, { ai: { status: 'running', message: 'Sending the corrected photo for review…' } });
     try {
       const m = p.model;
@@ -207,8 +209,8 @@ export const useStore = create<State>((set, get) => ({
       const f = m.facade;
       const boxes = new Map<string, NormBox>();
       const candidates = m.openings.map((o) => { const b = toNorm(o.rect, m.width, m.height); boxes.set(o.id, b); return { id: o.id, kind: o.kind, box: b, confidence: o.confidence }; });
-      const { claudeProvider } = await import('../ai/claude'); // loaded only when used
-      const res = await claudeProvider(key).refine({
+      const provider = hosted ?? (await import('../ai/claude')).claudeProvider(key); // SDK loaded only when used
+      const res = await provider.refine({
         imageBase64: jpg.base64, width: jpg.w, height: jpg.h, candidates,
         facade: toNorm({ x: f.x0, y: f.top, w: f.x1 - f.x0, h: f.ground - f.top }, m.width, m.height),
       });

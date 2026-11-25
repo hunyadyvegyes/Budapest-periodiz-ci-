@@ -76,3 +76,14 @@ describe('PDF / SVG', () => {
     expect(exportDXF(drawings[3])).toMatch(/\$INSUNITS\r\n 70\r\n0\r\n/);
   });
 });
+
+describe('zip container (hosted DXF save)', () => {
+  it.skipIf(!hasPy('zipfile'))('is readable by a standard unzip', async () => {
+    const { zip } = await import('../src/platform');
+    const f = path.join(tmp, 'x.zip');
+    const dxf = exportDXF(drawings[0]);
+    fs.writeFileSync(f, zip([{ name: 'facade.dxf', data: new TextEncoder().encode(dxf) }]));
+    const out = execFileSync('python3', ['-c', 'import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;print(z.namelist()[0], len(z.read("facade.dxf")))', f], { encoding: 'utf8' });
+    expect(out.trim()).toBe(`facade.dxf ${new TextEncoder().encode(dxf).length}`);
+  });
+});

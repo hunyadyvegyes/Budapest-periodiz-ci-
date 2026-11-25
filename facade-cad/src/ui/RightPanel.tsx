@@ -9,6 +9,7 @@ import { Derived } from '../state/derived';
 import { deleteElement, findElement, patchOpening, restoreSuppressed, setOpeningRect, setSubdivisions, suppressEntity } from '../state/edits';
 import { Project, useStore } from '../state/store';
 import { Meter, Section } from './LeftPanel';
+import { saveFile, inArtifact } from '../platform';
 
 export default function RightPanel({ project, derived }: { project: Project | null; derived: Derived | null }) {
   return (
@@ -164,13 +165,6 @@ function QC({ derived }: { derived: Derived | null }) {
   );
 }
 
-function download(name: string, data: string | Blob | Uint8Array, type: string) {
-  const url = URL.createObjectURL(new Blob([data as BlobPart], { type }));
-  const a = document.createElement('a');
-  a.href = url; a.download = name;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 5000);
-}
 
 function Export({ project, derived }: { project: Project | null; derived: Derived | null }) {
   const layers = useStore((s) => s.layers);
@@ -178,6 +172,8 @@ function Export({ project, derived }: { project: Project | null; derived: Derive
   const [ver, setVer] = useState<'R2000' | 'R12'>('R2000');
   const [hidden, setHidden] = useState(true);
   const [scaleDen, setScaleDen] = useState<number | 0>(0);
+  const [msg, setMsg] = useState('');
+  const download = (name: string, data: string | Uint8Array | Blob) => { saveFile(name, data).then(setMsg); };
   if (!project || !derived) return <p className="muted">Available after the analysis.</p>;
   const d = derived.drawing;
   const base = `${project.name.replace(/\.[a-z]+$/i, '')}-L${level}`;
@@ -195,7 +191,7 @@ function Export({ project, derived }: { project: Project | null; derived: Derive
     g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
     g.drawImage(img, 0, 0, c.width, c.height);
     URL.revokeObjectURL(url);
-    c.toBlob((b) => b && download(`${base}.png`, b, 'image/png'), 'image/png');
+    c.toBlob((b) => b && download(`${base}.png`, b), 'image/png');
   };
   return (
     <div className="stack">
@@ -208,7 +204,7 @@ function Export({ project, derived }: { project: Project | null; derived: Derive
         </select>
       </div>
       <label className="check small"><input type="checkbox" checked={hidden} onChange={(e) => setHidden(e.target.checked)} /> Include hidden layers in DXF (switched off)</label>
-      <button className="primary" onClick={() => download(`${base}.dxf`, exportDXF(d, { version: ver, layers, includeHiddenLayers: hidden }), 'application/dxf')}>Download DXF</button>
+      <button className="primary" onClick={() => download(`${base}.dxf`, exportDXF(d, { version: ver, layers, includeHiddenLayers: hidden }))}>Download DXF</button>
       <label className="field">Sheet scale (SVG/PDF/PNG)
         <select value={scaleDen} onChange={(e) => setScaleDen(+e.target.value)} disabled={!d.mmPerPx}>
           <option value={0}>{d.mmPerPx ? `auto (1:${autoScale(d)})` : 'fit to sheet (unscaled)'}</option>
@@ -216,11 +212,13 @@ function Export({ project, derived }: { project: Project | null; derived: Derive
         </select>
       </label>
       <div className="row">
-        <button onClick={() => download(`${base}.svg`, exportSVG(d, layers, { scaleDenom: den }).svg, 'image/svg+xml')}>SVG</button>
-        <button onClick={() => download(`${base}.pdf`, exportPDF(d, layers, { scaleDenom: den }), 'application/pdf')}>PDF</button>
+        <button onClick={() => download(`${base}.svg`, exportSVG(d, layers, { scaleDenom: den }).svg)}>SVG</button>
+        <button onClick={() => download(`${base}.pdf`, exportPDF(d, layers, { scaleDenom: den }))}>PDF</button>
         <button onClick={png}>PNG</button>
-        <button title="Semantic model (for re-import / debugging)" onClick={() => download(`${base}-model.json`, JSON.stringify({ model: project.model, quad: project.quad, scale: project.scale }, null, 1), 'application/json')}>JSON</button>
+        <button title="Semantic model (for re-import / debugging)" onClick={() => download(`${base}-model.json`, JSON.stringify({ model: project.model, quad: project.quad, scale: project.scale }, null, 1))}>JSON</button>
       </div>
+      {inArtifact && <p className="muted small">In this hosted version the DXF is saved inside a .zip.</p>}
+      {msg && <p className="note">{msg}</p>}
       <details className="small">
         <summary>Layer standard</summary>
         <ul className="layer-list">{LAYER_DEFS.map((L) => <li key={L.name}><code>{L.name}</code> {L.desc} · {(layers[L.name as LayerName]?.lw ?? L.lw).toFixed(2)} mm</li>)}</ul>
