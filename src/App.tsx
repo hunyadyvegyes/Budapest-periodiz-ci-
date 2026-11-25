@@ -128,7 +128,12 @@ export default function App() {
         )}
       </main>
 
-      {loadError && <div className="load-error" role="alert">{loadError}</div>}
+      {loadError && (
+        <div className="load-error" role="alert">
+          <span>{loadError}</span>
+          <button className="btn small" onClick={() => load()}>Újrapróbálás</button>
+        </div>
+      )}
       <DetailModal />
       <LoginDialog />
       <EditForm />

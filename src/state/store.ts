@@ -36,6 +36,8 @@ interface AppState {
   session: EditorSession | null;
   loginOpen: boolean;
   loadError: string | null;
+  /** írható-e most a háttértár (online adatbázis kiesésekor nem) */
+  writable: boolean;
   flyTo: { center: [number, number]; ts: number } | null;
   toast: string | null;
 
@@ -67,8 +69,8 @@ interface AppState {
 }
 
 /** Szerkeszthet-e a felhasználó: helyi módban mindig, online módban bejelentkezve. */
-export function canEdit(s: Pick<AppState, 'saveTarget' | 'session'>): boolean {
-  return s.saveTarget !== 'online' || s.session != null;
+export function canEdit(s: Pick<AppState, 'saveTarget' | 'session' | 'writable'>): boolean {
+  return s.writable && (s.saveTarget !== 'online' || s.session != null);
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -89,6 +91,7 @@ export const useStore = create<AppState>((set, get) => ({
   session: null,
   loginOpen: false,
   loadError: null,
+  writable: true,
   flyTo: null,
   toast: null,
 
@@ -100,6 +103,8 @@ export const useStore = create<AppState>((set, get) => ({
     } catch (e) {
       set({ loadError: (e as Error).message });
     }
+    if (repo.lastError) set({ loadError: repo.lastError, writable: repo.writable });
+    else set({ writable: true });
     const session = repo.target === 'online' ? await currentSession() : null;
     if (repo.target === 'online') onAuthChange((s) => set({ session: s }));
     // Ha van valós (nem DEMO) adat: a DEMO rekordok alapból rejtve, az OSM-alapkontúrok láthatók

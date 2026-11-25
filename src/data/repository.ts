@@ -195,11 +195,26 @@ export class AtlasRepository {
     return this.backend;
   }
 
+  /** Ha a saját réteg (pl. az online adatbázis) nem tölthető be, itt a hiba; a beépített adatok ettől még látszanak. */
+  lastError: string | null = null;
+  /** Elérhető-e írásra a háttértár (online adatbázis kiesésekor nem). */
+  writable = true;
+
   async loadAll(): Promise<Building[]> {
     const backend = await this.pickBackend();
+    this.lastError = null;
+    this.writable = true;
     const [lists, overlay] = await Promise.all([
       Promise.all(DATASETS.map((p) => fetchCollection(import.meta.env.BASE_URL + p))),
-      backend.load(),
+      backend.load().catch((e: Error) => {
+        this.lastError =
+          backend.target === 'online'
+            ? 'Az online adatbázis most nem érhető el, ezért csak a beépített épületek látszanak, és a szerkesztés szünetel. ' +
+              'Ha ez tartósan így marad, a Supabase-projekt valószínűleg szüneteltetve van: supabase.com → a projekt → „Restore project”.'
+            : e.message;
+        this.writable = false;
+        return { upserts: {}, deleted: [] } as Overlay;
+      }),
     ]);
     const byId = new Map<string, Building>();
     for (const list of lists) for (const b of list) byId.set(b.id, b);
