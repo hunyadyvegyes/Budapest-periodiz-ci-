@@ -1,0 +1,169 @@
+{
+ "name": "brick-townhouse",
+ "title": "Brick townhouse with arched windows (frontal photo)",
+ "facade": {
+  "width_m": 11.0,
+  "wall_height_m": 13.0
+ },
+ "quad_px": [
+  [
+   388.63,
+   363.83
+  ],
+  [
+   1211.37,
+   363.83
+  ],
+  [
+   1249.38,
+   1356.88
+  ],
+  [
+   350.62,
+   1356.88
+  ]
+ ],
+ "camera": {
+  "f": 1600,
+  "w": 1600,
+  "h": 2000,
+  "dist": 20.0,
+  "yaw": 0.0,
+  "pitch": 8.0,
+  "height": 1.6,
+  "dx": 0.0
+ },
+ "openings": [
+  {
+   "kind": "window",
+   "u0": 1.2,
+   "v0": 1.0,
+   "u1": 2.7,
+   "v1": 3.4,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 8.3,
+   "v0": 1.0,
+   "u1": 9.8,
+   "v1": 3.4,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 1.2,
+   "v0": 5.2,
+   "u1": 2.5999999999999996,
+   "v1": 7.800000000000001,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "window",
+   "u0": 4.75,
+   "v0": 5.2,
+   "u1": 6.15,
+   "v1": 7.800000000000001,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "window",
+   "u0": 8.3,
+   "v0": 5.2,
+   "u1": 9.700000000000001,
+   "v1": 7.800000000000001,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "window",
+   "u0": 1.2,
+   "v0": 8.8,
+   "u1": 2.5999999999999996,
+   "v1": 11.200000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "window",
+   "u0": 4.75,
+   "v0": 8.8,
+   "u1": 6.15,
+   "v1": 11.200000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "window",
+   "u0": 8.3,
+   "v0": 8.8,
+   "u1": 9.700000000000001,
+   "v1": 11.200000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": "round"
+  },
+  {
+   "kind": "door",
+   "u0": 4.85,
+   "v0": 0,
+   "u1": 6.1499999999999995,
+   "v1": 2.6,
+   "floor": 0,
+   "arch": null
+  }
+ ],
+ "balconies": [],
+ "bands": [
+  {
+   "kind": "plinth",
+   "v0": 0,
+   "v1": 0.5
+  },
+  {
+   "kind": "string_course",
+   "v0": 4.0,
+   "v1": 4.28
+  },
+  {
+   "kind": "cornice",
+   "v0": 12.3,
+   "v1": 13.0
+  }
+ ],
+ "downpipes": [
+  {
+   "u0": 10.6,
+   "u1": 10.709999999999999
+  }
+ ],
+ "pilasters": [],
+ "occluders": [],
+ "roof": {
+  "top_v": 15.6,
+  "pitched": true
+ },
+ "material": {
+  "pattern": "brick",
+  "course_m": 0.075
+ }
+}

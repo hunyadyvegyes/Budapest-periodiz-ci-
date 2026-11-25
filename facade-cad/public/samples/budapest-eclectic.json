@@ -1,0 +1,369 @@
+{
+ "name": "budapest-eclectic",
+ "title": "Eclectic apartment house (historicist, 1890s style)",
+ "facade": {
+  "width_m": 21.0,
+  "wall_height_m": 17.2
+ },
+ "quad_px": [
+  [
+   521.21,
+   357.15
+  ],
+  [
+   1435.85,
+   423.44
+  ],
+  [
+   1488.84,
+   1173.7
+  ],
+  [
+   456.49,
+   1182.36
+  ]
+ ],
+ "camera": {
+  "f": 1500,
+  "w": 2000,
+  "h": 1500,
+  "dist": 31.0,
+  "yaw": 9.0,
+  "pitch": 13.0,
+  "height": 1.6,
+  "dx": 0.0
+ },
+ "openings": [
+  {
+   "kind": "window",
+   "u0": 1.3,
+   "v0": 1.0,
+   "u1": 2.6,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.4,
+   "v0": 1.0,
+   "u1": 5.7,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 7.5,
+   "v0": 1.0,
+   "u1": 8.8,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.4,
+   "v0": 1.0,
+   "u1": 13.700000000000001,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 15.5,
+   "v0": 1.0,
+   "u1": 16.8,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.6,
+   "v0": 1.0,
+   "u1": 19.900000000000002,
+   "v1": 3.6,
+   "floor": 0,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 1.3,
+   "v0": 5.6,
+   "u1": 2.6,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.4,
+   "v0": 5.6,
+   "u1": 5.7,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 7.5,
+   "v0": 5.6,
+   "u1": 8.8,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.4,
+   "v0": 5.6,
+   "u1": 13.700000000000001,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 15.5,
+   "v0": 5.6,
+   "u1": 16.8,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.6,
+   "v0": 5.6,
+   "u1": 19.900000000000002,
+   "v1": 8.1,
+   "floor": 1,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 1.3,
+   "v0": 9.3,
+   "u1": 2.6,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.4,
+   "v0": 9.3,
+   "u1": 5.7,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 7.5,
+   "v0": 9.3,
+   "u1": 8.8,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.4,
+   "v0": 9.3,
+   "u1": 13.700000000000001,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 15.5,
+   "v0": 9.3,
+   "u1": 16.8,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.6,
+   "v0": 9.3,
+   "u1": 19.900000000000002,
+   "v1": 11.700000000000001,
+   "floor": 2,
+   "mullions": 1,
+   "transom": true,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 1.3,
+   "v0": 12.9,
+   "u1": 2.6,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.4,
+   "v0": 12.9,
+   "u1": 5.7,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 7.5,
+   "v0": 12.9,
+   "u1": 8.8,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.4,
+   "v0": 12.9,
+   "u1": 13.700000000000001,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 15.5,
+   "v0": 12.9,
+   "u1": 16.8,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.6,
+   "v0": 12.9,
+   "u1": 19.900000000000002,
+   "v1": 15.0,
+   "floor": 3,
+   "mullions": 1,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "door",
+   "u0": 9.6,
+   "v0": 0,
+   "u1": 11.4,
+   "v1": 4.1000000000000005,
+   "floor": 0,
+   "arch": "round"
+  }
+ ],
+ "balconies": [
+  {
+   "u0": 3.9,
+   "u1": 8.3,
+   "slab_v": 5.3,
+   "rail_top": 6.3,
+   "floor": 1
+  },
+  {
+   "u0": 11.9,
+   "u1": 16.3,
+   "slab_v": 5.3,
+   "rail_top": 6.3,
+   "floor": 1
+  }
+ ],
+ "bands": [
+  {
+   "kind": "plinth",
+   "v0": 0,
+   "v1": 0.5
+  },
+  {
+   "kind": "string_course",
+   "v0": 4.6,
+   "v1": 4.88
+  },
+  {
+   "kind": "cornice",
+   "v0": 16.25,
+   "v1": 17.2
+  }
+ ],
+ "downpipes": [
+  {
+   "u0": 20.5,
+   "u1": 20.61
+  }
+ ],
+ "pilasters": [],
+ "occluders": [
+  {
+   "kind": "car",
+   "u0": 2.0,
+   "u1": 6.3,
+   "v0": 0,
+   "v1": 1.5
+  }
+ ],
+ "roof": {
+  "top_v": 20.4,
+  "pitched": true
+ },
+ "rustication": {
+  "v0": 0.5,
+  "v1": 4.6,
+  "step": 0.42
+ }
+}

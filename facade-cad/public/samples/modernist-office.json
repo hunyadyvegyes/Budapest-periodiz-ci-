@@ -1,0 +1,558 @@
+{
+ "name": "modernist-office",
+ "title": "Modernist office block (strip grid, flat roof)",
+ "facade": {
+  "width_m": 24.0,
+  "wall_height_m": 14.5
+ },
+ "quad_px": [
+  [
+   487.1,
+   472.75
+  ],
+  [
+   1602.11,
+   372.39
+  ],
+  [
+   1652.05,
+   1140.74
+  ],
+  [
+   451.3,
+   1126.32
+  ]
+ ],
+ "camera": {
+  "f": 1700,
+  "w": 2000,
+  "h": 1500,
+  "dist": 33.0,
+  "yaw": -14.0,
+  "pitch": 10.0,
+  "height": 1.6,
+  "dx": 0.0
+ },
+ "openings": [
+  {
+   "kind": "window",
+   "u0": 0.9,
+   "v0": 0.9,
+   "u1": 2.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 2.9,
+   "v0": 0.9,
+   "u1": 4.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.9,
+   "v0": 0.9,
+   "u1": 6.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 6.9,
+   "v0": 0.9,
+   "u1": 8.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 8.9,
+   "v0": 0.9,
+   "u1": 10.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.9,
+   "v0": 0.9,
+   "u1": 14.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 14.9,
+   "v0": 0.9,
+   "u1": 16.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 16.9,
+   "v0": 0.9,
+   "u1": 18.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.9,
+   "v0": 0.9,
+   "u1": 20.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 20.9,
+   "v0": 0.9,
+   "u1": 22.4,
+   "v1": 3.5,
+   "floor": 0,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 0.9,
+   "v0": 4.9,
+   "u1": 2.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 2.9,
+   "v0": 4.9,
+   "u1": 4.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.9,
+   "v0": 4.9,
+   "u1": 6.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 6.9,
+   "v0": 4.9,
+   "u1": 8.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 8.9,
+   "v0": 4.9,
+   "u1": 10.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 10.9,
+   "v0": 4.9,
+   "u1": 12.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.9,
+   "v0": 4.9,
+   "u1": 14.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 14.9,
+   "v0": 4.9,
+   "u1": 16.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 16.9,
+   "v0": 4.9,
+   "u1": 18.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.9,
+   "v0": 4.9,
+   "u1": 20.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 20.9,
+   "v0": 4.9,
+   "u1": 22.4,
+   "v1": 6.6000000000000005,
+   "floor": 1,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 0.9,
+   "v0": 7.9,
+   "u1": 2.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 2.9,
+   "v0": 7.9,
+   "u1": 4.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.9,
+   "v0": 7.9,
+   "u1": 6.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 6.9,
+   "v0": 7.9,
+   "u1": 8.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 8.9,
+   "v0": 7.9,
+   "u1": 10.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 10.9,
+   "v0": 7.9,
+   "u1": 12.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.9,
+   "v0": 7.9,
+   "u1": 14.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 14.9,
+   "v0": 7.9,
+   "u1": 16.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 16.9,
+   "v0": 7.9,
+   "u1": 18.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.9,
+   "v0": 7.9,
+   "u1": 20.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 20.9,
+   "v0": 7.9,
+   "u1": 22.4,
+   "v1": 9.6,
+   "floor": 2,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 0.9,
+   "v0": 10.9,
+   "u1": 2.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 2.9,
+   "v0": 10.9,
+   "u1": 4.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 4.9,
+   "v0": 10.9,
+   "u1": 6.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 6.9,
+   "v0": 10.9,
+   "u1": 8.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 8.9,
+   "v0": 10.9,
+   "u1": 10.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 10.9,
+   "v0": 10.9,
+   "u1": 12.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 12.9,
+   "v0": 10.9,
+   "u1": 14.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 14.9,
+   "v0": 10.9,
+   "u1": 16.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 16.9,
+   "v0": 10.9,
+   "u1": 18.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 18.9,
+   "v0": 10.9,
+   "u1": 20.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "window",
+   "u0": 20.9,
+   "v0": 10.9,
+   "u1": 22.4,
+   "v1": 12.6,
+   "floor": 3,
+   "mullions": 0,
+   "transom": false,
+   "arch": null
+  },
+  {
+   "kind": "door",
+   "u0": 10.6,
+   "v0": 0,
+   "u1": 12.6,
+   "v1": 2.7,
+   "floor": 0,
+   "arch": null
+  }
+ ],
+ "balconies": [],
+ "bands": [
+  {
+   "kind": "plinth",
+   "v0": 0,
+   "v1": 0.5
+  },
+  {
+   "kind": "string_course",
+   "v0": 4.0,
+   "v1": 4.28
+  },
+  {
+   "kind": "cornice",
+   "v0": 13.9,
+   "v1": 14.5
+  }
+ ],
+ "downpipes": [
+  {
+   "u0": 0.3,
+   "u1": 0.41
+  }
+ ],
+ "pilasters": [],
+ "occluders": [
+  {
+   "kind": "tree",
+   "u0": 16.5,
+   "u1": 22.5,
+   "v0": 3.23,
+   "v1": 8.5
+  }
+ ],
+ "roof": {
+  "top_v": 15.0,
+  "pitched": false
+ }
+}

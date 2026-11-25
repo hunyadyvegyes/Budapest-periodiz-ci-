@@ -186,3 +186,8 @@ az adott böngészőben tárolódnak.
   (`building:part`): kupola, gúla, kúp néhány szelettel, a többi tető lapos tömbként; az apró,
   eltakart és lebegő részek kimaradnak. Jelenleg: Országház, Szent István-bazilika. Új épület:
   `data-work/models.py` → `MODELS` lista, majd `cd data-work && python3 models.py`.
+
+## Facade → CAD (külön alkalmazás)
+
+A `facade-cad/` mappában egy önálló, böngészőben futó alkalmazás található, amely homlokzatfotókból
+rétegezett 2D építészeti nézetrajzot (DXF/SVG/PDF) készít. Részletek: [facade-cad/README.md](facade-cad/README.md).

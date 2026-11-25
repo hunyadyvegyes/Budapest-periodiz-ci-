@@ -1,0 +1,20 @@
+[
+ {
+  "name": "budapest-eclectic",
+  "title": "Eclectic apartment house (historicist, 1890s style)",
+  "file": "budapest-eclectic.jpg",
+  "truth": "budapest-eclectic.json"
+ },
+ {
+  "name": "modernist-office",
+  "title": "Modernist office block (strip grid, flat roof)",
+  "file": "modernist-office.jpg",
+  "truth": "modernist-office.json"
+ },
+ {
+  "name": "brick-townhouse",
+  "title": "Brick townhouse with arched windows (frontal photo)",
+  "file": "brick-townhouse.jpg",
+  "truth": "brick-townhouse.json"
+ }
+]
